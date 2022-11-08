@@ -1,40 +1,43 @@
 import logo from './logo.svg';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {
+  BrowserRouter,
+  NavLink,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
+
 import './App.css';
 import Create from './components/create';
+import DiagramsDesigner from './components/diagrams-designer';
 
 
 
 // const electron = window.require('electron');
 // const ipcRenderer  = electron.ipcRenderer;
 
-function App() {
+export function App() {
   return (
-    <div className="main">
-      <h2 className="main-header">React Crud Operations</h2>
-      <div>
-        <Route exact path='/create' component={Create} />
-      </div>
+
+    <BrowserRouter>
+     <div className="main">
+      <nav>
+        <NavLink to="" >Home</NavLink> | 
+        <NavLink to="about" >About</NavLink> | 
+        <NavLink to="ddesigner" >Diagrams Designer</NavLink>
+      </nav>
+      <h1 className="main-header">React Crud Operations</h1>
+
+      <Routes>
+        <Route path="/" element={<Create/>} />
+        <Route path='/create' element={<Create />} />
+        <Route path='/ddesigner' element={<DiagramsDesigner />} />
+      </Routes>
+      
     </div>
 
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
+    </BrowserRouter>
 
-    //       DUN
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 

@@ -54,3 +54,6 @@ Source:: https://blog.codemagic.io/building-electron-desktop-apps-with-react/
 ### CRUD SETUP
 https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
 
+
+
+$ npm run electron-react

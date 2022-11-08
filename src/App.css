@@ -41,8 +41,7 @@
 
 .main{
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   height: 100vh;
   background-color: #212121;
   color: whitesmoke;
@@ -53,6 +52,8 @@
 
 .main-header{
   font-family: 'Montserrat', sans-serif;
+  justify-content: center;
+  align-items: center;
 }
 
 .create-form label{
