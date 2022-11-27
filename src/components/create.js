@@ -20,6 +20,7 @@ export default function Create() {
     }
     return (
         <div>
+            <h1 className="main-header">Синтез технических решений</h1>
             <Form className="create-form">
                 <Form.Field>
                     <label>First Name</label>

@@ -57,3 +57,9 @@ https://www.freecodecamp.org/news/how-to-perform-crud-operations-using-react/
 
 
 $ npm run electron-react
+
+
+https://graphin.antv.vision/en-US/graphin/quick-start/quick-start
+yarn add @antv/graphin@latest --save
+yarn add @antv/graphin-components@latest --save
+yarn add @antv/graphin-icons --save

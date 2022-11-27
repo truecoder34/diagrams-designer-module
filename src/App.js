@@ -26,7 +26,7 @@ export function App() {
         <NavLink to="about" >About</NavLink> | 
         <NavLink to="ddesigner" >Diagrams Designer</NavLink>
       </nav>
-      <h1 className="main-header">React Crud Operations</h1>
+      
 
       <Routes>
         <Route path="/" element={<Create/>} />
