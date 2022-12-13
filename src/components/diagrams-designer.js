@@ -71,8 +71,9 @@ export default function DiagramsDesigner() {
           width: 1200,
           height: 800,
           modes: {
-            default: ['drag-canvas', 'drag-node'],
+            default: ['drag-canvas', 'drag-node',  'drag-combo', 'collapse-expand-combo'],
             addEdge: ['click-add-edge', 'click-select'],
+            addDashedEdge: ['click-add-edge-dashed', 'click-select'],
           },
           layout: {
             type: 'dagre',
@@ -93,6 +94,29 @@ export default function DiagramsDesigner() {
           },
           defaultEdge: {
             type: 'polyline',
+          },
+          defaultCombo: {
+            type: 'rect',
+            /* The minimum size of the combo. combo 最小大小 */
+            size: [50, 50],
+            /* style for the keyShape */
+            style: {
+              lineWidth: 1,
+               fill: 'white',
+              stroke: 'red',
+              lineWidth: 2,
+              lineDash: [8]
+            },
+            labelCfg: {
+              /* label's offset to the keyShape */
+              // refY: 10,
+              /* label's position, options: center, top, bottom, left, right */
+              position: 'top',
+              /* label's style */
+              // style: {
+              //   fontSize: 18,
+              // },
+            },
           },
           nodeStateStyles: {
             // The state styles defined as following will take effect on keyShape only. To define state styles on other shapes, refer to the link Configure Styles for State above
@@ -127,6 +151,27 @@ export default function DiagramsDesigner() {
         });
       });
 
+
+      graph.on('combo:mouseenter', (evt) => {
+        const { item } = evt;
+        graph.setItemState(item, 'active', true);
+      });
+      
+      graph.on('combo:mouseleave', (evt) => {
+        const { item } = evt;
+        graph.setItemState(item, 'active', false);
+      });
+      graph.on('combo:click', (evt) => {
+        const { item } = evt;
+        graph.setItemState(item, 'selected', true);
+      });
+      graph.on('canvas:click', (evt) => {
+        graph.getCombos().forEach((combo) => {
+          graph.clearItemStates(combo);
+        });
+      });
+
+
       let addedCount = 0;
       G6.registerBehavior('click-add-edge', {
         getEvents() {
@@ -154,13 +199,79 @@ export default function DiagramsDesigner() {
           } else {
             this.edge = graph.addItem('edge', {
               source: model.id,
-              type: 'line',
+              type: 'polyline',
               target: point,
               style: {
                 stroke: 'black',
                 lineWidth: 3,
                 endArrow: {
                   path: G6.Arrow.triangle(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'white',
+                  lineWidth: 1,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          // 拖拽过程中，点击会点击到新增的边上
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
+      G6.registerBehavior('click-add-edge-dashed', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                lineDash: [8],
+                stroke: 'black',
+                lineWidth: 3,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
                   d: 0,
                   fill: 'black',
                   stroke: 'white',
@@ -210,6 +321,17 @@ export default function DiagramsDesigner() {
           fill: 'white',
           stroke: 'black',
           lineWidth: 2
+        },
+        linkPoints: {
+          top: true,
+          right: false,
+          bottom: true,
+          left: false,
+          // circle的大小
+          size: 5,
+          lineWidth: 1,
+          fill: '#fff',
+          stroke: '#1890FF'
         },
         size : 50,
 
@@ -322,9 +444,31 @@ export default function DiagramsDesigner() {
     };
 
 
+    const addComboElement = () => {
+      let newElemUuid = uuidv4();
+      console.log('[INFO] New object UUID is: ' + newElemUuid);
+      ELEMENTS_STORAGE.push(newElemUuid)
+
+      const modelFuncModuleDashed = {
+        id: newElemUuid,
+
+        label: 'combo',
+
+      };
+      graph.addItem('combo', modelFuncModuleDashed);
+    };
+
+
+
     const setAddEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.setMode("addEdge");
+      console.log(graph)
+    }
+
+    const setAddDashedEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addDashedEdge");
       console.log(graph)
     }
 
@@ -345,7 +489,9 @@ export default function DiagramsDesigner() {
             <button onClick={addFunctionalModuleDashed}>Функциональный модуль пунктир</button>
             <button onClick={addIsolationElement}>Элемент изоляции</button>
             <button onClick={setAddEdgeMode}>Режим добавления граней</button>
+            <button onClick={setAddDashedEdgeMode}>Режим добавления прерывистых граней</button>
             <button onClick={setDefaultMode}>Режим добавления элементов</button>
+            <button onClick={addComboElement}>Добавялем комбо</button>
           </div>
       </div>
     );
