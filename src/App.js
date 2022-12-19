@@ -24,7 +24,7 @@ export function App() {
       <nav>
         <NavLink to="" >Home</NavLink> | 
         <NavLink to="about" >About</NavLink> | 
-        <NavLink to="ddesigner" >Diagrams Designer</NavLink>
+        <NavLink to="ddesigner" >Diagram Designer</NavLink>
       </nav>
       
 

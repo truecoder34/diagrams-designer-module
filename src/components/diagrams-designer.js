@@ -5,7 +5,30 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import G6 from '@antv/g6';
 
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
+
+import { faInfo,faCircle} from '@fortawesome/free-solid-svg-icons';
+//import { faRectangleWide } from '@fortawesome/free-regular-svg-icons';
+//import { faRectangleWide } from '@fortawesome/free-light-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import SvgIcon from '@mui/material/SvgIcon';
+
+
+import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
+import TollIcon from '@mui/icons-material/Toll';
+import Crop32Icon from '@mui/icons-material/Crop32';
+import Crop75Icon from '@mui/icons-material/Crop75';
+import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
+import RectangleTwoToneIcon from '@mui/icons-material/RectangleTwoTone';
+
+
+
 import {v4 as uuidv4} from 'uuid';
+import { Toll } from '@mui/icons-material';
 
 
 export default function DiagramsDesigner() {
@@ -199,7 +222,7 @@ export default function DiagramsDesigner() {
           } else {
             this.edge = graph.addItem('edge', {
               source: model.id,
-              type: 'polyline',
+              type: 'line', //'polyline',
               target: point,
               style: {
                 stroke: 'black',
@@ -481,12 +504,29 @@ export default function DiagramsDesigner() {
     return (
       <div>
           <h1>Diagrams Designer</h1> 
-          <button onClick={addNode}>Характерная точка 1</button>
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <Button onClick={addNodeEllipse}>
+              <PanoramaFishEyeIcon></PanoramaFishEyeIcon>Характерная точка. Круг 
+            </Button>
+            <Button onClick={addNode}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
+            <Button onClick={addObject}> <Crop32Icon> </Crop32Icon> Объект окружения</Button>
+            <Button onClick={addFunctionalModule}> <Crop75Icon> </Crop75Icon>Функциональный модуль</Button>
+            <Button onClick={addFunctionalModuleDashed}> 
+              <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon> Функциональный модуль пунктир
+            </Button>
+            <Button onClick={addIsolationElement}> 
+              <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
+            </Button>
+          </ButtonGroup>
+          <br/>
+          <br/>
+
+          {/* <button onClick={addNode}>Характерная точка 1</button>
           <button onClick={addNodeEllipse}>Характерная точка 2</button>
           <button onClick={addObject}>Объект окружения</button>
           <button onClick={addFunctionalModule}>Функциональный модуль</button>
           <button onClick={addFunctionalModuleDashed}>Функциональный модуль пунктир</button>
-          <button onClick={addIsolationElement}>Элемент изоляции</button>
+          <button onClick={addIsolationElement}>Элемент изоляции</button> */}
           <button onClick={setAddEdgeMode}>Режим добавления граней</button>
           <button onClick={setAddDashedEdgeMode}>Режим добавления прерывистых граней</button>
           <button onClick={setDefaultMode}>Режим добавления элементов</button>
@@ -509,11 +549,11 @@ export default function DiagramsDesigner() {
             <div class="column-2">
             <form>
               <label for="fname">Название</label><br/>
-              <input type="text" id="fname" name="fname" value="John"/><br/>
+              <input type="text" id="fname" name="fname" value="x"/><br/>
               <label for="lname">Верхний индекс:</label><br/>
-              <input type="text" id="lname" name="lname" value="Doe"/>
+              <input type="text" id="hidx" name="hidx" value="123"/><br/>
               <label for="lname">Нижний индекс:</label><br/>
-              <input type="text" id="lname" name="lname" value="Doe"/>
+              <input type="text" id="lidx" name="lidx" value="456"/><br/>
               </form>
             </div>
           </div> 
