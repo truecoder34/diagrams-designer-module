@@ -61,3 +61,47 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 12px !important;
 }
+
+.design-field {
+  display: flex;
+  /* height: 400px;
+  width: 900px; */
+  background-color: #f5f5f5;
+  border: 0.5rem double  black;
+}
+
+.DivStyle{
+  display: flex;
+  border: 0.5rem solid rgb(219, 19, 19);
+}
+
+
+.grid-container-element { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 20px; 
+    border: 1px solid black; 
+    width: 100%; 
+} 
+.grid-child-element { 
+    margin: 10px; 
+    border: 1px solid red; 
+    display: flex;
+}
+
+
+.row {
+  display: flex;
+}
+
+.column-1 {
+  flex: 70%;
+    background-color: #f5f5f5;
+  border: 0.5rem double  black;
+}
+
+.column-2 {
+  flex: 30%;
+    background-color: #f5f5f500;
+  border: 0.5rem double  rgb(255, 0, 0);
+}

@@ -481,18 +481,44 @@ export default function DiagramsDesigner() {
     return (
       <div>
           <h1>Diagrams Designer</h1> 
-          <div ref={ref}>
-            <button onClick={addNode}>Характерная точка 1</button>
-            <button onClick={addNodeEllipse}>Характерная точка 2</button>
-            <button onClick={addObject}>Объект окружения</button>
-            <button onClick={addFunctionalModule}>Функциональный модуль</button>
-            <button onClick={addFunctionalModuleDashed}>Функциональный модуль пунктир</button>
-            <button onClick={addIsolationElement}>Элемент изоляции</button>
-            <button onClick={setAddEdgeMode}>Режим добавления граней</button>
-            <button onClick={setAddDashedEdgeMode}>Режим добавления прерывистых граней</button>
-            <button onClick={setDefaultMode}>Режим добавления элементов</button>
-            <button onClick={addComboElement}>Добавялем комбо</button>
-          </div>
+          <button onClick={addNode}>Характерная точка 1</button>
+          <button onClick={addNodeEllipse}>Характерная точка 2</button>
+          <button onClick={addObject}>Объект окружения</button>
+          <button onClick={addFunctionalModule}>Функциональный модуль</button>
+          <button onClick={addFunctionalModuleDashed}>Функциональный модуль пунктир</button>
+          <button onClick={addIsolationElement}>Элемент изоляции</button>
+          <button onClick={setAddEdgeMode}>Режим добавления граней</button>
+          <button onClick={setAddDashedEdgeMode}>Режим добавления прерывистых граней</button>
+          <button onClick={setDefaultMode}>Режим добавления элементов</button>
+          <button onClick={addComboElement}>Добавялем комбо</button>
+          <hr/>
+          <br/>
+          {/* <div>
+            <div className="design-field" ref={ref}>
+            </div>
+            <div className="DivStyle">
+            </div>
+          </div> */}
+          {/* <div class="grid-container-element">
+            <div class="grid-child-element purple" ref={ref} >Grid Column 1</div>
+            <div class="grid-child-element green">Grid Column 2</div>
+          </div> */}
+
+          <div class="row">
+            <div class="column-1" ref={ref} ></div>
+            <div class="column-2">
+            <form>
+              <label for="fname">Название</label><br/>
+              <input type="text" id="fname" name="fname" value="John"/><br/>
+              <label for="lname">Верхний индекс:</label><br/>
+              <input type="text" id="lname" name="lname" value="Doe"/>
+              <label for="lname">Нижний индекс:</label><br/>
+              <input type="text" id="lname" name="lname" value="Doe"/>
+              </form>
+            </div>
+          </div> 
+
+        
       </div>
     );
 }
