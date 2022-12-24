@@ -43,8 +43,9 @@
   display: flex;
 
   height: 100vh;
-  background-color: #1a52a7;
-  color: whitesmoke;
+  background-color: #f6f6e8; 
+  /* #1a52a7; */
+  color: rgb(15, 15, 15);
   flex-direction: column;
 }
 
@@ -95,14 +96,14 @@
 
 .column-1 {
   flex: 70%;
-    height: 400px;
+  height: 450px;
   width: 900px;
   background-color: #f5f5f5;
-  border: 0.5rem double  black;
+  border: 0.5rem double  #125b30;
 }
 
 .column-2 {
   flex: 30%;
     background-color: #f5f5f500;
-  border: 0.5rem double  rgb(255, 0, 0);
+  border: 0.5rem double  #125b30;
 }

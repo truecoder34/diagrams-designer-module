@@ -24,11 +24,22 @@ import Crop32Icon from '@mui/icons-material/Crop32';
 import Crop75Icon from '@mui/icons-material/Crop75';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import RectangleTwoToneIcon from '@mui/icons-material/RectangleTwoTone';
+import ImageAspectRatioIcon from '@mui/icons-material/ImageAspectRatio';
 
-
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 import {v4 as uuidv4} from 'uuid';
-import { Toll } from '@mui/icons-material';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { purple } from '@mui/material/colors';
+
+
 
 
 export default function DiagramsDesigner() {
@@ -500,61 +511,135 @@ export default function DiagramsDesigner() {
       graph.setMode("default");
       console.log(graph)
     }
+
+    function createData(name, calories, fat, carbs) {
+      return { name, calories, fat, carbs };
+    }
+
+    const rows = [
+      createData('1', 1, 1, 1),
+      createData('2', 2, 2, 2),
+    ];
+
   
     return (
       <div>
-          <h1>Diagrams Designer</h1> 
+          <h1>Конструктор диаграмм</h1> 
+
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <Button onClick={addNodeEllipse}>
+            <Button  sx={{ color: 'white','&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#125b30', 
+                            borderColor: '#125b30 !important', }} 
+                      onClick={addNodeEllipse}>
               <PanoramaFishEyeIcon></PanoramaFishEyeIcon>Характерная точка. Круг 
             </Button>
-            <Button onClick={addNode}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
-            <Button onClick={addObject}> <Crop32Icon> </Crop32Icon> Объект окружения</Button>
-            <Button onClick={addFunctionalModule}> <Crop75Icon> </Crop75Icon>Функциональный модуль</Button>
-            <Button onClick={addFunctionalModuleDashed}> 
+            <Button  sx={{ color: 'white', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#477b59', 
+                            borderColor: '#125b30 !important' }} 
+                      onClick={addNode}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
+            <Button  sx={{ color: 'white','&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#125b30', 
+                            borderColor: '#125b30 !important', }}  
+                      onClick={addObject}> <Crop32Icon> </Crop32Icon> Объект окружения</Button>
+            <Button  sx={{ color: 'white', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#477b59', 
+                            borderColor: '#125b30 !important' }} 
+                      onClick={addFunctionalModule}> <Crop75Icon> </Crop75Icon>Функциональный модуль</Button>
+            <Button  sx={{ color: 'white','&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#125b30', 
+                            borderColor: '#125b30 !important', }}  onClick={addFunctionalModuleDashed}> 
               <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon> Функциональный модуль пунктир
             </Button>
-            <Button onClick={addIsolationElement}> 
+            <Button  sx={{ color: 'white', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#477b59', 
+                            borderColor: '#125b30 !important' }} 
+                      onClick={addIsolationElement}> 
               <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
             </Button>
+            <Button sx={{ color: 'white','&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#125b30', 
+                            borderColor: '#125b30 !important', }} 
+                          onClick={addComboElement}>
+                    <ImageAspectRatioIcon></ImageAspectRatioIcon>
+                               Комбо</Button>
+
           </ButtonGroup>
           <br/>
           <br/>
 
-          {/* <button onClick={addNode}>Характерная точка 1</button>
-          <button onClick={addNodeEllipse}>Характерная точка 2</button>
-          <button onClick={addObject}>Объект окружения</button>
-          <button onClick={addFunctionalModule}>Функциональный модуль</button>
-          <button onClick={addFunctionalModuleDashed}>Функциональный модуль пунктир</button>
-          <button onClick={addIsolationElement}>Элемент изоляции</button> */}
-          <button onClick={setAddEdgeMode}>Режим добавления граней</button>
-          <button onClick={setAddDashedEdgeMode}>Режим добавления прерывистых граней</button>
-          <button onClick={setDefaultMode}>Режим добавления элементов</button>
-          <button onClick={addComboElement}>Добавялем комбо</button>
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <Button sx={{ color: 'black', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setAddEdgeMode}>Режим добавления ребер</Button>
+            <Button sx={{ color: 'black', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setAddDashedEdgeMode}>Режим добавления прерывистых ребер</Button>
+            <Button sx={{ color: 'black', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setDefaultMode}>Режим добавления элементов</Button>
+          </ButtonGroup>
+
           <hr/>
           <br/>
-          {/* <div>
-            <div className="design-field" ref={ref}>
-            </div>
-            <div className="DivStyle">
-            </div>
-          </div> */}
-          {/* <div class="grid-container-element">
-            <div class="grid-child-element purple" ref={ref} >Grid Column 1</div>
-            <div class="grid-child-element green">Grid Column 2</div>
-          </div> */}
 
           <div class="row">
             <div class="column-1" ref={ref} ></div>
             <div class="column-2">
-            <form>
-              <label for="fname">Название</label><br/>
-              <input type="text" id="fname" name="fname" value="x"/><br/>
-              <label for="lname">Верхний индекс:</label><br/>
-              <input type="text" id="hidx" name="hidx" value="123"/><br/>
-              <label for="lname">Нижний индекс:</label><br/>
-              <input type="text" id="lidx" name="lidx" value="456"/><br/>
+              <h3>Характеристики элемента</h3>
+              <form>
+                <label for="fname">Название элемента</label><br/>
+                <input type="text" id="fname" name="fname" value="x"/><br/>
+                <label for="fname">Тип элемента</label><br/>
+                <input type="text" id="fname" name="fname" value="x"/><br/>
               </form>
+              <br/>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>            
+                      <TableCell>#</TableCell>
+                      <TableCell align="right">Значение</TableCell>
+                      <TableCell align="right">Верхний Индекс</TableCell>
+                      <TableCell align="right">Нижний Индекс</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                      {rows.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.calories}</TableCell>
+                        <TableCell align="right">{row.fat}</TableCell>
+                        <TableCell align="right">{row.carbs}</TableCell>
+                        <TableCell align="right">{row.protein}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+
             </div>
           </div> 
 

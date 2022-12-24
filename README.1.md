@@ -69,3 +69,7 @@ material-ui
 npm install @mui/material @emotion/react @emotion/styled
 npm i @fortawesome/react-fontawesome
 npm i @fortawesome/free-solid-svg-icons
+
+
+npm install @mui/icons-material
+npm install @mui/material/styles
