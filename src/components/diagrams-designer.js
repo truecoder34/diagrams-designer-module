@@ -33,6 +33,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -108,6 +109,9 @@ export default function DiagramsDesigner() {
             default: ['drag-canvas', 'drag-node',  'drag-combo', 'collapse-expand-combo'],
             addEdge: ['click-add-edge', 'click-select'],
             addDashedEdge: ['click-add-edge-dashed', 'click-select'],
+            addBoldBlueEdge: ['click-add-edge-bold-blue', 'click-select'],
+            addBoldPurpleEdge: ['click-add-edge-bold-purple', 'click-select'],
+            addBoldYellowEdge: ['click-add-edge-bold-yellow', 'click-select'],
           },
           layout: {
             type: 'dagre',
@@ -338,7 +342,204 @@ export default function DiagramsDesigner() {
         }
       });
 
+      G6.registerBehavior('click-add-edge-bold-blue', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'blue',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'blue',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          // 拖拽过程中，点击会点击到新增的边上
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
+      G6.registerBehavior('click-add-edge-bold-purple', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'purple',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'purple',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          // 拖拽过程中，点击会点击到新增的边上
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
+      G6.registerBehavior('click-add-edge-bold-yellow', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'yellow',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'yellow',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          // 拖拽过程中，点击会点击到新增的边上
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
     }, []);
+
+    
 
     const addNode = () => {
       let newElemUuid = uuidv4();
@@ -492,6 +693,22 @@ export default function DiagramsDesigner() {
       graph.addItem('combo', modelFuncModuleDashed);
     };
 
+    const addComboGreenElement = () => {
+      let newElemUuid = uuidv4();
+      console.log('[INFO] New object UUID is: ' + newElemUuid);
+      ELEMENTS_STORAGE.push(newElemUuid)
+
+      const modelComboGreen = {
+        id: newElemUuid,
+        style: {
+          stroke: 'green',
+          lineWidth: 4,
+        },
+        label: 'combo',
+
+      };
+      graph.addItem('combo', modelComboGreen);
+    };
 
 
     const setAddEdgeMode = () => {
@@ -503,6 +720,25 @@ export default function DiagramsDesigner() {
     const setAddDashedEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.setMode("addDashedEdge");
+      console.log(graph)
+    }
+
+    
+    const setAddBoldBlueEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldBlueEdge");
+      console.log(graph)
+    }
+
+    const setAddBoldPurpleEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldPurpleEdge");
+      console.log(graph)
+    }
+
+    const setAddBoldYellowEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldYellowEdge");
       console.log(graph)
     }
 
@@ -568,7 +804,7 @@ export default function DiagramsDesigner() {
                       onClick={addIsolationElement}> 
               <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
             </Button>
-            <Button sx={{ color: 'white','&:hover': {
+            <Button sx={{ color: 'red','&:hover': {
                                             backgroundColor: '#59bb7b',
                                             color: "white", },
                             backgroundColor: '#125b30', 
@@ -576,6 +812,15 @@ export default function DiagramsDesigner() {
                           onClick={addComboElement}>
                     <ImageAspectRatioIcon></ImageAspectRatioIcon>
                                Комбо</Button>
+            <Button sx={{ color: '#11f36f', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                            backgroundColor: '#477b59', 
+                            borderColor: '#125b30 !important' }} 
+                          onClick={addComboGreenElement}>
+                    <ImageAspectRatioIcon></ImageAspectRatioIcon>
+                               Комбо</Button>
+                               
 
           </ButtonGroup>
           <br/>
@@ -597,6 +842,31 @@ export default function DiagramsDesigner() {
                                             color: "white", },
                           backgroundColor: 'white', borderColor: '#125b30 !important' }} 
                     onClick={setDefaultMode}>Режим добавления элементов</Button>
+          </ButtonGroup>
+          <br/>
+          <br/>
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <Button sx={{ color: 'blue', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setAddBoldBlueEdgeMode}>
+                    <DoubleArrowIcon></DoubleArrowIcon> Ребро толстое синее 
+            </Button>
+            <Button sx={{ color: 'purple', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setAddBoldPurpleEdgeMode}>
+                    <DoubleArrowIcon></DoubleArrowIcon> Ребро толстое фиолетовое
+            </Button>
+            <Button sx={{ color: '#bdba00', '&:hover': {
+                                            backgroundColor: '#59bb7b',
+                                            color: "white", },
+                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                    onClick={setAddBoldYellowEdgeMode}>
+                      <DoubleArrowIcon></DoubleArrowIcon>Ребро толстое Желтое
+            </Button>
           </ButtonGroup>
 
           <hr/>
