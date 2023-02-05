@@ -97,6 +97,49 @@ export default function DiagramsDesigner() {
         //     target: 'node3',
         //   },
         // ],
+        // nodes: [
+        //   {
+        //     id: 'node1',
+        //     x: 100,
+        //     y: 200,
+        //     anchorPoints: [
+        //       [0, 0.3],
+        //       [1, 0.7],
+        //     ],
+        //   },
+        //   {
+        //     id: 'node2',
+        //     x: 200,
+        //     y: 100,
+        //     anchorPoints: [
+        //       [0, 0.5],
+        //       [1, 0.5],
+        //     ],
+        //   },
+        //   {
+        //     id: 'node3',
+        //     x: 200,
+        //     y: 300,
+        //     anchorPoints: [
+        //       [0, 0.5],
+        //       [1, 0.5],
+        //     ],
+        //   },
+        // ],
+        // edges: [
+        //   {
+        //     id: 'edge1',
+        //     target: 'node2',
+        //     source: 'node1',
+        //     shape: 'hvh',
+        //   },
+        //   {
+        //     id: 'edge2',
+        //     target: 'node3',
+        //     source: 'node1',
+        //     shape: 'hvh',
+        //   },
+        // ],
       };
   
     useEffect(() => {
@@ -267,7 +310,6 @@ export default function DiagramsDesigner() {
         },
         onEdgeClick(ev) {
           const currentEdge = ev.item;
-          // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
             graph.removeItem(this.edge);
             this.edge = null;
@@ -281,7 +323,7 @@ export default function DiagramsDesigner() {
           return {
             'node:click': 'onClick',
             mousemove: 'onMousemove',
-            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+            'edge:click': 'onEdgeClick'
           };
         },
         onClick(ev) {
@@ -333,7 +375,6 @@ export default function DiagramsDesigner() {
         },
         onEdgeClick(ev) {
           const currentEdge = ev.item;
-          // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
             graph.removeItem(this.edge);
             this.edge = null;
@@ -347,7 +388,7 @@ export default function DiagramsDesigner() {
           return {
             'node:click': 'onClick',
             mousemove: 'onMousemove',
-            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+            'edge:click': 'onEdgeClick'
           };
         },
         onClick(ev) {
@@ -398,7 +439,6 @@ export default function DiagramsDesigner() {
         },
         onEdgeClick(ev) {
           const currentEdge = ev.item;
-          // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
             graph.removeItem(this.edge);
             this.edge = null;
@@ -412,7 +452,7 @@ export default function DiagramsDesigner() {
           return {
             'node:click': 'onClick',
             mousemove: 'onMousemove',
-            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+            'edge:click': 'onEdgeClick'
           };
         },
         onClick(ev) {
@@ -463,7 +503,6 @@ export default function DiagramsDesigner() {
         },
         onEdgeClick(ev) {
           const currentEdge = ev.item;
-          // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
             graph.removeItem(this.edge);
             this.edge = null;
@@ -477,7 +516,7 @@ export default function DiagramsDesigner() {
           return {
             'node:click': 'onClick',
             mousemove: 'onMousemove',
-            'edge:click': 'onEdgeClick' // 点击空白处，取消边
+            'edge:click': 'onEdgeClick'
           };
         },
         onClick(ev) {
@@ -528,7 +567,6 @@ export default function DiagramsDesigner() {
         },
         onEdgeClick(ev) {
           const currentEdge = ev.item;
-          // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
             graph.removeItem(this.edge);
             this.edge = null;
@@ -539,13 +577,30 @@ export default function DiagramsDesigner() {
 
     }, []);
 
+    G6.registerEdge('hvh', {
+      draw(cfg, group) {
+        const startPoint = cfg.startPoint;
+        const endPoint = cfg.endPoint;
+        const shape = group.addShape('path', {
+          attrs: {
+            stroke: '#333',
+            path: [
+              ['M', startPoint.x, startPoint.y],
+              ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, startPoint.y], // 1/3
+              ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, endPoint.y], // 2/3
+              ['L', endPoint.x, endPoint.y],
+            ],
+          },
+        });
+        return shape;
+      },
+    });
     
 
     const addNode = () => {
       let newElemUuid = uuidv4();
       console.log('[INFO] New node UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
       const modelCircle = {
         id: newElemUuid,
         label: 'node',
@@ -557,18 +612,24 @@ export default function DiagramsDesigner() {
           stroke: 'black',
           lineWidth: 2
         },
-        linkPoints: {
-          top: true,
-          right: false,
-          bottom: true,
-          left: false,
-          // circle的大小
-          size: 5,
-          lineWidth: 1,
-          fill: '#fff',
-          stroke: '#1890FF'
-        },
-        size : 50,
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+        ],
+        // linkPoints: {
+        //   top: true,
+        //   right: false,
+        //   bottom: true,
+        //   left: false,
+        //   // circle的大小
+        //   size: 5,
+        //   lineWidth: 1,
+        //   fill: '#fff',
+        //   stroke: '#1890FF'
+        // },
+        size : 60,
 
       };
       graph.addItem('node', modelCircle);
@@ -590,6 +651,13 @@ export default function DiagramsDesigner() {
           stroke: 'black',
           lineWidth: 2
         },
+        size : [90, 60],
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+        ], 
       };
       graph.addItem('node', modelEllipse);
     };
@@ -610,6 +678,18 @@ export default function DiagramsDesigner() {
           stroke: 'black',
           lineWidth: 2
         },
+        size: [140, 90],
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+          // angles
+          [0, 0] ,
+          [1, 0] ,
+          [1, 1] ,
+          [0, 1] ,
+        ],
       };
       graph.addItem('node', modelRectangle);
     };
@@ -630,7 +710,18 @@ export default function DiagramsDesigner() {
           stroke: 'red',
           lineWidth: 2
         },
-        size: 70
+        size: [140, 90],
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+          // angles
+          [0, 0] ,
+          [1, 0] ,
+          [1, 1] ,
+          [0, 1] ,
+        ],
       };
       graph.addItem('node', modelFuncModule);
     };
@@ -652,7 +743,18 @@ export default function DiagramsDesigner() {
           lineWidth: 2,
           lineDash: [8]
         },
-        size: [120, 80]
+        size: [140, 90],
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+          // angles
+          [0, 0] ,
+          [1, 0] ,
+          [1, 1] ,
+          [0, 1] ,
+        ],
       };
       graph.addItem('node', modelFuncModuleDashed);
     };
@@ -673,7 +775,19 @@ export default function DiagramsDesigner() {
           stroke: 'blue',
           lineWidth: 4,
         },
-        size: [100, 80]
+        size: [140, 90],
+        anchorPoints: [
+          [0.5, 0],
+          [0, 0.5],
+          [1, 0.5],
+          [0.5, 1],
+          // angles
+          [0, 0] ,
+          [1, 0] ,
+          [1, 1] ,
+          [0, 1] ,
+        ],
+        
       };
       graph.addItem('node', modelFuncModuleDashed);
     };
@@ -768,7 +882,7 @@ export default function DiagramsDesigner() {
                                             color: "white", },
                             backgroundColor: '#125b30', 
                             borderColor: '#125b30 !important', }} 
-                      onClick={addNodeEllipse}>
+                      onClick={addNode}>
               <PanoramaFishEyeIcon></PanoramaFishEyeIcon>Характерная точка. Круг 
             </Button>
             <Button  sx={{ color: 'white', '&:hover': {
@@ -776,7 +890,7 @@ export default function DiagramsDesigner() {
                                             color: "white", },
                             backgroundColor: '#477b59', 
                             borderColor: '#125b30 !important' }} 
-                      onClick={addNode}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
+                      onClick={addNodeEllipse}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
             <Button  sx={{ color: 'white','&:hover': {
                                             backgroundColor: '#59bb7b',
                                             color: "white", },
@@ -804,20 +918,20 @@ export default function DiagramsDesigner() {
                       onClick={addIsolationElement}> 
               <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
             </Button>
-            <Button sx={{ color: 'red','&:hover': {
+            <Button sx={{ color: '#11f36f','&:hover': {
                                             backgroundColor: '#59bb7b',
                                             color: "white", },
                             backgroundColor: '#125b30', 
                             borderColor: '#125b30 !important', }} 
-                          onClick={addComboElement}>
+                          onClick={addComboGreenElement}>
                     <ImageAspectRatioIcon></ImageAspectRatioIcon>
                                Комбо</Button>
-            <Button sx={{ color: '#11f36f', '&:hover': {
+            <Button sx={{ color: 'red', '&:hover': {
                                             backgroundColor: '#59bb7b',
                                             color: "white", },
                             backgroundColor: '#477b59', 
                             borderColor: '#125b30 !important' }} 
-                          onClick={addComboGreenElement}>
+                          onClick={addComboElement}>
                     <ImageAspectRatioIcon></ImageAspectRatioIcon>
                                Комбо</Button>
                                
