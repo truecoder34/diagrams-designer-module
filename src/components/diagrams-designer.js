@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import G6 from '@antv/g6';
+import Grid from '@mui/material/Grid';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -34,6 +35,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import SubdirectoryArrowRight from '@mui/icons-material/SubdirectoryArrowRight';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -47,7 +51,21 @@ export default function DiagramsDesigner() {
     const ref = React.useRef(null);
     let graph = null;
 
+    const [inputs, setInputs] = useState({});
+    const [elementName, setElementName] = useState('');
+    const [elementType, setElementType] = useState('');
+    const [elementSizeX, setElementSizeX] = useState('');
+    const [elementSizeY, setElementSizeY] = useState('');
+
     let ELEMENTS_STORAGE = []
+
+
+    
+    const handleSubmit = (event) => {
+        console.log(graph)
+        event.preventDefault();
+        console.log(elementName, elementType, elementSizeX, elementSizeY);
+    }
 
     const data = {
         id: 'root',
@@ -147,7 +165,7 @@ export default function DiagramsDesigner() {
         graph = new G6.Graph({
           container: ReactDOM.findDOMNode(ref.current),
           width: 1200,
-          height: 800,
+          height: 750,
           modes: {
             default: ['drag-canvas', 'drag-node',  'drag-combo', 'collapse-expand-combo'],
             addEdge: ['click-add-edge', 'click-select'],
@@ -155,6 +173,10 @@ export default function DiagramsDesigner() {
             addBoldBlueEdge: ['click-add-edge-bold-blue', 'click-select'],
             addBoldPurpleEdge: ['click-add-edge-bold-purple', 'click-select'],
             addBoldYellowEdge: ['click-add-edge-bold-yellow', 'click-select'],
+            addBoldBlueBrokenEdge: ['click-add-edge-broken-bold-blue', 'click-select'],
+            addBoldPurpleBrokenEdge: ['click-add-edge-broken-bold-purple', 'click-select'],
+            addBoldYellowBrokenEdge: ['click-add-edge-broken-bold-yellow', 'click-select'],
+            editNoode: [ { type: 'click-select', trigger: 'ctrl', }, ]
           },
           layout: {
             type: 'dagre',
@@ -215,17 +237,15 @@ export default function DiagramsDesigner() {
         const { item } = evt;
         graph.setItemState(item, 'active', true);
       });
-      
       graph.on('node:mouseleave', (evt) => {
         const { item } = evt;
         graph.setItemState(item, 'active', false);
       });
-      
       graph.on('node:click', (evt) => {
         const { item } = evt;
         graph.setItemState(item, 'selected', true);
+        console.log('NODE IS SELECTED', item)
       });
-      
       graph.on('canvas:click', (evt) => {
         graph.getNodes().forEach((node) => {
           graph.clearItemStates(node);
@@ -237,7 +257,6 @@ export default function DiagramsDesigner() {
         const { item } = evt;
         graph.setItemState(item, 'active', true);
       });
-      
       graph.on('combo:mouseleave', (evt) => {
         const { item } = evt;
         graph.setItemState(item, 'active', false);
@@ -383,6 +402,69 @@ export default function DiagramsDesigner() {
         }
       });
 
+      G6.registerBehavior('click-add-edge-broken-bold-blue', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick'
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'blue',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'blue',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
       G6.registerBehavior('click-add-edge-bold-blue', {
         getEvents() {
           return {
@@ -419,6 +501,70 @@ export default function DiagramsDesigner() {
                   d: 0,
                   fill: 'black',
                   stroke: 'blue',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
+      G6.registerBehavior('click-add-edge-broken-bold-purple', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick'
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'purple',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'purple',
                   lineWidth: 6,
                 }
               }
@@ -511,7 +657,7 @@ export default function DiagramsDesigner() {
         }
       });
 
-      G6.registerBehavior('click-add-edge-bold-yellow', {
+      G6.registerBehavior('click-add-edge-broken-bold-yellow', {
         getEvents() {
           return {
             'node:click': 'onClick',
@@ -538,6 +684,70 @@ export default function DiagramsDesigner() {
             this.edge = graph.addItem('edge', {
               source: model.id,
               type: 'polyline',
+              target: point,
+              style: {
+                stroke: 'yellow',
+                lineWidth: 6,
+                endArrow: {
+                  path: G6.Arrow.vee(10, 20, 0), // Using the built-in edges for the path, parameters are the width, length, offset (0 by default, corresponds to d), respectively
+                  d: 0,
+                  fill: 'black',
+                  stroke: 'yellow',
+                  lineWidth: 6,
+                }
+              }
+            });
+            this.addingEdge = true;
+          }
+        },
+        onMousemove(ev) {
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          if (this.addingEdge && this.edge) {
+            this.graph.updateItem(this.edge, {
+              target: point
+            });
+          }
+        },
+        onEdgeClick(ev) {
+          const currentEdge = ev.item;
+          if (this.addingEdge && this.edge == currentEdge) {
+            graph.removeItem(this.edge);
+            this.edge = null;
+            this.addingEdge = false;
+          }
+        }
+      });
+
+      G6.registerBehavior('click-add-edge-bold-yellow', {
+        getEvents() {
+          return {
+            'node:click': 'onClick',
+            mousemove: 'onMousemove',
+            'edge:click': 'onEdgeClick'
+          };
+        },
+        onClick(ev) {
+          const node = ev.item;
+          const graph = this.graph;
+          const point = {
+            x: ev.x,
+            y: ev.y
+          };
+          const model = node.getModel();
+          if (this.addingEdge && this.edge) {
+            graph.updateItem(this.edge, {
+              target: model.id
+            });
+            // graph.setItemState(this.edge, 'selected', true);
+            this.edge = null;
+            this.addingEdge = false;
+          } else {
+            this.edge = graph.addItem('edge', {
+              source: model.id,
+              type: 'line',
               target: point,
               style: {
                 stroke: 'yellow',
@@ -698,7 +908,6 @@ export default function DiagramsDesigner() {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
       const modelFuncModule = {
         id: newElemUuid,
         x: 100,
@@ -730,7 +939,6 @@ export default function DiagramsDesigner() {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
       const modelFuncModuleDashed = {
         id: newElemUuid,
         x: 100,
@@ -763,7 +971,6 @@ export default function DiagramsDesigner() {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
       const modelFuncModuleDashed = {
         id: newElemUuid,
         x: 100,
@@ -797,12 +1004,9 @@ export default function DiagramsDesigner() {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
       const modelFuncModuleDashed = {
         id: newElemUuid,
-
         label: 'combo',
-
       };
       graph.addItem('combo', modelFuncModuleDashed);
     };
@@ -844,9 +1048,27 @@ export default function DiagramsDesigner() {
       console.log(graph)
     }
 
+    const setAddBoldBlueBrokenEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldBlueBrokenEdge");
+      console.log(graph)
+    }
+
     const setAddBoldPurpleEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.setMode("addBoldPurpleEdge");
+      console.log(graph)
+    }
+
+    const setAddBoldPurpleBrokenEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldPurpleBrokenEdge");
+      console.log(graph)
+    }
+
+    const setAddBoldYellowBrokenEdgeMode = () => {
+      console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
+      graph.setMode("addBoldYellowBrokenEdge");
       console.log(graph)
     }
 
@@ -873,162 +1095,278 @@ export default function DiagramsDesigner() {
 
   
     return (
-      <div>
-          <h1>Конструктор диаграмм</h1> 
+        <div>
+            <h1>Конструктор диаграмм</h1> 
+            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                <Button  sx={{ color: 'white','&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#125b30', 
+                                borderColor: '#125b30 !important', }} 
+                        onClick={addNode}>
+                    <PanoramaFishEyeIcon></PanoramaFishEyeIcon>
+                    Характерная точка. Круг 
+                </Button>
+                <Button  sx={{ color: 'white', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#477b59', 
+                                borderColor: '#125b30 !important' }} 
+                        onClick={addNodeEllipse}> 
+                        <TollIcon></TollIcon> 
+                        Характерная точка. Овал 
+                </Button>
+                <Button  sx={{ color: 'white','&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#125b30', 
+                                borderColor: '#125b30 !important', }}  
+                        onClick={addObject}> 
+                        <Crop32Icon> </Crop32Icon> 
+                        Объект окружения
+                </Button>
+                <Button  sx={{ color: 'white', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#477b59', 
+                                borderColor: '#125b30 !important' }} 
+                        onClick={addFunctionalModule}> 
+                        <Crop75Icon> </Crop75Icon>
+                        Функциональный модуль
+                </Button>
+                <Button  sx={{ color: 'white','&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#125b30', 
+                                borderColor: '#125b30 !important', }}  
+                                onClick={addFunctionalModuleDashed}> 
+                        <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon> 
+                        Функциональный модуль пунктир
+                </Button>
+                <Button  sx={{ color: 'white', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#477b59', 
+                                borderColor: '#125b30 !important' }} 
+                        onClick={addIsolationElement}> 
+                        <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
+                </Button>
+                <Button sx={{ color: '#11f36f','&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#125b30', 
+                                borderColor: '#125b30 !important', }} 
+                            onClick={addComboGreenElement}>
+                        <ImageAspectRatioIcon></ImageAspectRatioIcon>
+                                Комбо
+                </Button>
+                <Button sx={{ color: 'red', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: '#477b59', 
+                                borderColor: '#125b30 !important' }} 
+                            onClick={addComboElement}>
+                        <ImageAspectRatioIcon></ImageAspectRatioIcon>
+                                Комбо
+                </Button>
+            </ButtonGroup>
+            <br/>
+            <br/>
+            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                <Button sx={{ color: 'black', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                            backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                        onClick={setAddEdgeMode}>Режим добавления ребер
+                </Button>
+                <Button sx={{ color: 'black', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                            backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                        onClick={setAddDashedEdgeMode}>Режим добавления прерывистых ребер
+                </Button>
+                <Button sx={{ color: 'black', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                        onClick={setDefaultMode}>Режим добавления элементов
+                </Button>
+            </ButtonGroup>
+            <br/>
+            <br/>
+            <Grid container spacing={1} justifyContent="flex-start">
+                <Grid item xs={4}>
+                    <Grid container spacing={0.5} justifyContent="flex-start"> 
+                        <Grid item xs={6}>
+                            <Button sx={{ color: 'blue', backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+                                <DoubleArrowIcon></DoubleArrowIcon> Ребро синее 
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button sx={{ color: 'blue', '&:hover': {
+                                                        backgroundColor: '#59bb7b',
+                                                        color: "white", },
+                                    backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldBlueEdgeMode}> 
+                                <ArrowOutwardIcon></ArrowOutwardIcon>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}> 
+                            <Button sx={{ color: 'blue', '&:hover': {
+                                                        backgroundColor: '#59bb7b',
+                                                        color: "white", },
+                                    backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldBlueBrokenEdgeMode}> 
+                                <SubdirectoryArrowRight> </SubdirectoryArrowRight> 
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container spacing={0.5} justifyContent="flex-start"> 
+                        <Grid item xs={6}>
+                            <Button sx={{ color: 'purple', backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+                                <DoubleArrowIcon></DoubleArrowIcon> Ребро фиолетовое
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}> 
+                            <Button sx={{ color: 'purple', '&:hover': {
+                                                    backgroundColor: '#59bb7b',
+                                                    color: "white", },
+                                    backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldPurpleEdgeMode}>
+                                <ArrowOutwardIcon></ArrowOutwardIcon>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}> 
+                            <Button sx={{ color: 'purple', '&:hover': {
+                                                backgroundColor: '#59bb7b',
+                                                color: "white", },
+                                backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldPurpleBrokenEdgeMode}>
+                                <SubdirectoryArrowRight></SubdirectoryArrowRight>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container spacing={0.5} justifyContent="flex-start"> 
+                        <Grid item xs={6}>
+                            <Button sx={{ color: '#bdba00',backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+                                <DoubleArrowIcon></DoubleArrowIcon>Ребро желтое
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button sx={{ color: '#bdba00', '&:hover': {
+                                                        backgroundColor: '#59bb7b',
+                                                        color: "white", },
+                                    backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldYellowEdgeMode}>
+                                <ArrowOutwardIcon></ArrowOutwardIcon>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button sx={{ color: '#bdba00', '&:hover': {
+                                                        backgroundColor: '#59bb7b',
+                                                        color: "white", },
+                                    backgroundColor: 'white', borderColor: '#125b30 !important' }} 
+                                onClick={setAddBoldYellowBrokenEdgeMode}>
+                                <SubdirectoryArrowRight></SubdirectoryArrowRight>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
 
-          <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <Button  sx={{ color: 'white','&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#125b30', 
-                            borderColor: '#125b30 !important', }} 
-                      onClick={addNode}>
-              <PanoramaFishEyeIcon></PanoramaFishEyeIcon>Характерная точка. Круг 
-            </Button>
-            <Button  sx={{ color: 'white', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#477b59', 
-                            borderColor: '#125b30 !important' }} 
-                      onClick={addNodeEllipse}> <TollIcon></TollIcon> Характерная точка. Овал </Button>
-            <Button  sx={{ color: 'white','&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#125b30', 
-                            borderColor: '#125b30 !important', }}  
-                      onClick={addObject}> <Crop32Icon> </Crop32Icon> Объект окружения</Button>
-            <Button  sx={{ color: 'white', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#477b59', 
-                            borderColor: '#125b30 !important' }} 
-                      onClick={addFunctionalModule}> <Crop75Icon> </Crop75Icon>Функциональный модуль</Button>
-            <Button  sx={{ color: 'white','&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#125b30', 
-                            borderColor: '#125b30 !important', }}  onClick={addFunctionalModuleDashed}> 
-              <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon> Функциональный модуль пунктир
-            </Button>
-            <Button  sx={{ color: 'white', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#477b59', 
-                            borderColor: '#125b30 !important' }} 
-                      onClick={addIsolationElement}> 
-              <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
-            </Button>
-            <Button sx={{ color: '#11f36f','&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#125b30', 
-                            borderColor: '#125b30 !important', }} 
-                          onClick={addComboGreenElement}>
-                    <ImageAspectRatioIcon></ImageAspectRatioIcon>
-                               Комбо</Button>
-            <Button sx={{ color: 'red', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                            backgroundColor: '#477b59', 
-                            borderColor: '#125b30 !important' }} 
-                          onClick={addComboElement}>
-                    <ImageAspectRatioIcon></ImageAspectRatioIcon>
-                               Комбо</Button>
-                               
 
-          </ButtonGroup>
-          <br/>
-          <br/>
+            <hr/>
+            <br/>
 
-          <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <Button sx={{ color: 'black', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setAddEdgeMode}>Режим добавления ребер</Button>
-            <Button sx={{ color: 'black', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setAddDashedEdgeMode}>Режим добавления прерывистых ребер</Button>
-            <Button sx={{ color: 'black', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setDefaultMode}>Режим добавления элементов</Button>
-          </ButtonGroup>
-          <br/>
-          <br/>
-          <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <Button sx={{ color: 'blue', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setAddBoldBlueEdgeMode}>
-                    <DoubleArrowIcon></DoubleArrowIcon> Ребро толстое синее 
-            </Button>
-            <Button sx={{ color: 'purple', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setAddBoldPurpleEdgeMode}>
-                    <DoubleArrowIcon></DoubleArrowIcon> Ребро толстое фиолетовое
-            </Button>
-            <Button sx={{ color: '#bdba00', '&:hover': {
-                                            backgroundColor: '#59bb7b',
-                                            color: "white", },
-                          backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                    onClick={setAddBoldYellowEdgeMode}>
-                      <DoubleArrowIcon></DoubleArrowIcon>Ребро толстое Желтое
-            </Button>
-          </ButtonGroup>
+            <div class="row">
+                <div class="column-1" ref={ref}>
 
-          <hr/>
-          <br/>
+                </div>
 
-          <div class="row">
-            <div class="column-1" ref={ref} ></div>
-            <div class="column-2">
-              <h3>Характеристики элемента</h3>
-              <form>
-                <label for="fname">Название элемента</label><br/>
-                <input type="text" id="fname" name="fname" value="x"/><br/>
-                <label for="fname">Тип элемента</label><br/>
-                <input type="text" id="fname" name="fname" value="x"/><br/>
-              </form>
-              <br/>
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>            
-                      <TableCell>#</TableCell>
-                      <TableCell align="right">Значение</TableCell>
-                      <TableCell align="right">Верхний Индекс</TableCell>
-                      <TableCell align="right">Нижний Индекс</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {rows.map((row) => (
-                      <TableRow key={row.name}>
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                <div class="column-2">
+                    <h3>Характеристики элемента</h3>
+                    <form onSubmit={handleSubmit}>
+                        <label for="elementLabel">Название элемента</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementLabel"
+                            value={elementName}
+                            onChange={e => setElementName(e.target.value)}
+                            placeholder="Label"
+                            // required
+                        />
+                        <br/>
+                        <label for="elementType">Название элемента</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementType"
+                            value={elementType}
+                            onChange={e => setElementType(e.target.value)}
+                            placeholder="Type"
+                            // required
+                        />
+                        <br/>
+                        <label for="elementSizeX">X</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementSizeX"
+                            value={elementSizeX}
+                            onChange={e => setElementSizeX(e.target.value)}
+                            placeholder="X"
+                            // required
+                        />
+                        <br/>
+                        <label for="elementSizeY">Y</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementSizeY"
+                            value={elementSizeY}
+                            onChange={e => setElementSizeY(e.target.value)}
+                            placeholder="Y"
+                            // required
+                        />
+                        <br/>
+                        <input type="submit" />
+                    </form>
+                    <br/>
+                    <TableContainer component={Paper}>
+                        <Table>
+                        <TableHead>
+                            <TableRow>            
+                            <TableCell>#</TableCell>
+                            <TableCell align="right">Значение</TableCell>
+                            <TableCell align="right">Верхний Индекс</TableCell>
+                            <TableCell align="right">Нижний Индекс</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell component="th" scope="row">
+                                {row.name}
+                                </TableCell>
+                                <TableCell align="right">{row.calories}</TableCell>
+                                <TableCell align="right">{row.fat}</TableCell>
+                                <TableCell align="right">{row.carbs}</TableCell>
+                                <TableCell align="right">{row.protein}</TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            </div> 
 
-
-            </div>
-          </div> 
-
-        
-      </div>
+            
+        </div>
     );
 }
 
