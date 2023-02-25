@@ -51,17 +51,60 @@ export default function DiagramsDesigner() {
     const ref = React.useRef(null);
     let graph = null;
 
+    const initialList = [
+        {
+          id: 'a',
+          name: 'Robin',
+        },
+        {
+          id: 'b',
+          name: 'Dennis',
+        },
+    ];
+
+    const graphStorageInitial = [
+        {
+            id: 1,
+            name: "id like string",
+            element : "element"
+        },
+    ]
+    const [listStorage, setListStorage] = React.useState(graphStorageInitial);
+    //const [name, setName] = React.useState('');
+    const [element, setElement] = React.useState('');
+
+    function handleAddElement() {
+        const newListStorage = listStorage.concat({ name, id: uuidv4() });
+        setListStorage(newListStorage);
+        setName('');
+    }
+
+
+
+
     const [inputs, setInputs] = useState({});
     const [elementName, setElementName] = useState('');
     const [elementType, setElementType] = useState('');
     const [elementSizeX, setElementSizeX] = useState('');
     const [elementSizeY, setElementSizeY] = useState('');
+    
+    const [list, setList] = React.useState(initialList);
+    const [name, setName] = React.useState('');
+
+    function handleChange(event) {
+        setName(event.target.value);
+    }
+    
+    function handleAdd() {
+        const newList = list.concat({ name, id: uuidv4() });
+        setList(newList);
+        setName('');
+    }
+
 
     let ELEMENTS_STORAGE = []
-
-
     
-    const handleSubmit = (event) => {
+    const handleSubmitButton = (event) => {
         console.log(graph)
         event.preventDefault();
         console.log(elementName, elementType, elementSizeX, elementSizeY);
@@ -158,8 +201,9 @@ export default function DiagramsDesigner() {
         //     shape: 'hvh',
         //   },
         // ],
-      };
+    };
   
+
     useEffect(() => {
       if (!graph) {
         graph = new G6.Graph({
@@ -491,7 +535,7 @@ export default function DiagramsDesigner() {
           } else {
             this.edge = graph.addItem('edge', {
               source: model.id,
-              type: 'polyline',
+              type: 'line',
               target: point,
               style: {
                 stroke: 'blue',
@@ -619,7 +663,7 @@ export default function DiagramsDesigner() {
           } else {
             this.edge = graph.addItem('edge', {
               source: model.id,
-              type: 'polyline',
+              type: 'line',
               target: point,
               style: {
                 stroke: 'purple',
@@ -787,31 +831,19 @@ export default function DiagramsDesigner() {
 
     }, []);
 
-    G6.registerEdge('hvh', {
-      draw(cfg, group) {
-        const startPoint = cfg.startPoint;
-        const endPoint = cfg.endPoint;
-        const shape = group.addShape('path', {
-          attrs: {
-            stroke: '#333',
-            path: [
-              ['M', startPoint.x, startPoint.y],
-              ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, startPoint.y], // 1/3
-              ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, endPoint.y], // 2/3
-              ['L', endPoint.x, endPoint.y],
-            ],
-          },
-        });
-        return shape;
-      },
-    });
-    
+   
 
     const addNode = () => {
-      let newElemUuid = uuidv4();
-      console.log('[INFO] New node UUID is: ' + newElemUuid);
-      ELEMENTS_STORAGE.push(newElemUuid)
-      const modelCircle = {
+        let newElemUuid = uuidv4();
+        console.log('[INFO] New node UUID is: ' + newElemUuid);
+        
+        const newListStorage = listStorage.concat({ name: newElemUuid, id: newElemUuid });
+        setListStorage(newListStorage);
+        setName('');
+
+
+        ELEMENTS_STORAGE.push(newElemUuid)
+        const modelCircle = {
         id: newElemUuid,
         label: 'node',
         address: 'cq',
@@ -828,21 +860,12 @@ export default function DiagramsDesigner() {
           [1, 0.5],
           [0.5, 1],
         ],
-        // linkPoints: {
-        //   top: true,
-        //   right: false,
-        //   bottom: true,
-        //   left: false,
-        //   // circle的大小
-        //   size: 5,
-        //   lineWidth: 1,
-        //   fill: '#fff',
-        //   stroke: '#1890FF'
-        // },
         size : 60,
 
-      };
-      graph.addItem('node', modelCircle);
+        };
+        graph.addItem('node', modelCircle);
+
+
     };
 
     const addNodeEllipse = () => {
@@ -1087,7 +1110,6 @@ export default function DiagramsDesigner() {
     function createData(name, calories, fat, carbs) {
       return { name, calories, fat, carbs };
     }
-
     const rows = [
       createData('1', 1, 1, 1),
       createData('2', 2, 2, 2),
@@ -1097,6 +1119,23 @@ export default function DiagramsDesigner() {
     return (
         <div>
             <h1>Конструктор диаграмм</h1> 
+            <br/>
+            <br/>
+            <div>
+                <div>
+                    <input type="text" value={name} onChange={handleChange} />
+                    <button type="button" onClick={handleAdd}>
+                    Add
+                    </button>
+                </div>
+
+                <ul>
+                    {list.map((item) => (
+                    <li key={item.id}>{item.name}</li>
+                    ))}
+                </ul>
+            </div>
+
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <Button  sx={{ color: 'white','&:hover': {
                                                 backgroundColor: '#59bb7b',
@@ -1289,7 +1328,7 @@ export default function DiagramsDesigner() {
 
                 <div class="column-2">
                     <h3>Характеристики элемента</h3>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmitButton}>
                         <label for="elementLabel">Название элемента</label>
                         <br/>
                         <input
@@ -1315,7 +1354,7 @@ export default function DiagramsDesigner() {
                         <label for="elementSizeX">X</label>
                         <br/>
                         <input
-                            type="text"
+                            type="number"
                             name="elementSizeX"
                             value={elementSizeX}
                             onChange={e => setElementSizeX(e.target.value)}
@@ -1326,7 +1365,7 @@ export default function DiagramsDesigner() {
                         <label for="elementSizeY">Y</label>
                         <br/>
                         <input
-                            type="text"
+                            type="number"
                             name="elementSizeY"
                             value={elementSizeY}
                             onChange={e => setElementSizeY(e.target.value)}
@@ -1362,6 +1401,21 @@ export default function DiagramsDesigner() {
                         </TableBody>
                         </Table>
                     </TableContainer>
+
+                    <br/>
+                    <br/>
+                    <div>
+                        {/* <div>
+                            <input type="text" value={name} onChange={handleChange} />
+                        </div> */}
+
+                        <ul>
+                            {listStorage.map((item) => (
+                            <li key={item.id}>{item.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+
                 </div>
             </div> 
 
