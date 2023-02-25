@@ -73,6 +73,7 @@ export default function DiagramsDesigner() {
     //const [name, setName] = React.useState('');
     const [element, setElement] = React.useState('');
 
+    // modes this functionality to AddNode() method 
     function handleAddElement() {
         const newListStorage = listStorage.concat({ name, id: uuidv4() });
         setListStorage(newListStorage);
@@ -81,8 +82,6 @@ export default function DiagramsDesigner() {
 
 
 
-
-    const [inputs, setInputs] = useState({});
     const [elementName, setElementName] = useState('');
     const [elementType, setElementType] = useState('');
     const [elementSizeX, setElementSizeX] = useState('');
@@ -91,18 +90,38 @@ export default function DiagramsDesigner() {
     const [list, setList] = React.useState(initialList);
     const [name, setName] = React.useState('');
 
+
+
+
+    // ***************** example start *****************
     function handleChange(event) {
         setName(event.target.value);
     }
-    
     function handleAdd() {
         const newList = list.concat({ name, id: uuidv4() });
         setList(newList);
         setName('');
     }
+    // ***************** example finish *****************
 
 
-    let ELEMENTS_STORAGE = []
+    // handle changes on element description fields . 
+    // Can replace with  such syntax :: onChange={e => setElementName(e.target.value)}
+    function handleElementNameChange(event) {
+        setElementName(event.target.value);
+    }
+    function handleElementTypeChange(event) {
+        setElementType(event.target.value);
+    }
+    function handleElementSizeXChange(event) {
+        setElementSizeX(event.target.value);
+    }
+    function handleElementSizeYChange(event) {
+        setElementSizeY(event.target.value);
+    }
+
+
+    const ELEMENTS_STORAGE = []
     
     const handleSubmitButton = (event) => {
         console.log(graph)
@@ -834,13 +853,27 @@ export default function DiagramsDesigner() {
    
 
     const addNode = () => {
+        console.log("GRAPH BEFORE", graph)
         let newElemUuid = uuidv4();
         console.log('[INFO] New node UUID is: ' + newElemUuid);
         
-        const newListStorage = listStorage.concat({ name: newElemUuid, id: newElemUuid });
+        // add element to storage and lists 
+        //const newListStorage = listStorage.concat({ name , id: newElemUuid });
+        const newListStorage = listStorage.concat({ 
+            name:   elementName,
+            type: elementType, 
+            x : elementSizeX,
+            y: elementSizeY, 
+            id: newElemUuid,
+         });
         setListStorage(newListStorage);
-        setName('');
+        
+        setElementName('');
+        setElementType('');
+        setElementSizeX('');
+        setElementSizeY('');
 
+        console.log(newListStorage)
 
         ELEMENTS_STORAGE.push(newElemUuid)
         const modelCircle = {
@@ -1119,23 +1152,6 @@ export default function DiagramsDesigner() {
     return (
         <div>
             <h1>Конструктор диаграмм</h1> 
-            <br/>
-            <br/>
-            <div>
-                <div>
-                    <input type="text" value={name} onChange={handleChange} />
-                    <button type="button" onClick={handleAdd}>
-                    Add
-                    </button>
-                </div>
-
-                <ul>
-                    {list.map((item) => (
-                    <li key={item.id}>{item.name}</li>
-                    ))}
-                </ul>
-            </div>
-
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <Button  sx={{ color: 'white','&:hover': {
                                                 backgroundColor: '#59bb7b',
@@ -1381,21 +1397,23 @@ export default function DiagramsDesigner() {
                         <TableHead>
                             <TableRow>            
                             <TableCell>#</TableCell>
-                            <TableCell align="right">Значение</TableCell>
-                            <TableCell align="right">Верхний Индекс</TableCell>
-                            <TableCell align="right">Нижний Индекс</TableCell>
+                            <TableCell align="right"> ID</TableCell>
+                            <TableCell align="right">Имя</TableCell>
+                            <TableCell align="right">Тип</TableCell>
+                            <TableCell align="right">Размеры</TableCell>
+                            <TableCell align="right">Верхний и.</TableCell>
+                            <TableCell align="right">Нижний и.</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
+                            {listStorage.map((row) => (
                             <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
-                                {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell component="th" scope="row">{row.id}</TableCell>
+                                <TableCell align="right">{row.id}</TableCell>
+                                <TableCell align="right">{row.name}</TableCell>
+                                <TableCell align="right">{row.type}</TableCell>
+                                <TableCell align="right">{row.x} : {row.y}</TableCell>
+                                {/* <TableCell align="right">{row.protein}</TableCell> */}
                             </TableRow>
                             ))}
                         </TableBody>
