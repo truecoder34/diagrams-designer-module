@@ -86,6 +86,9 @@ export default function DiagramsDesigner() {
     const [elementType, setElementType] = useState('');
     const [elementSizeX, setElementSizeX] = useState('');
     const [elementSizeY, setElementSizeY] = useState('');
+    const [elementUpperIndex, setElementUpperIndex] = useState('');
+    const [elementLowerIndex, setElementLowerIndex] = useState('');
+    
     
     const [list, setList] = React.useState(initialList);
     const [name, setName] = React.useState('');
@@ -857,14 +860,15 @@ export default function DiagramsDesigner() {
         let newElemUuid = uuidv4();
         console.log('[INFO] New node UUID is: ' + newElemUuid);
         
-        // add element to storage and lists 
-        //const newListStorage = listStorage.concat({ name , id: newElemUuid });
+
         const newListStorage = listStorage.concat({ 
             name:   elementName,
             type: elementType, 
             x : elementSizeX,
             y: elementSizeY, 
             id: newElemUuid,
+            lowerIndex: elementLowerIndex,
+            upperIndex: elementUpperIndex,
          });
         setListStorage(newListStorage);
         
@@ -872,6 +876,8 @@ export default function DiagramsDesigner() {
         setElementType('');
         setElementSizeX('');
         setElementSizeY('');
+        setElementUpperIndex('')
+        setElementLowerIndex('')
 
         console.log(newListStorage)
 
@@ -1389,6 +1395,26 @@ export default function DiagramsDesigner() {
                             // required
                         />
                         <br/>
+                        <label for="elementUpperIndex">Upper Index</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementUpperIndex"
+                            value={elementUpperIndex}
+                            onChange={e => setElementUpperIndex(e.target.value)}
+                            placeholder="upper index"                            
+                        />
+                        <br/>
+                        <label for="elementLowerIndex">Lower Index</label>
+                        <br/>
+                        <input
+                            type="text"
+                            name="elementLowerIndex"
+                            value={elementLowerIndex}
+                            onChange={e => setElementLowerIndex(e.target.value)}
+                            placeholder="lower index"
+                        />
+                        <br/>
                         <input type="submit" />
                     </form>
                     <br/>
@@ -1413,26 +1439,15 @@ export default function DiagramsDesigner() {
                                 <TableCell align="right">{row.name}</TableCell>
                                 <TableCell align="right">{row.type}</TableCell>
                                 <TableCell align="right">{row.x} : {row.y}</TableCell>
-                                {/* <TableCell align="right">{row.protein}</TableCell> */}
+                                <TableCell align="right">{row.upperIndex}</TableCell>
+                                <TableCell align="right">{row.lowerIndex}</TableCell>
                             </TableRow>
                             ))}
                         </TableBody>
                         </Table>
                     </TableContainer>
-
-                    <br/>
-                    <br/>
-                    <div>
-                        {/* <div>
-                            <input type="text" value={name} onChange={handleChange} />
-                        </div> */}
-
-                        <ul>
-                            {listStorage.map((item) => (
-                            <li key={item.id}>{item.name}</li>
-                            ))}
-                        </ul>
-                    </div>
+                {/* <br/>
+                    <br/> */}
 
                 </div>
             </div> 
