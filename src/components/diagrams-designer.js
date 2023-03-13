@@ -47,9 +47,12 @@ import { purple } from '@mui/material/colors';
 
 
 
+
+
 export default function DiagramsDesigner() {
     const ref = React.useRef(null);
-    let graph = null;
+    const graph = React.useRef(null);
+    //let graph = null;
 
     const initialList = [
         {
@@ -62,24 +65,8 @@ export default function DiagramsDesigner() {
         },
     ];
 
-    const graphStorageInitial = [
-        {
-            id: 1,
-            name: "id like string",
-            element : "element"
-        },
-    ]
+    const graphStorageInitial = []
     const [listStorage, setListStorage] = React.useState(graphStorageInitial);
-    //const [name, setName] = React.useState('');
-    const [element, setElement] = React.useState('');
-
-    // modes this functionality to AddNode() method 
-    function handleAddElement() {
-        const newListStorage = listStorage.concat({ name, id: uuidv4() });
-        setListStorage(newListStorage);
-        setName('');
-    }
-
 
 
     const [elementName, setElementName] = useState('');
@@ -88,6 +75,8 @@ export default function DiagramsDesigner() {
     const [elementSizeY, setElementSizeY] = useState('');
     const [elementUpperIndex, setElementUpperIndex] = useState('');
     const [elementLowerIndex, setElementLowerIndex] = useState('');
+    const [elementSemanticDescription, setElementSemanticDescription] = useState('');
+    
     
     
     const [list, setList] = React.useState(initialList);
@@ -226,9 +215,11 @@ export default function DiagramsDesigner() {
     };
   
 
+
+
     useEffect(() => {
-      if (!graph) {
-        graph = new G6.Graph({
+      if (!graph.current) {
+        graph.current = new G6.Graph({
           container: ReactDOM.findDOMNode(ref.current),
           width: 1200,
           height: 750,
@@ -296,44 +287,44 @@ export default function DiagramsDesigner() {
           },
         });
       }
-      graph.data(data);
-      graph.render();
+      graph.current.data(data);
+      graph.current.render();
 
-      graph.on('node:mouseenter', (evt) => {
+      graph.current.on('node:mouseenter', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'active', true);
+        graph.current.setItemState(item, 'active', true);
       });
-      graph.on('node:mouseleave', (evt) => {
+      graph.current.on('node:mouseleave', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'active', false);
+        graph.current.setItemState(item, 'active', false);
       });
-      graph.on('node:click', (evt) => {
+      graph.current.on('node:click', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'selected', true);
+        graph.current.setItemState(item, 'selected', true);
         console.log('NODE IS SELECTED', item)
       });
-      graph.on('canvas:click', (evt) => {
-        graph.getNodes().forEach((node) => {
-          graph.clearItemStates(node);
+      graph.current.on('canvas:click', (evt) => {
+        graph.current.getNodes().forEach((node) => {
+          graph.current.clearItemStates(node);
         });
       });
 
 
-      graph.on('combo:mouseenter', (evt) => {
+      graph.current.on('combo:mouseenter', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'active', true);
+        graph.current.setItemState(item, 'active', true);
       });
-      graph.on('combo:mouseleave', (evt) => {
+      graph.current.on('combo:mouseleave', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'active', false);
+        graph.current.setItemState(item, 'active', false);
       });
-      graph.on('combo:click', (evt) => {
+      graph.current.on('combo:click', (evt) => {
         const { item } = evt;
-        graph.setItemState(item, 'selected', true);
+        graph.current.setItemState(item, 'selected', true);
       });
-      graph.on('canvas:click', (evt) => {
-        graph.getCombos().forEach((combo) => {
-          graph.clearItemStates(combo);
+      graph.current.on('canvas:click', (evt) => {
+        graph.current.getCombos().forEach((combo) => {
+          graph.current.clearItemStates(combo);
         });
       });
 
@@ -359,7 +350,7 @@ export default function DiagramsDesigner() {
             graph.updateItem(this.edge, {
               target: model.id
             });
-            // graph.setItemState(this.edge, 'selected', true);
+            // graph.current.setItemState(this.edge, 'selected', true);
             this.edge = null;
             this.addingEdge = false;
           } else {
@@ -423,7 +414,7 @@ export default function DiagramsDesigner() {
             graph.updateItem(this.edge, {
               target: model.id
             });
-            // graph.setItemState(this.edge, 'selected', true);
+            // graph.current.setItemState(this.edge, 'selected', true);
             this.edge = null;
             this.addingEdge = false;
           } else {
@@ -853,7 +844,7 @@ export default function DiagramsDesigner() {
 
     }, []);
 
-   
+    console.log("---GRAPH INIT", graph)
 
     const addNode = () => {
         console.log("GRAPH BEFORE", graph)
@@ -869,6 +860,7 @@ export default function DiagramsDesigner() {
             id: newElemUuid,
             lowerIndex: elementLowerIndex,
             upperIndex: elementUpperIndex,
+            semanticDescription : elementSemanticDescription
          });
         setListStorage(newListStorage);
         
@@ -878,13 +870,14 @@ export default function DiagramsDesigner() {
         setElementSizeY('');
         setElementUpperIndex('')
         setElementLowerIndex('')
+        setElementSemanticDescription('')
 
         console.log(newListStorage)
 
         ELEMENTS_STORAGE.push(newElemUuid)
         const modelCircle = {
         id: newElemUuid,
-        label: 'node',
+        label: elementName,
         address: 'cq',
         x: 200,
         y: 150,
@@ -899,17 +892,38 @@ export default function DiagramsDesigner() {
           [1, 0.5],
           [0.5, 1],
         ],
-        size : 60,
-
+        size : elementSizeX,
         };
-        graph.addItem('node', modelCircle);
-
-
+        graph.current.addItem('node', modelCircle);
     };
 
     const addNodeEllipse = () => {
+      console.log("GRAPH BEFORE", graph)
       let newElemUuid = uuidv4();
       console.log('[INFO] New node ellipse UUID is: ' + newElemUuid);
+
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
+
+      console.log(newListStorage)
+
       ELEMENTS_STORAGE.push(newElemUuid)
 
       const modelEllipse = {
@@ -917,13 +931,13 @@ export default function DiagramsDesigner() {
         x: 100,
         y: 100,
         type: 'ellipse',
-        label: 'ellipse',
+        label: elementName,
         style: {
           fill: 'white',
           stroke: 'black',
           lineWidth: 2
         },
-        size : [90, 60],
+        size : [elementSizeX, elementSizeY],
         anchorPoints: [
           [0.5, 0],
           [0, 0.5],
@@ -931,26 +945,47 @@ export default function DiagramsDesigner() {
           [0.5, 1],
         ], 
       };
-      graph.addItem('node', modelEllipse);
+
+      graph.current.addItem('node', modelEllipse);
     };
 
     const addObject = () => {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
 
+      console.log(newListStorage)
       const modelRectangle = {
         id: newElemUuid,
         x: 100,
         y: 100,
         type: 'rect',
-        label: 'rect',
+        label: elementName,
         style: {
           fill: 'white',
           stroke: 'black',
           lineWidth: 2
         },
-        size: [140, 90],
+        size: [elementSizeX, elementSizeY],
         anchorPoints: [
           [0.5, 0],
           [0, 0.5],
@@ -963,12 +998,31 @@ export default function DiagramsDesigner() {
           [0, 1] ,
         ],
       };
-      graph.addItem('node', modelRectangle);
+      graph.current.addItem('node', modelRectangle);
     };
 
     const addFunctionalModule = () => {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
       ELEMENTS_STORAGE.push(newElemUuid)
       const modelFuncModule = {
         id: newElemUuid,
@@ -981,7 +1035,7 @@ export default function DiagramsDesigner() {
           stroke: 'red',
           lineWidth: 2
         },
-        size: [140, 90],
+        size: [elementSizeX, elementSizeY],
         anchorPoints: [
           [0.5, 0],
           [0, 0.5],
@@ -994,7 +1048,7 @@ export default function DiagramsDesigner() {
           [0, 1] ,
         ],
       };
-      graph.addItem('node', modelFuncModule);
+      graph.current.addItem('node', modelFuncModule);
     };
 
     const addFunctionalModuleDashed = () => {
@@ -1026,13 +1080,32 @@ export default function DiagramsDesigner() {
           [0, 1] ,
         ],
       };
-      graph.addItem('node', modelFuncModuleDashed);
+      graph.current.addItem('node', modelFuncModuleDashed);
     };
 
     const addIsolationElement = () => {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
       const modelFuncModuleDashed = {
         id: newElemUuid,
         x: 100,
@@ -1044,7 +1117,7 @@ export default function DiagramsDesigner() {
           stroke: 'blue',
           lineWidth: 4,
         },
-        size: [140, 90],
+        size: [elementSizeX, elementSizeY],
         anchorPoints: [
           [0.5, 0],
           [0, 0.5],
@@ -1058,7 +1131,7 @@ export default function DiagramsDesigner() {
         ],
         
       };
-      graph.addItem('node', modelFuncModuleDashed);
+      graph.current.addItem('node', modelFuncModuleDashed);
     };
 
 
@@ -1066,83 +1139,120 @@ export default function DiagramsDesigner() {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
       const modelFuncModuleDashed = {
         id: newElemUuid,
-        label: 'combo',
+        label: elementName,
       };
-      graph.addItem('combo', modelFuncModuleDashed);
+      graph.current.addItem('combo', modelFuncModuleDashed);
     };
 
     const addComboGreenElement = () => {
       let newElemUuid = uuidv4();
       console.log('[INFO] New object UUID is: ' + newElemUuid);
       ELEMENTS_STORAGE.push(newElemUuid)
-
+      const newListStorage = listStorage.concat({ 
+        name:   elementName,
+        type: elementType, 
+        x : elementSizeX,
+        y: elementSizeY, 
+        id: newElemUuid,
+        lowerIndex: elementLowerIndex,
+        upperIndex: elementUpperIndex,
+        semanticDescription : elementSemanticDescription
+     });
+      setListStorage(newListStorage);
+      
+      setElementName('');
+      setElementType('');
+      setElementSizeX('');
+      setElementSizeY('');
+      setElementUpperIndex('')
+      setElementLowerIndex('')
+      setElementSemanticDescription('')
       const modelComboGreen = {
         id: newElemUuid,
         style: {
           stroke: 'green',
           lineWidth: 4,
         },
-        label: 'combo',
+        label: elementName,
 
       };
-      graph.addItem('combo', modelComboGreen);
+      graph.current.addItem('combo', modelComboGreen);
     };
 
 
     const setAddEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addEdge");
+      graph.current.setMode("addEdge");
       console.log(graph)
     }
 
     const setAddDashedEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addDashedEdge");
+      graph.current.setMode("addDashedEdge");
       console.log(graph)
     }
 
     
     const setAddBoldBlueEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldBlueEdge");
+      graph.current.setMode("addBoldBlueEdge");
       console.log(graph)
     }
 
     const setAddBoldBlueBrokenEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldBlueBrokenEdge");
+      graph.current.setMode("addBoldBlueBrokenEdge");
       console.log(graph)
     }
 
     const setAddBoldPurpleEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldPurpleEdge");
+      graph.current.setMode("addBoldPurpleEdge");
       console.log(graph)
     }
 
     const setAddBoldPurpleBrokenEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldPurpleBrokenEdge");
+      graph.current.setMode("addBoldPurpleBrokenEdge");
       console.log(graph)
     }
 
     const setAddBoldYellowBrokenEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldYellowBrokenEdge");
+      graph.current.setMode("addBoldYellowBrokenEdge");
       console.log(graph)
     }
 
     const setAddBoldYellowEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("addBoldYellowEdge");
+      graph.current.setMode("addBoldYellowEdge");
       console.log(graph)
     }
 
     const setDefaultMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
-      graph.setMode("default");
+      graph.current.setMode("default");
       console.log(graph)
     }
 
@@ -1349,74 +1459,100 @@ export default function DiagramsDesigner() {
                 </div>
 
                 <div class="column-2">
-                    <h3>Характеристики элемента</h3>
+
+                <Grid container spacing={0} justifyContent="flex-start">
+                <h3>Характеристики элемента</h3>
                     <form onSubmit={handleSubmitButton}>
-                        <label for="elementLabel">Название элемента</label>
-                        <br/>
-                        <input
-                            type="text"
-                            name="elementLabel"
-                            value={elementName}
-                            onChange={e => setElementName(e.target.value)}
-                            placeholder="Label"
-                            // required
-                        />
-                        <br/>
-                        <label for="elementType">Название элемента</label>
-                        <br/>
-                        <input
-                            type="text"
-                            name="elementType"
-                            value={elementType}
-                            onChange={e => setElementType(e.target.value)}
-                            placeholder="Type"
-                            // required
-                        />
-                        <br/>
-                        <label for="elementSizeX">X</label>
-                        <br/>
-                        <input
-                            type="number"
-                            name="elementSizeX"
-                            value={elementSizeX}
-                            onChange={e => setElementSizeX(e.target.value)}
-                            placeholder="X"
-                            // required
-                        />
-                        <br/>
-                        <label for="elementSizeY">Y</label>
-                        <br/>
-                        <input
-                            type="number"
-                            name="elementSizeY"
-                            value={elementSizeY}
-                            onChange={e => setElementSizeY(e.target.value)}
-                            placeholder="Y"
-                            // required
-                        />
-                        <br/>
-                        <label for="elementUpperIndex">Upper Index</label>
-                        <br/>
-                        <input
-                            type="text"
-                            name="elementUpperIndex"
-                            value={elementUpperIndex}
-                            onChange={e => setElementUpperIndex(e.target.value)}
-                            placeholder="upper index"                            
-                        />
-                        <br/>
-                        <label for="elementLowerIndex">Lower Index</label>
-                        <br/>
-                        <input
-                            type="text"
-                            name="elementLowerIndex"
-                            value={elementLowerIndex}
-                            onChange={e => setElementLowerIndex(e.target.value)}
-                            placeholder="lower index"
-                        />
-                        <br/>
-                        <input type="submit" />
+                      <Grid item xs={12}>
+                          <Grid container spacing={0.5} justifyContent="flex-start"> 
+                              <Grid item xs={6}>
+                                  <label for="elementLabel">Название элемента</label>
+                                  <br/>
+                                  <input
+                                      type="text"
+                                      name="elementLabel"
+                                      value={elementName}
+                                      onChange={e => setElementName(e.target.value)}
+                                      placeholder="Label"
+                                      // required
+                                  />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <label for="elementType">Тип элемента</label>
+                                <br/>
+                                <input
+                                    type="text"
+                                    name="elementType"
+                                    value={elementType}
+                                    onChange={e => setElementType(e.target.value)}
+                                    placeholder="Type"
+                                    // required
+                                />
+                              </Grid>
+
+                              <Grid item xs={6}>
+                                <label for="elementSizeX">X</label>
+                                <br/>
+                                <input
+                                    type="number"
+                                    name="elementSizeX"
+                                    value={elementSizeX}
+                                    onChange={e => setElementSizeX(e.target.value)}
+                                    placeholder="X"
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <label for="elementSizeY">Y</label>
+                                <br/>
+                                <input
+                                    type="number"
+                                    name="elementSizeY"
+                                    value={elementSizeY}
+                                    onChange={e => setElementSizeY(e.target.value)}
+                                    placeholder="Y"
+                                />
+                              </Grid>
+
+                              <Grid item xs={6}>
+                                <label for="elementUpperIndex">Верхний индекс</label>
+                                <br/>
+                                <input
+                                    type="text"
+                                    name="elementUpperIndex"
+                                    value={elementUpperIndex}
+                                    onChange={e => setElementUpperIndex(e.target.value)}
+                                    placeholder="Верхний индекс"                            
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <label for="elementLowerIndex">Нижний индекс</label>
+                                <br/>
+                                <input
+                                    type="text"
+                                    name="elementLowerIndex"
+                                    value={elementLowerIndex}
+                                    onChange={e => setElementLowerIndex(e.target.value)}
+                                    placeholder="Нижний индекс"
+                                />
+                              </Grid>
+
+                              <Grid item xs={12}>
+                                <label for="elementSemanticDescription"> Семантическое описание</label>
+                                <br/>
+                                <input
+                                    type="text"
+                                    name="elementSemanticDescription"
+                                    value={elementSemanticDescription}
+                                    onChange={e => setElementSemanticDescription(e.target.value)}
+                                    placeholder="Семантическое описание"
+                                />
+                              </Grid>
+
+                          </Grid>
+                      </Grid>
                     </form>
+                </Grid>
+                    
                     <br/>
                     <TableContainer component={Paper}>
                         <Table>
