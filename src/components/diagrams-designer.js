@@ -97,20 +97,6 @@ export default function DiagramsDesigner() {
     // ***************** example finish *****************
 
 
-    // handle changes on element description fields . 
-    // Can replace with  such syntax :: onChange={e => setElementName(e.target.value)}
-    function handleElementNameChange(event) {
-        setElementName(event.target.value);
-    }
-    function handleElementTypeChange(event) {
-        setElementType(event.target.value);
-    }
-    function handleElementSizeXChange(event) {
-        setElementSizeX(event.target.value);
-    }
-    function handleElementSizeYChange(event) {
-        setElementSizeY(event.target.value);
-    }
 
 
     const ELEMENTS_STORAGE = []
@@ -1201,6 +1187,16 @@ export default function DiagramsDesigner() {
     };
 
 
+    const setUserMode = (mode) => {
+      console.log("!!!!!!!", mode)
+      console.log("[INFO] set mode - ",  mode)
+      if (graph.current != null) {
+        graph.current.setMode(mode);
+      } 
+      //
+      console.log("[DEBUG] graph",graph)
+    }
+
     const setAddEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.current.setMode("addEdge");
@@ -1213,13 +1209,14 @@ export default function DiagramsDesigner() {
       console.log(graph)
     }
 
-    
     const setAddBoldBlueEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.current.setMode("addBoldBlueEdge");
       console.log(graph)
     }
 
+
+    
     const setAddBoldBlueBrokenEdgeMode = () => {
       console.log('[INFO] Current elements UUIDs : ' + ELEMENTS_STORAGE);
       graph.current.setMode("addBoldBlueBrokenEdge");
@@ -1348,23 +1345,26 @@ export default function DiagramsDesigner() {
                                                 backgroundColor: '#59bb7b',
                                                 color: "white", },
                             backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                        onClick={setAddEdgeMode}>Режим добавления ребер
+                        onClick={() => setUserMode("addEdge")}>Режим добавления ребер
                 </Button>
                 <Button sx={{ color: 'black', '&:hover': {
                                                 backgroundColor: '#59bb7b',
                                                 color: "white", },
                             backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                        onClick={setAddDashedEdgeMode}>Режим добавления прерывистых ребер
+                        onClick={() => setUserMode("addDashedEdge")}>Режим добавления прерывистых ребер
                 </Button>
                 <Button sx={{ color: 'black', '&:hover': {
                                                 backgroundColor: '#59bb7b',
                                                 color: "white", },
                                 backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                        onClick={setDefaultMode}>Режим добавления элементов
+                        onClick={() => setUserMode("default")}>Режим добавления элементов
                 </Button>
             </ButtonGroup>
             <br/>
             <br/>
+
+            
+    
             <Grid container spacing={1} justifyContent="flex-start">
                 <Grid item xs={4}>
                     <Grid container spacing={0.5} justifyContent="flex-start"> 
@@ -1378,7 +1378,7 @@ export default function DiagramsDesigner() {
                                                         backgroundColor: '#59bb7b',
                                                         color: "white", },
                                     backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldBlueEdgeMode}> 
+                                onClick={() => setUserMode("addBoldBlueEdge")}> 
                                 <ArrowOutwardIcon></ArrowOutwardIcon>
                             </Button>
                         </Grid>
@@ -1387,7 +1387,7 @@ export default function DiagramsDesigner() {
                                                         backgroundColor: '#59bb7b',
                                                         color: "white", },
                                     backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldBlueBrokenEdgeMode}> 
+                                onClick={() => setUserMode("addBoldBlueBrokenEdge")}> 
                                 <SubdirectoryArrowRight> </SubdirectoryArrowRight> 
                             </Button>
                         </Grid>
@@ -1396,7 +1396,9 @@ export default function DiagramsDesigner() {
                 <Grid item xs={4}>
                     <Grid container spacing={0.5} justifyContent="flex-start"> 
                         <Grid item xs={6}>
-                            <Button sx={{ color: 'purple', backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+                            <Button sx={{ color: 'purple', 
+                            backgroundColor: 'white', 
+                            borderColor: '#125b30 !important' }}  > 
                                 <DoubleArrowIcon></DoubleArrowIcon> Ребро фиолетовое
                             </Button>
                         </Grid>
@@ -1405,7 +1407,7 @@ export default function DiagramsDesigner() {
                                                     backgroundColor: '#59bb7b',
                                                     color: "white", },
                                     backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldPurpleEdgeMode}>
+                                    onClick={() => setUserMode("addBoldPurpleEdge")}>
                                 <ArrowOutwardIcon></ArrowOutwardIcon>
                             </Button>
                         </Grid>
@@ -1414,7 +1416,7 @@ export default function DiagramsDesigner() {
                                                 backgroundColor: '#59bb7b',
                                                 color: "white", },
                                 backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldPurpleBrokenEdgeMode}>
+                                onClick={() => setUserMode("addBoldPurpleBrokenEdge")}>
                                 <SubdirectoryArrowRight></SubdirectoryArrowRight>
                             </Button>
                         </Grid>
@@ -1432,7 +1434,7 @@ export default function DiagramsDesigner() {
                                                         backgroundColor: '#59bb7b',
                                                         color: "white", },
                                     backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldYellowEdgeMode}>
+                                    onClick={() => setUserMode("addBoldYellowEdge")}>
                                 <ArrowOutwardIcon></ArrowOutwardIcon>
                             </Button>
                         </Grid>
@@ -1441,7 +1443,7 @@ export default function DiagramsDesigner() {
                                                         backgroundColor: '#59bb7b',
                                                         color: "white", },
                                     backgroundColor: 'white', borderColor: '#125b30 !important' }} 
-                                onClick={setAddBoldYellowBrokenEdgeMode}>
+                                    onClick={() => setUserMode("addBoldYellowBrokenEdge")}>
                                 <SubdirectoryArrowRight></SubdirectoryArrowRight>
                             </Button>
                         </Grid>
