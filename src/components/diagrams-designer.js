@@ -45,7 +45,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
 
 
-import {initModelCircle, updateModel} from "./elements-config"
+import {initModelCircle, initModelEllipse, 
+  initModelObject, initFunctionalModule, initIsolationElement,
+  initComboElement, updateModel} from "./elements-config"
 
 
 
@@ -797,31 +799,11 @@ export default function DiagramsDesigner() {
 
     setElementsEmpty();
 
-    console.log(newListStorage)
+    let me = initModelEllipse();
+    let me_upd = updateModel(me, elementName, elementSizeX, 
+                          elementSizeY, newElemUuid);
 
-    ELEMENTS_STORAGE.push(newElemUuid)
-
-    const modelEllipse = {
-      id: newElemUuid,
-      x: 100,
-      y: 100,
-      type: 'ellipse',
-      label: elementName,
-      style: {
-        fill: 'white',
-        stroke: 'black',
-        lineWidth: 2
-      },
-      size: [elementSizeX, elementSizeY],
-      anchorPoints: [
-        [0.5, 0],
-        [0, 0.5],
-        [1, 0.5],
-        [0.5, 1],
-      ],
-    };
-
-    graph.current.addItem('node', modelEllipse);
+    graph.current.addItem('node', me_upd);
   };
 
   const addObject = () => {
@@ -842,35 +824,14 @@ export default function DiagramsDesigner() {
 
     setElementsEmpty();
 
-    console.log(newListStorage)
-    const modelRectangle = {
-      id: newElemUuid,
-      x: 100,
-      y: 100,
-      type: 'rect',
-      label: elementName,
-      style: {
-        fill: 'white',
-        stroke: 'black',
-        lineWidth: 2
-      },
-      size: [elementSizeX, elementSizeY],
-      anchorPoints: [
-        [0.5, 0],
-        [0, 0.5],
-        [1, 0.5],
-        [0.5, 1],
-        // angles
-        [0, 0],
-        [1, 0],
-        [1, 1],
-        [0, 1],
-      ],
-    };
-    graph.current.addItem('node', modelRectangle);
+    let mo = initModelObject();
+    let mo_upd = updateModel(mo, elementName, elementSizeX, 
+                          elementSizeY, newElemUuid);
+    graph.current.addItem('node', mo_upd);
   };
 
   const addFunctionalModule = () => {
+
     let newElemUuid = uuidv4();
     console.log('[INFO] New object UUID is: ' + newElemUuid);
     const newListStorage = listStorage.concat({
@@ -887,70 +848,39 @@ export default function DiagramsDesigner() {
 
     setElementsEmpty();
 
-    ELEMENTS_STORAGE.push(newElemUuid)
-    const modelFuncModule = {
-      id: newElemUuid,
-      x: 100,
-      y: 100,
-      type: 'rect',
-      label: 'functional module',
-      style: {
-        fill: 'white',
-        stroke: 'red',
-        lineWidth: 2
-      },
-      size: [elementSizeX, elementSizeY],
-      anchorPoints: [
-        [0.5, 0],
-        [0, 0.5],
-        [1, 0.5],
-        [0.5, 1],
-        // angles
-        [0, 0],
-        [1, 0],
-        [1, 1],
-        [0, 1],
-      ],
-    };
-    graph.current.addItem('node', modelFuncModule);
+    let mf = initFunctionalModule(false);
+    let mf_upd = updateModel(mf, elementName, elementSizeX, 
+                          elementSizeY, newElemUuid);
+
+    graph.current.addItem('node', mf_upd);
   };
 
   const addFunctionalModuleDashed = () => {
     let newElemUuid = uuidv4();
-    console.log('[INFO] New object UUID is: ' + newElemUuid);
-    ELEMENTS_STORAGE.push(newElemUuid)
-    const modelFuncModuleDashed = {
+    console.log('[INFO] New object (Functional Moduke Dashed) UUID is: ' + newElemUuid);
+    const newListStorage = listStorage.concat({
+      name: elementName,
+      type: elementType,
+      x: elementSizeX,
+      y: elementSizeY,
       id: newElemUuid,
-      x: 100,
-      y: 100,
-      type: 'rect',
-      label: 'functional module',
-      style: {
-        fill: 'white',
-        stroke: 'red',
-        lineWidth: 2,
-        lineDash: [8]
-      },
-      size: [140, 90],
-      anchorPoints: [
-        [0.5, 0],
-        [0, 0.5],
-        [1, 0.5],
-        [0.5, 1],
-        // angles
-        [0, 0],
-        [1, 0],
-        [1, 1],
-        [0, 1],
-      ],
-    };
-    graph.current.addItem('node', modelFuncModuleDashed);
+      lowerIndex: elementLowerIndex,
+      upperIndex: elementUpperIndex,
+      semanticDescription: elementSemanticDescription
+    });
+    setListStorage(newListStorage);
+
+    setElementsEmpty();
+    let mf = initFunctionalModule(true);
+    let mf_upd = updateModel(mf, elementName, elementSizeX, 
+                          elementSizeY, newElemUuid);
+
+    graph.current.addItem('node', mf_upd);
   };
 
   const addIsolationElement = () => {
     let newElemUuid = uuidv4();
     console.log('[INFO] New object UUID is: ' + newElemUuid);
-    ELEMENTS_STORAGE.push(newElemUuid)
     const newListStorage = listStorage.concat({
       name: elementName,
       type: elementType,
@@ -962,42 +892,19 @@ export default function DiagramsDesigner() {
       semanticDescription: elementSemanticDescription
     });
     setListStorage(newListStorage);
+    setElementsEmpty();
 
-  setElementsEmpty();
+    let ioe = initIsolationElement();
+    let ioe_upd = updateModel(ioe, elementName, elementSizeX, 
+                          elementSizeY, newElemUuid);
 
-    const modelFuncModuleDashed = {
-      id: newElemUuid,
-      x: 100,
-      y: 100,
-      type: 'rect',
-      label: 'isolation element',
-      style: {
-        fill: 'white',
-        stroke: 'blue',
-        lineWidth: 4,
-      },
-      size: [elementSizeX, elementSizeY],
-      anchorPoints: [
-        [0.5, 0],
-        [0, 0.5],
-        [1, 0.5],
-        [0.5, 1],
-        // angles
-        [0, 0],
-        [1, 0],
-        [1, 1],
-        [0, 1],
-      ],
-
-    };
-    graph.current.addItem('node', modelFuncModuleDashed);
+    graph.current.addItem('node', ioe_upd);
   };
 
 
   const addComboElement = () => {
     let newElemUuid = uuidv4();
-    console.log('[INFO] New object UUID is: ' + newElemUuid);
-    ELEMENTS_STORAGE.push(newElemUuid)
+    console.log('[INFO] New combo element UUID is: ' + newElemUuid);
     const newListStorage = listStorage.concat({
       name: elementName,
       type: elementType,
@@ -1009,20 +916,17 @@ export default function DiagramsDesigner() {
       semanticDescription: elementSemanticDescription
     });
     setListStorage(newListStorage);
-
     setElementsEmpty();
+    let ce = initComboElement(false);
+    let ce_upd = updateModel(ce, elementName, elementSizeX, 
+      elementSizeY, newElemUuid);
 
-    const modelFuncModuleDashed = {
-      id: newElemUuid,
-      label: elementName,
-    };
-    graph.current.addItem('combo', modelFuncModuleDashed);
+    graph.current.addItem('combo', ce_upd);
   };
 
   const addComboGreenElement = () => {
     let newElemUuid = uuidv4();
-    console.log('[INFO] New object UUID is: ' + newElemUuid);
-    ELEMENTS_STORAGE.push(newElemUuid)
+    console.log('[INFO] New combo (green) element UUID is: ' + newElemUuid);
     const newListStorage = listStorage.concat({
       name: elementName,
       type: elementType,
@@ -1034,20 +938,12 @@ export default function DiagramsDesigner() {
       semanticDescription: elementSemanticDescription
     });
     setListStorage(newListStorage);
-
     setElementsEmpty();
+    let ce = initComboElement(true);
+    let ce_upd = updateModel(ce, elementName, elementSizeX, 
+      elementSizeY, newElemUuid);
 
-    setElementSemanticDescription('')
-    const modelComboGreen = {
-      id: newElemUuid,
-      style: {
-        stroke: 'green',
-        lineWidth: 4,
-      },
-      label: elementName,
-
-    };
-    graph.current.addItem('combo', modelComboGreen);
+    graph.current.addItem('combo', ce_upd);
   };
 
 
