@@ -15,7 +15,8 @@ import Create from './components/create';
 import Tables from './components/tables';
 import DiagramsDesigner from './components/diagrams-designer';
 import InputData from './components/input-data';
-import QualityMetrics from './components/quality-metrics';
+import QualityMetrics from './components/input/quality-metrics';
+import ElementaryFunctions from './components/input/elementary-functions';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -29,24 +30,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 export function App() {
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const [value, setValue] = React.useState('1');
-  // const [value2, setValue2] = React.useState('1');
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-  // const handleChange2 = (event, newValue) => {
-  //   setValue2(newValue);
-  // };
 
   return (
 
@@ -61,16 +44,18 @@ export function App() {
           <NavLink to="about" >Вывод результатов</NavLink> |
           <NavLink to="tables">Таблицы</NavLink> |
           <NavLink to="ddesigner">Конструктор</NavLink> |
-          <NavLink to="qualityMetrics"> Показатели качества</NavLink>
+          <NavLink to="qualityMetrics"> Показатели качества</NavLink> |
+          <NavLink to="elementaryFunctions"> Элементарные функции</NavLink>
         </nav>
 
         <Routes>
           <Route path="/" element={<Create />} />
           <Route path="/file" element={<File />} />
-          <Route path="/inputData" element={<InputData />} />
+          <Route path="/inputData/*" element={<InputData />} />
           <Route path='/tables' element={<Tables />} />
           <Route path='/ddesigner' element={<DiagramsDesigner />} />
           <Route path='/qualityMetrics' element={<QualityMetrics />} />
+          <Route path='/elementaryFunctions' element={<ElementaryFunctions />} />
         </Routes>
 
       </div>
