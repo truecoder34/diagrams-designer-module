@@ -104,7 +104,6 @@ export default function QualityMetrics() {
                     <Grid item xs={12}>
                         <Stack
                             direction="row"
-                            // divider={<Divider orientation="vertical" flexItem />}
                             spacing={1}
                         >
                             <h4>Введено показателей качества :</h4> 
