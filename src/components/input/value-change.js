@@ -33,43 +33,12 @@ export default function ValueChange() {
         return { number, name, description };
     }
 
-    // const tableStorageInitial = [
-    //     createData(1, 'Эффективность смазывающего воздействия', 'дополнительная информация..'),
-    //     createData(2, 'Эффективность охлаждающего воздействия', 'дополнительная информация..'),
-    //     createData(3, 'Рассход электроэнергии', 'дополнительная информация..'),
-    //     createData(4, 'Вероятность безотказной работы', 'дополнительная информация..'),
-    //     createData(5, 'Срок службы', 'дополнительная информация..'),
-    //     createData(6, 'Трудоемкость изготовления', 'дополнительная информация..'),
-    //     createData(7, 'Коэффициент стандартизации и унификации', 'дополнительная информация..'),
-    //     createData(8, 'Безопсность', 'дополнительная информация..'),
-    //     createData(9, 'Показатель патентной защиты', 'дополнительная информация..'),
-    //     createData(10, 'Показатель патентной чвстоты', 'дополнительная информация..'),
-    //     createData(11, 'Габаритные размеры', 'дополнительная информация..'),
-    //     createData(12, 'Масса', 'дополнительная информация..'),
-    // ]
-
-    // const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
-    // const [elementName, setElementName] = useState('');
-
-    // const [elementCount, setElementCount] = useState(tableStorage.length);
-
-
-    // const addRow = () => {
-    //     console.log("New name :: ", elementName)
-    //     const newListStorage = tableStorage.concat(
-    //         createData(tableStorage.length + 1, elementName, 'дополнительная информация..')
-    //     )
-    //     setListStorage(newListStorage);
-    //     console.log("New ", tableStorage)
-    //     setElementName('');
-    //     setElementCount(tableStorage.length + 1)
-    // };
 
 
     return (
 
         <div>
-            <h2>Конструктивные элементы</h2>
+            <h2>Редактирование значений</h2>
             {/* <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
                 <Grid container rowSpacing={1} columnSpacing={2}   >
                     <Grid item xs={12}>

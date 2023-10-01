@@ -44,18 +44,14 @@ export function App() {
           <NavLink to="about" >Вывод результатов</NavLink> |
           <NavLink to="tables">Таблицы</NavLink> |
           <NavLink to="ddesigner">Конструктор</NavLink> |
-          <NavLink to="qualityMetrics"> Показатели качества</NavLink> |
-          <NavLink to="elementaryFunctions"> Элементарные функции</NavLink>
         </nav>
 
         <Routes>
           <Route path="/" element={<Create />} />
-          <Route path="/file" element={<File />} />
+          <Route path="/file/*" element={<File />} />
           <Route path="/inputData/*" element={<InputData />} />
           <Route path='/tables' element={<Tables />} />
           <Route path='/ddesigner' element={<DiagramsDesigner />} />
-          <Route path='/qualityMetrics' element={<QualityMetrics />} />
-          <Route path='/elementaryFunctions' element={<ElementaryFunctions />} />
         </Routes>
 
       </div>

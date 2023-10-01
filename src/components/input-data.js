@@ -21,32 +21,24 @@ import ConstructionElements from './input/construction-elements';
 
 
 export default function InputData() {
-    const [value, setValue] = React.useState('a');
     const handleChange = (event, newValue) => {
         console.log("New value refering :: ", newValue.toString())
         setValue(newValue.toString());
-        //setValue(newValue);
-
-        // subPagesArray.map((x, index) => (
-        //     console.log(x, index)
-        // ))
-        // subPagesLinksArray.map((x, index) => (
-        //     console.log(x, index)
-        // ))
-
     };
     const subPagesArray = ['Показатели качества', 'Элементарные функции',
         'Конструктивные элементы', 'Редактирование значений',]
     const subPagesLinksArray = ['qualityMetrics', 'elementaryFunctions',
         'constructionElements', 'valueChange',]
-    const tabValuesArray = ['a', 'b','c', 'd',]
+    const [value, setValue] = React.useState(subPagesLinksArray[0]);
+
+
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
             <Tabs
                 value={value}
                 onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
+                // textColor="secondary"
+                // indicatorColor="secondary"
                 aria-label="secondary tabs example"
             >
                 {subPagesArray.map((_, index) => (
@@ -54,15 +46,15 @@ export default function InputData() {
                         key={index}
                         component={Link}
                         to={subPagesLinksArray[index]}
-                        label={subPagesArray[index]} value={tabValuesArray[index]} />
+                        label={subPagesArray[index]} value={subPagesLinksArray[index]} />
                 ))}
             </Tabs>
 
             <Routes>
-                <Route path=':qualityMetrics' element={<QualityMetrics />} />
-                <Route path=':elementaryFunctions' element={<ElementaryFunctions />} />
-                <Route path=':constructionElements' element={<ConstructionElements />} />
-                <Route path=':valueChange' element={<ValueChange />} />
+                <Route path='qualityMetrics' element={<QualityMetrics />} />
+                <Route path='elementaryFunctions' element={<ElementaryFunctions />} />
+                <Route path='constructionElements' element={<ConstructionElements />} />
+                <Route path='valueChange' element={<ValueChange />} />
             </Routes>
 
         </Box>

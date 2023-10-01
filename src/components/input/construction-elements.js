@@ -29,88 +29,35 @@ export default function ConstructionElements() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    function createData(number, name, description) {
-        return { number, name, description };
+
+    function createData(number, name, scheme, patentNumber, 
+            elementaryFunctions, qualityMetrics, expertsScore) {
+        return { number, name, scheme, patentNumber, 
+                 elementaryFunctions, qualityMetrics, expertsScore };
     }
-
-    // const tableStorageInitial = [
-    //     createData(1, 'Эффективность смазывающего воздействия', 'дополнительная информация..'),
-    //     createData(2, 'Эффективность охлаждающего воздействия', 'дополнительная информация..'),
-    //     createData(3, 'Рассход электроэнергии', 'дополнительная информация..'),
-    //     createData(4, 'Вероятность безотказной работы', 'дополнительная информация..'),
-    //     createData(5, 'Срок службы', 'дополнительная информация..'),
-    //     createData(6, 'Трудоемкость изготовления', 'дополнительная информация..'),
-    //     createData(7, 'Коэффициент стандартизации и унификации', 'дополнительная информация..'),
-    //     createData(8, 'Безопсность', 'дополнительная информация..'),
-    //     createData(9, 'Показатель патентной защиты', 'дополнительная информация..'),
-    //     createData(10, 'Показатель патентной чвстоты', 'дополнительная информация..'),
-    //     createData(11, 'Габаритные размеры', 'дополнительная информация..'),
-    //     createData(12, 'Масса', 'дополнительная информация..'),
-    // ]
-
-    // const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
-    // const [elementName, setElementName] = useState('');
-
-    // const [elementCount, setElementCount] = useState(tableStorage.length);
-
-
-    // const addRow = () => {
-    //     console.log("New name :: ", elementName)
-    //     const newListStorage = tableStorage.concat(
-    //         createData(tableStorage.length + 1, elementName, 'дополнительная информация..')
-    //     )
-    //     setListStorage(newListStorage);
-    //     console.log("New ", tableStorage)
-    //     setElementName('');
-    //     setElementCount(tableStorage.length + 1)
-    // };
-
+    const tableStorageInitial = [
+        createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
+        'RU № 2 203 165 B23С 5/28',
+        'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 ); f 6 (e 05 гид )',
+        '(1)2 (2)4 (4)1 (5)1 (6)1 (7)1 (8)1 (9)1 (10)1 (11)1 (12)1',
+        '{6;6}=6 {8;9;6;6}=7,25 {9}=9 {8}=8 {9}=9 {9}=9 {9}=9 {7}=7 {8}=8 {9}=9 {8}=8'),
+        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1',
+        'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 );f 5 (i 31,2 )',
+        '(1)1 (2)4 (4)1 (5)1 (6)1 (7)1 (9)1 (10)1 (11)1 (12)1',
+        '{5}=5 {7;8;5;4}=5,5 {8}=8 {7}=7 {7}=7 {8}=8 {8}=8 {5}=5 {7}=7 {8}=8'),
+        createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Устройство_для_Подачи_Охл_жидкости_RU_№994214.png', 
+        'SU № 1454651 B23Q 11/10',
+        'f 3 (e 1 тер ); f 5 (i 13 ); f 5 (i 31,2 ); f 6 (e 05 гид )',
+        '(1)2 (2)4 (4)1 (5)1 (6)1 (7)7 (8)1 (9)1 (10)1 (11)1 (12)1',
+        '{3}=3 {5;6;3;3}=4,25 {5}=5 {3}=3 {3}=3 {5}=5 {6}=6 {2}=2 {5}=5 {5}=5 {5}=5'), 
+    ]
+    const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
     return (
-
         <div>
             <h2>Конструктивные элементы</h2>
-            {/* <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
-                <Grid container rowSpacing={1} columnSpacing={2}   >
-                    <Grid item xs={12}>
-                        <FormControl fullWidth>
-                            <FormLabel>
-                                <h4>Почередно введите показатели качества для оценки технических решений (не более 7)</h4>
-                            </FormLabel>
-                            <br/>
-                            <FormGroup row >
-                                <Grid item xs={11}>
-                                    <TextField fullWidth
-                                        label="показатели качества" id="baseFunction"
-                                        value={elementName} onChange={e => setElementName(e.target.value)}
-                                    />
-                                </Grid>
-                                <Grid item xs={1}>
-                                    <Button variant="contained" color='primary' size="large"
-                                        onClick={() => addRow()}
-                                    >
-                                        Добавить
-                                    </Button>
-                                </Grid>
-                            </FormGroup>
-                            <br/>
-                        </FormControl>
-
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Stack
-                            direction="row"
-                            // divider={<Divider orientation="vertical" flexItem />}
-                            spacing={1}
-                        >
-                            <h4>Введено показателей качества :</h4> 
-                            <Divider orientation="vertical" flexItem />
-                            <Chip label={elementCount}  />
-                            
-                        </Stack>
-                        <br/>
-                    </Grid>
-
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
+                <Grid container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={12}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -118,7 +65,11 @@ export default function ConstructionElements() {
                                     <TableRow>
                                         <TableCell>#</TableCell>
                                         <TableCell align="center">Название</TableCell>
-                                        <TableCell align="center">Дополнительная информация</TableCell>
+                                        <TableCell align="center">Схема</TableCell>
+                                        <TableCell align="center">Номер патента</TableCell>
+                                        <TableCell align="center">Элементарные функции</TableCell>
+                                        <TableCell align="center">Показатели качества</TableCell>
+                                        <TableCell align="center">Экспертные оценки</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -131,7 +82,11 @@ export default function ConstructionElements() {
                                                 {row.number}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                            <TableCell align="left">{row.description}</TableCell>
+                                            <TableCell align="left"><img src={row.scheme} /></TableCell>                                            
+                                            <TableCell align="left">{row.patentNumber}</TableCell>
+                                            <TableCell align="left">{row.elementaryFunctions}</TableCell>
+                                            <TableCell align="left">{row.qualityMetrics}</TableCell>
+                                            <TableCell align="left">{row.expertsScore}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -139,10 +94,8 @@ export default function ConstructionElements() {
                         </TableContainer>
                     </Grid>
                 </Grid>
-            </Box> */}
+            </Box>
         </div>
-
-
     )
 }
 
