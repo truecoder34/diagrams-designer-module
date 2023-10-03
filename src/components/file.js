@@ -36,6 +36,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import AddIcon from '@mui/icons-material/Add';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
+import HomeIcon from '@mui/icons-material/Home';
+import CloseIcon from '@mui/icons-material/Close';
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import HelpIcon from '@mui/icons-material/Help';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
 
 export default function InputData() {
     const handleChange = (event, newValue) => {
@@ -47,6 +56,8 @@ export default function InputData() {
     const subPagesLinksArray = ['mainPage', 'deviceInformation', 'modelPhisics',
         'constructionElements', 'valueFunctions',]
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
+
+    const iconsList = [<AddIcon/>, <FileOpenIcon/>,<FirstPageIcon/>,<CloseIcon/>,<SaveIcon/>,<PrintIcon/>,<HelpIcon/>,<ExitToAppIcon/>];
 
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -60,7 +71,7 @@ export default function InputData() {
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                        {iconsList[index]}
                                     </ListItemIcon>
                                     <ListItemText primary={text} />
                                 </ListItemButton>
