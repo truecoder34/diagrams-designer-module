@@ -46,7 +46,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 
-export default function InputData() {
+export default function File() {
     const handleChange = (event, newValue) => {
         setValue(newValue.toString());
     };
