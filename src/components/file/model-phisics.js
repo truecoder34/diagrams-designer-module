@@ -23,7 +23,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 import Grid from '@mui/material/Grid';
-
+import DiagramsDesigner from '../diagrams-designer';
 
 export default function ModelPhisics() {
     const [value, setValue] = React.useState('1');
@@ -39,6 +39,7 @@ export default function ModelPhisics() {
 
         <div>
             <h2>Модель физического принципа действия (ФПД)</h2>
+            <DiagramsDesigner />
         </div>
 
 

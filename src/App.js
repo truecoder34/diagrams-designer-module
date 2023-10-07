@@ -42,8 +42,7 @@ export function App() {
           <NavLink to="about" >Поиск решений</NavLink> |
           <NavLink to="about" >Значения показателей</NavLink> |
           <NavLink to="about" >Вывод результатов</NavLink> |
-          <NavLink to="tables">Таблицы</NavLink> |
-          <NavLink to="ddesigner">Конструктор</NavLink> |
+          <NavLink to="tables">Таблицы</NavLink>
         </nav>
 
         <Routes>
@@ -51,7 +50,6 @@ export function App() {
           <Route path="/file/*" element={<File />} />
           <Route path="/inputData/*" element={<InputData />} />
           <Route path='/tables' element={<Tables />} />
-          <Route path='/ddesigner' element={<DiagramsDesigner />} />
         </Routes>
 
       </div>
