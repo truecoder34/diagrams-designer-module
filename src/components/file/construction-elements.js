@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
-
 import axios from 'axios';
 import { Box, Tabs, Tab, dividerClasses } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+
 import TextField from '@mui/material/TextField';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import { FormLabel, FormControl, FormGroup, Divider } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Chip from '@mui/material/Chip';
+
 
 
 import Stack from '@mui/material/Stack';
-
 import Grid from '@mui/material/Grid';
 
+
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 
 export default function ConstructionElements() {
     const [value, setValue] = React.useState('1');
@@ -36,10 +26,54 @@ export default function ConstructionElements() {
 
 
     return (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
 
-        <div>
-            <h2>Конструктивные элементы</h2>
-        </div>
+            <div>
+                <h2>Конструктивные элементы</h2>
+            </div>
+
+            <Grid container rowSpacing={1} columnSpacing={2}>
+
+                {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
+                <Grid item xs={12}>
+                    {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
+                    <Stack
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+
+                        <TextField
+                            id="outlined-name-input"
+                            label="Название"
+                            type="search"
+                            autoComplete="current-name"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <Divider orientation="vertical" variant="middle" flexItem />
+                        <TextField
+                            id="outlined-patent-name-input"
+                            label="Номер патента"
+                            autoComplete="current-patent-name"
+                        />
+                    </Stack>
+                </Grid>
+                
+                <Grid item xs={12}>
+                    
+                    xxx
+                </Grid>
+                
+            </Grid>
+        </Box>
+
 
 
     )

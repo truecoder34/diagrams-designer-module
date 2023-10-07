@@ -15,10 +15,10 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function InputFileUpload() {
+export default function InputFileUpload({fileName}) {
   return (
     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-      Загрузить схему
+      {fileName}
       <VisuallyHiddenInput type="file" />
     </Button>
   );
