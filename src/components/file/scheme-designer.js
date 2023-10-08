@@ -27,7 +27,7 @@ import DiagramsDesigner from '../diagrams-designer';
 import InputFileUpload from '../subComponents/upload-file';
 import SaveButton from '../subComponents/save-button';
 
-export default function ModelPhisics() {
+export default function SchemeDesigner() {
     const [value, setValue] = React.useState('1');
     const handleChange = (event, newValue) => {
         setValue(newValue);

@@ -17,7 +17,8 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import MainPage from './file/main-page';
 import DeviceInformation from './file/device-information';
-import ModelPhisics from './file/model-phisics';
+import SchemeDesigner from './file/scheme-designer';
+import Schemes from './file/schemes';
 import ConstructionElements from './file/construction-elements';
 import ValueFunctions from './file/values-functions';
 
@@ -52,8 +53,8 @@ export default function File() {
     };
 
     const subPagesArray = ['Начальная страница', 'Описание устройства',
-        'Модель ФПД', 'Конструктивные элементы', 'Показатели и функции']
-    const subPagesLinksArray = ['mainPage', 'deviceInformation', 'modelPhisics',
+        'Редактор', 'Схемы', 'Конструктивные элементы', 'Показатели и функции']
+    const subPagesLinksArray = ['mainPage', 'deviceInformation', 'schemeDesigner', 'schemes', 
         'constructionElements', 'valueFunctions',]
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
 
@@ -101,7 +102,8 @@ export default function File() {
                     <Routes>
                         <Route path='mainPage' element={<MainPage />} />
                         <Route path='deviceInformation' element={<DeviceInformation />} />
-                        <Route path='modelPhisics' element={<ModelPhisics />} />
+                        <Route path='schemeDesigner' element={<SchemeDesigner />} />
+                        <Route path='schemes' element={<Schemes />} />
                         <Route path='constructionElements' element={<ConstructionElements />} />
                         <Route path='valueFunctions' element={<ValueFunctions />} />
                     </Routes>
