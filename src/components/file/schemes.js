@@ -25,13 +25,12 @@ export default function Schemes() {
 
     function srcset(image, width, height, rows = 1, cols = 1) {
         return {
-          src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
-          srcSet: `${image}?w=${width * cols}&h=${
-            height * rows
-          }&fit=crop&auto=format&dpr=2 2x`,
+            src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
+            srcSet: `${image}?w=${width * cols}&h=${height * rows
+                }&fit=crop&auto=format&dpr=2 2x`,
         };
-      }
-      
+    }
+
 
     const itemData = [
         {
@@ -68,10 +67,9 @@ export default function Schemes() {
 
             <Grid container rowSpacing={1} columnSpacing={2}>
                 <Grid item xs={12}>
-
                     <ImageList sx={{
                         width: "100%",
-                        height: 700,
+                        height: 600,
                         // Promote the list into its own layer in Chrome. 
                         // This costs memory, but helps keeping high FPS.
                         transform: 'translateZ(0)',
@@ -94,11 +92,10 @@ export default function Schemes() {
                             </ImageListItem>
                         ))}
                     </ImageList>
-
                 </Grid>
 
                 <Grid item xs={12}>
-                <ImageList sx={{
+                    <ImageList sx={{
                         width: "100%",
                         height: 600,
                         // Promote the list into its own layer in Chrome. 

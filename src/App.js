@@ -30,12 +30,36 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 export function App() {
-
+  const handleChange = (event, newValue) => {
+    console.log("New value refering :: ", newValue.toString())
+    setValue(newValue.toString());
+};
+const pagesArray = ['Файл', 'Ввод даных',
+    'Поиск решений', 'Значение показателей', 'Вывод результатов', 'Таблицы']
+const pagesLinksArray = ['file/*', 'inputData/*',
+    'constructionElements', 'valueChange', 'tables', 'tables']
+const [value, setValue] = React.useState(pagesLinksArray[0]);
   return (
 
     <BrowserRouter>
       <div className="main">
-        <nav>
+      <Tabs
+                value={value}
+                onChange={handleChange}
+                // textColor="secondary"
+                // indicatorColor="secondary"
+                aria-label="secondary tabs example"
+            >
+                {pagesArray.map((_, index) => (
+                    <Tab
+                        key={index}
+                        component={Link}
+                        to={pagesLinksArray[index]}
+                        label={pagesArray[index]} value={pagesLinksArray[index]} />
+                ))}
+            </Tabs>
+
+        {/* <nav>
           <NavLink to="">*</NavLink> |
           <NavLink to="file">Файл</NavLink> |
           <NavLink to="inputData" >Ввод данных</NavLink> |
@@ -43,7 +67,7 @@ export function App() {
           <NavLink to="about" >Значения показателей</NavLink> |
           <NavLink to="about" >Вывод результатов</NavLink> |
           <NavLink to="tables">Таблицы</NavLink>
-        </nav>
+        </nav> */}
 
         <Routes>
           <Route path="/" element={<Create />} />
