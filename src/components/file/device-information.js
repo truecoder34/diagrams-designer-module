@@ -43,10 +43,10 @@ export default function DeviceInformation() {
     let defaultImg = "/images/scheme_CO2_laser.png"
     let defaultImgDescription = "1 – основание; 2 – активный элемент; 3 – стенки газоразрядной трубки; 4 – выходное зеркало резонатора; 5 – узел юстировки резонатора; 6 – диафрагма; 7 – окно Брюстера; 8 – резервный баллон; 9 – рубашка охлаждения;  10 – штуцер подачи охлаждающей жидкости в рубашку охлаждения; 11– глухое зеркало резонатора; 12 – катод; 13 – колба с катодом и регенератором; 14 – вещество регенератора Cu2O; 15 – анод; 16 – штуцер вывода охлаждающей жидкости";
 
-    
+
     const [text, setValueText] = React.useState(defaultText);
     const [description, setValueDescripton] = React.useState(defaultImgDescription);
-    
+
     const cleareAllFields = (event) => {
         setValueText("11");
         setValueDescripton("111");
@@ -88,15 +88,17 @@ export default function DeviceInformation() {
                                 alignItems="flex-start"
                                 spacing={2}
                             >
-                                <InputFileUpload></InputFileUpload>
+                                <InputFileUpload
+                                    fileName={"Загрузить схему"}
+                                ></InputFileUpload>
                                 <SaveButton></SaveButton>
                             </Stack>
                         </Grid>
                         <Grid item xs={1}>
-                            <DeleteButton 
+                            <DeleteButton
                             // onClick={cleareAllFields()}
                             >
-                                
+
                             </DeleteButton>
                         </Grid>
                     </Grid>
@@ -116,6 +118,7 @@ export default function DeviceInformation() {
                     />
                 </Grid>
                 <Grid item xs={12}>
+                    <h3>Конструктивная схема</h3>
                     <ImageList sx={{ maxWidth: '95%' }} cols={1} rowHeight={450}>
 
                         <ImageListItem>

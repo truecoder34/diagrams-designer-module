@@ -24,8 +24,10 @@ import Stack from '@mui/material/Stack';
 
 import Grid from '@mui/material/Grid';
 import DiagramsDesigner from '../diagrams-designer';
+import InputFileUpload from '../subComponents/upload-file';
+import SaveButton from '../subComponents/save-button';
 
-export default function ModelPhisics() {
+export default function SchemeDesigner() {
     const [value, setValue] = React.useState('1');
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -37,10 +39,45 @@ export default function ModelPhisics() {
 
     return (
 
-        <div>
+        <Box
+            component="form"
+            sx={{
+                //width: 500,
+                maxWidth: '95%',
+            }}
+            noValidate
+            autoComplete="off"
+        >
+
             <h2>Модель физического принципа действия (ФПД)</h2>
-            <DiagramsDesigner />
-        </div>
+            <Grid container rowSpacing={2} columnSpacing={2}>
+                <Grid item xs={12}>
+                    <Stack
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+
+                        <InputFileUpload
+                            fileName={"Загрузить граф ФПД"}
+                        ></InputFileUpload>
+                        <SaveButton></SaveButton>
+                    </Stack>
+
+                </Grid>
+                <Grid item xs={12}>
+                    <DiagramsDesigner />
+                </Grid>
+            </Grid>
+
+
+
+
+
+        </Box>
+
+
 
 
     )

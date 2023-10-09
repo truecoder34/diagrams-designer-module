@@ -961,7 +961,7 @@ export default function DiagramsDesigner() {
 
   return (
     <div>
-      <h1>Конструктор диаграмм</h1>
+      <h3>Конструктор диаграмм</h3>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
         <Button sx={{
           color: 'white', '&:hover': {
