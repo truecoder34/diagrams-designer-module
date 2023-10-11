@@ -27,26 +27,15 @@ export default function ConstructionElements() {
         setValue(newValue);
     };
 
-    function createData(number, name, scheme, patentNumber, 
-            elementaryFunctions, qualityMetrics, expertsScore) {
-        return { number, name, scheme, patentNumber, 
-                 elementaryFunctions, qualityMetrics, expertsScore };
+    function createData(number, name, scheme, patentNumber, sourceURL) {
+        return { number, name, scheme, patentNumber, sourceURL };
     }
     const tableStorageInitial = [
         createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
-        'RU № 2 203 165 B23С 5/28',
-        'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 ); f 6 (e 05 гид )',
-        '(1)2 (2)4 (4)1 (5)1 (6)1 (7)1 (8)1 (9)1 (10)1 (11)1 (12)1',
-        '{6;6}=6 {8;9;6;6}=7,25 {9}=9 {8}=8 {9}=9 {9}=9 {9}=9 {7}=7 {8}=8 {9}=9 {8}=8'),
-        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1',
-        'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 );f 5 (i 31,2 )',
-        '(1)1 (2)4 (4)1 (5)1 (6)1 (7)1 (9)1 (10)1 (11)1 (12)1',
-        '{5}=5 {7;8;5;4}=5,5 {8}=8 {7}=7 {7}=7 {8}=8 {8}=8 {5}=5 {7}=7 {8}=8'),
+        'RU № 2 203 165 B23С 5/28', 'ссылка на ресурс 1'),
+        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1','ссылка на ресурс 2'),
         createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Устройство_для_Подачи_Охл_жидкости_RU_№994214.png', 
-        'SU № 1454651 B23Q 11/10',
-        'f 3 (e 1 тер ); f 5 (i 13 ); f 5 (i 31,2 ); f 6 (e 05 гид )',
-        '(1)2 (2)4 (4)1 (5)1 (6)1 (7)7 (8)1 (9)1 (10)1 (11)1 (12)1',
-        '{3}=3 {5;6;3;3}=4,25 {5}=5 {3}=3 {3}=3 {5}=5 {6}=6 {2}=2 {5}=5 {5}=5 {5}=5'), 
+        'SU № 1454651 B23Q 11/10', 'ссылка на ресурс 3'), 
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
@@ -101,9 +90,7 @@ export default function ConstructionElements() {
                                         <TableCell align="center">Название</TableCell>
                                         <TableCell align="center">Схема</TableCell>
                                         <TableCell align="center">Номер патента</TableCell>
-                                        <TableCell align="center">Элементарные функции</TableCell>
-                                        <TableCell align="center">Показатели качества</TableCell>
-                                        <TableCell align="center">Экспертные оценки</TableCell>
+                                        <TableCell align="center">Ресурс</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -118,9 +105,7 @@ export default function ConstructionElements() {
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
                                             <TableCell align="left"><img src={row.scheme} /></TableCell>                                            
                                             <TableCell align="left">{row.patentNumber}</TableCell>
-                                            <TableCell align="left">{row.elementaryFunctions}</TableCell>
-                                            <TableCell align="left">{row.qualityMetrics}</TableCell>
-                                            <TableCell align="left">{row.expertsScore}</TableCell>
+                                            <TableCell align="left">{row.sourceURL}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

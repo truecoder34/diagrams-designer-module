@@ -59,15 +59,6 @@ const [value, setValue] = React.useState(pagesLinksArray[0]);
                 ))}
             </Tabs>
 
-        {/* <nav>
-          <NavLink to="">*</NavLink> |
-          <NavLink to="file">Файл</NavLink> |
-          <NavLink to="inputData" >Ввод данных</NavLink> |
-          <NavLink to="about" >Поиск решений</NavLink> |
-          <NavLink to="about" >Значения показателей</NavLink> |
-          <NavLink to="about" >Вывод результатов</NavLink> |
-          <NavLink to="tables">Таблицы</NavLink>
-        </nav> */}
 
         <Routes>
           <Route path="/" element={<Create />} />
