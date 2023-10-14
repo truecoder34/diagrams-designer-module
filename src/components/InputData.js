@@ -14,10 +14,10 @@ import axios from 'axios';
 import { Box, Tabs, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import QualityMetrics from './input/quality-metrics';
-import ElementaryFunctions from './input/elementary-functions';
-import ValueChange from './input/value-change';
-import ConstructionElements from './input/construction-elements';
+import QualityMetrics from './Input/QualityMetrics';
+import ElementaryFunctions from './Input/ElementaryFunctions';
+import ValueChange from './Input/ValueChange';
+import ConstructionElements from './Input/ConstructionElements';
 
 
 export default function InputData() {

@@ -3,9 +3,11 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function AddButton() {
+export default function AddButton({onPress}) {
   return (
-    <Button component="label" variant="contained"  startIcon={<AddIcon/>} >
+    <Button 
+      component="label" variant="contained" 
+      onClick={onPress} startIcon={<AddIcon/>} >
     Создать
   </Button>
   );

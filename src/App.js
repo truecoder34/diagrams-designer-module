@@ -10,13 +10,13 @@ import {
 } from 'react-router-dom';
 
 import './App.css';
-import File from './components/file';
-import Create from './components/create';
-import Tables from './components/tables';
-import DiagramsDesigner from './components/diagrams-designer';
-import InputData from './components/input-data';
-import QualityMetrics from './components/input/quality-metrics';
-import ElementaryFunctions from './components/input/elementary-functions';
+import File from './components/File';
+import Create from './components/Create';
+import Tables from './components/Tables';
+import DiagramsDesigner from './components/DiagramsDesigner';
+import InputData from './components/InputData';
+import QualityMetrics from './components/Input/QualityMetrics';
+import ElementaryFunctions from './components/Input/ElementaryFunctions';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
