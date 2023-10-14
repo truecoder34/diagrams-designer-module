@@ -1,35 +1,22 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 import axios from 'axios';
-import { Box, Tabs, Tab, dividerClasses } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import { FormLabel, FormControl, FormGroup, Divider } from '@mui/material';
-
-
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SchemaIcon from '@mui/icons-material/Schema';
-
-
-
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import DiagramsDesigner from '../DiagramsDesigner';
 import InputFileUpload from '../SubComponents/UploadFile';
+import DownloadFile from '../SubComponents/DownloadFile';
 import SaveButton from '../SubComponents/SaveButton';
 import AddButton from '../SubComponents/AddButton';
-import DeleteButton from '../SubComponents/DeleteButton';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function SchemeDesigner() {
@@ -37,7 +24,6 @@ export default function SchemeDesigner() {
     const [listStorage, setListStorage] = React.useState(schemasStorageInitial);
     const [schemeName, setSchemeName] = React.useState('');
 
-    const [activeSchemeName, setActiveSchemeName] = React.useState('');
 
 
     const addSchema = (event) => {
@@ -46,19 +32,17 @@ export default function SchemeDesigner() {
             name: schemeName + ".fpd"
         });
         setListStorage(newListStorage);
-
-        setActiveSchemeName(schemeName + ".fpd");
         setSchemeName("");
-        console.log("[INFO] : new schema file created ", schemeName, 
-        "; Current quantity of schemas: ", newListStorage.length,
-        "; Active schema name ", schemeName + ".fpd");
+
+        console.log("[INFO] : new schema file created ", schemeName,
+            "; Current quantity of schemas: ", newListStorage.length,
+            "; Active schema name ", schemeName + ".fpd");
     };
 
     const deleteSchema = (schemeName) => {
-        //event.preventDefault();
-        let localListStorage = listStorage;
-        console.log("Current list storage ", listStorage) 
-        for (let i=0; i < localListStorage.length; i++) {
+        let localListStorage = [...listStorage];
+        console.log("Current list storage ", listStorage)
+        for (let i = 0; i < localListStorage.length; i++) {
             if (localListStorage[i].name === schemeName) {
                 localListStorage.splice(i, 1);
             }
@@ -69,9 +53,7 @@ export default function SchemeDesigner() {
 
     };
 
-    const activeSchema = (schemeName) => {
-        //console.log(event)
-        setActiveSchemeName(schemeName + ".fpd");
+    const selectSchema = (schemeName) => {
         setSchemeName(schemeName)
         console.log("[DEBUG]: active scheme new : ", schemeName)
     };
@@ -98,24 +80,24 @@ export default function SchemeDesigner() {
                             // sx={{ mt: 4, mb: 2 }} 
                             variant="h6"
                             component="div">
-                            Схемы в работе:
+                            Схемы проекта:
                         </Typography>
                         <List
                             sx={{
                                 maxHeight: 200,
                                 overflow: 'auto'
-                            }} 
+                            }}
                         >
-                            {listStorage.map((row) => (
+                            {listStorage.map((row, index) => (
                                 <ListItem disablePadding key={row.name}>
-                                    <ListItemButton onClick={() => activeSchema(row.name)}>
+                                    <ListItemButton onClick={() => selectSchema(row.name)}>
                                         <ListItemIcon>
                                             <SchemaIcon />
                                         </ListItemIcon>
                                         <ListItemText primary={row.name} />
                                     </ListItemButton>
                                     <ListItemIcon>
-                                            <DeleteIcon onClick={() => deleteSchema(row.name)} />
+                                        <DeleteIcon onClick={() => deleteSchema(row.name)} />
                                     </ListItemIcon>
                                 </ListItem>
 
@@ -144,10 +126,30 @@ export default function SchemeDesigner() {
                             container rowSpacing={1} columnSpacing={2}
                             item xs={12}>
 
-                            <Grid item xs={3}><InputFileUpload fileName={"Загрузить граф ФПД"}> </InputFileUpload> </Grid>
-                            <Grid item xs={3}><SaveButton >  </SaveButton> </Grid>
-                            <Grid item xs={6}>
-                                {/* <DeleteButton labelName="Удалить"></DeleteButton>  */}
+                            <Grid justifyContent="flex-start" item xs={6}>
+
+                                <Stack
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="flex-start"
+                                    spacing={2}
+                                >
+                                    <InputFileUpload fileName={"Загрузить граф ФПД"}> </InputFileUpload>
+                                    <DownloadFile fileName={"Cкачать граф"}></DownloadFile>
+                                </Stack>
+
+
+                            </Grid>
+                            <Grid justifyContent="flex-end" item xs={6}>
+
+                                <Stack
+                                    direction="row"
+                                    justifyContent="flex-end"
+                                    alignItems="flex-start"
+                                    spacing={2}
+                                >
+                                    <SaveButton >  </SaveButton>
+                                </Stack>
                             </Grid>
 
                         </Grid>
