@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export default function DeleteButton() {
+export default function DeleteButton({labelName}) {
   return (
     <Button component="label" variant="contained" color="error" startIcon={<DeleteIcon />}>
-      Очистить
+      {labelName}
     </Button>
   );
 }

@@ -15,12 +15,12 @@ import { Box, Tabs, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 
-import MainPage from './file/main-page';
-import DeviceInformation from './file/device-information';
-import SchemeDesigner from './file/scheme-designer';
-import Schemes from './file/schemes';
-import ConstructionElements from './file/construction-elements';
-import ValueFunctions from './file/values-functions';
+import MainPage from './File/MainPage';
+import DeviceInformation from './File/DeviceInformation';
+import SchemeDesigner from './File/SchemeDesigner';
+import Schemes from './File/Schemes';
+import ConstructionElements from './File/ConstructionElements';
+import ValueFunctions from './File/ValuesFunctions';
 
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
@@ -62,7 +62,7 @@ export default function File() {
 
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
-            <Grid container rowSpacing={1} columnSpacing={2}   >
+            <Grid  container rowSpacing={1} columnSpacing={2}   >
                 <Grid item xs={2}>
                     <Toolbar />
                     <Divider />

@@ -47,7 +47,7 @@ import { purple } from '@mui/material/colors';
 
 import {initModelCircle, initModelEllipse, 
   initModelObject, initFunctionalModule, initIsolationElement,
-  initComboElement, updateModel} from "./elements-config"
+  initComboElement, updateModel} from "./ElementsConfig"
 
 
 

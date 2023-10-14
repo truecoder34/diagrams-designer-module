@@ -34,9 +34,9 @@ import SaveIcon from '@mui/icons-material/Save';
 import SendIcon from '@mui/icons-material/Send';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import InputFileUpload from '../subComponents/upload-file';
-import DeleteButton from '../subComponents/delete-button';
-import SaveButton from '../subComponents/save-button';
+import InputFileUpload from '../SubComponents/UploadFile';
+import DeleteButton from '../SubComponents/DeleteButton';
+import SaveButton from '../SubComponents/SaveButton';
 
 export default function DeviceInformation() {
     let defaultText = "Отпаянные СО2-лазеры. Описание конструкции. Наиболее просты и удобны в работе лазеры с отпаянным активным элементом, так как они не требуют подпитки рабочей смеси. Лазеры этого типа широко используются при физических измерениях, в метеорологии, системах связи, локации и т. д. [1]. Они состоят из излучателя и блока питания. Конструкция типичного отпаянного лазера типа ИЛГН приведена на рисунке 2.1. Активный элемент представляет собой стеклянную водоохлаждаемую трубку диаметром 15 мм с резервным баллоном 6 диаметром 90 мм. С одной стороны трубки расположено окно Брюстера из GaAs, а с другой – глухое вогнутое зеркало резонатора 8. Внутри трубки установлен кольцевой анод. Катод размещен в отдельной колбе с регенератором, выполненным в виде полупроводника с положительными вакансиями – Cu2O, который легко адсорбирует кислород при комнатных температурах и десорбирует его при температурах тлеющего разряда (менее 200 °С). Выходное полупрозрачное плоское зеркало резонатора из GaAs 3 расположено на внешнем юcтировочном устройстве 4. Для выделения низшей поперечной моды имеется ирисовая диафрагма 5. Источник питания состоит из повышающего трансформатора, выпрямителя и балластных резисторов."
@@ -95,7 +95,7 @@ export default function DeviceInformation() {
                             </Stack>
                         </Grid>
                         <Grid item xs={1}>
-                            <DeleteButton
+                            <DeleteButton labelName="Очистить"
                             // onClick={cleareAllFields()}
                             >
 
