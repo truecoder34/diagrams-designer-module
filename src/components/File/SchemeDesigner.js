@@ -77,7 +77,6 @@ export default function SchemeDesigner() {
                 <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={6} >
                         <Typography
-                            // sx={{ mt: 4, mb: 2 }} 
                             variant="h6"
                             component="div">
                             Схемы проекта:
