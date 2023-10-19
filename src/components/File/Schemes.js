@@ -14,14 +14,27 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
 
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 export default function Schemes() {
     const [value, setValue] = React.useState('1');
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    function createData(number, name, description) {
-        return { number, name, description };
-    }
+
+    const schemasStorageInitial = [];
+    const [listStorage, setListStorage] = React.useState(schemasStorageInitial);
+
 
     function srcset(image, width, height, rows = 1, cols = 1) {
         return {
@@ -63,6 +76,81 @@ export default function Schemes() {
                 <h2>Схемы</h2>
             </div>
 
+
+            <Grid sx={{
+                // display: 'flex', 
+                // flexWrap: 'wrap', 
+                maxWidth: '250',
+                height: '250',
+                maxHeight: '250',
+            }}
+                container
+                rowSpacing={1}
+                columnSpacing={2}>
+                <Grid item xs={6}>
+                    <TabContext value={value}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                <Tab label="Схема" value="1" />
+                                <Tab label="Описание" value="2" />
+                            </TabList>
+                        </Box>
+                        <TabPanel value="1">
+                            <h4>
+                                {itemData.title}
+                            </h4>
+                            <img
+                                srcSet={`${itemData[0].img}`}  //?w=250&h=250&fit=crop&auto=format&dpr=2 2x
+                                src={`${itemData[0].img}`}  // ?w=250&h=250&fit=crop&auto=format
+                                alt={itemData.title}
+                                loading="lazy"
+                            />
+                        </TabPanel>
+                        <TabPanel value="2">
+                            Таблица описания графа
+                            <TableContainer component={Paper}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>#</TableCell>
+                                            <TableCell align="right"> ID</TableCell>
+                                            <TableCell align="right">Имя</TableCell>
+                                            <TableCell align="right">Тип</TableCell>
+                                            <TableCell align="right">Размеры</TableCell>
+                                            <TableCell align="right">Верхний и.</TableCell>
+                                            <TableCell align="right">Нижний и.</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {listStorage.map((row) => (
+                                            <TableRow key={row.name}>
+                                                <TableCell component="th" scope="row">{row.id}</TableCell>
+                                                <TableCell align="right">{row.id}</TableCell>
+                                                <TableCell align="right">{row.name}</TableCell>
+                                                <TableCell align="right">{row.type}</TableCell>
+                                                <TableCell align="right">{row.x} : {row.y}</TableCell>
+                                                <TableCell align="right">{row.upperIndex}</TableCell>
+                                                <TableCell align="right">{row.lowerIndex}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                    </TabContext>
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+                                id="filled-multiline-static"
+                                label="Описание устройства"
+                                multiline
+                                rows={20}
+                                fullWidth
+                                defaultValue={"xxx"}
+                                variant="filled"
+                            />
+                </Grid>
+            </Grid>
 
 
             <Grid container rowSpacing={1} columnSpacing={2}>
