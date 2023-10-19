@@ -53,9 +53,9 @@ export default function File() {
     };
 
     const subPagesArray = ['Начальная страница', 'Описание устройства',
-        'Редактор', 'Схемы', 'Конструктивные элементы', 'Показатели и функции']
+        'Редактор', 'Схемы', 'Конструктивные элементы', ]   // 'Показатели и функции'
     const subPagesLinksArray = ['mainPage', 'deviceInformation', 'schemeDesigner', 'schemes', 
-        'constructionElements', 'valueFunctions',]
+        'constructionElements', ]       // 'valueFunctions',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
 
     const iconsList = [<AddIcon/>, <FileOpenIcon/>,<FirstPageIcon/>,<CloseIcon/>,<SaveIcon/>,<PrintIcon/>,<HelpIcon/>,<ExitToAppIcon/>];
@@ -105,7 +105,7 @@ export default function File() {
                         <Route path='schemeDesigner' element={<SchemeDesigner />} />
                         <Route path='schemes' element={<Schemes />} />
                         <Route path='constructionElements' element={<ConstructionElements />} />
-                        <Route path='valueFunctions' element={<ValueFunctions />} />
+                        {/* <Route path='valueFunctions' element={<ValueFunctions />} /> */}
                     </Routes>
 
                 </Grid>
