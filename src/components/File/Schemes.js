@@ -10,7 +10,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
-import Stack from '@mui/material/Stack';
+
 import Grid from '@mui/material/Grid';
 
 
@@ -26,10 +26,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import TableCustom from '../SubComponents/TableCustom'
+import SaveButton from '../SubComponents/SaveButton';
+
 export default function Schemes() {
     const [value, setValue] = React.useState('1');
+    const [value2, setValue2] = React.useState('1');
     const handleChange = (event, newValue) => {
         setValue(newValue);
+    };
+
+    const handleChange2 = (event, newValue) => {
+        setValue2(newValue);
     };
 
     const schemasStorageInitial = [];
@@ -70,7 +78,7 @@ export default function Schemes() {
     ];
 
     return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%', maxHeight: '100%' }} >
 
             <div>
                 <h2>Схемы</h2>
@@ -80,7 +88,7 @@ export default function Schemes() {
                 <Grid item xs={12}>
                     <ImageList sx={{
                         width: "100%",
-                        height: 600,
+                        height: 500,
                         // Promote the list into its own layer in Chrome. 
                         // This costs memory, but helps keeping high FPS.
                         transform: 'translateZ(0)',
@@ -107,18 +115,17 @@ export default function Schemes() {
             </Grid>
 
 
-            <Grid sx={{
-                // display: 'flex', 
-                // flexWrap: 'wrap', 
-                maxWidth: '250',
-                height: '250',
-                maxHeight: '250',
-            }}
-                container
-                rowSpacing={1}
-                columnSpacing={2}>
+            <Grid container rowSpacing={1} columnSpacing={2}>
                 <Grid item xs={6}>
-                    <TabContext value={value}>
+                    <TabContext
+                        sx={{
+                            // display: 'flex', 
+                            // flexWrap: 'wrap', 
+                            //maxWidth: '250',
+                            height: 250,
+                            maxHeight: '250',
+                        }}
+                        value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList onChange={handleChange} aria-label="lab API tabs example">
                                 <Tab label="Схема" value="1" />
@@ -126,59 +133,47 @@ export default function Schemes() {
                             </TabList>
                         </Box>
                         <TabPanel value="1">
-                            <h4>
-                                {itemDataFPD[0].title}
-                            </h4>
-                            <img
-                                srcSet={`${itemDataFPD[0].img}`}  //?w=250&h=250&fit=crop&auto=format&dpr=2 2x
-                                src={`${itemDataFPD[0].img}`}  // ?w=250&h=250&fit=crop&auto=format
-                                alt={itemDataFPD[0].title}
-                                loading="lazy"
-                            />
+                            <ImageList sx={{
+                                width: "100%",
+                                height: 300,
+                                transform: 'translateZ(0)',
+                                display: "block",
+                            }}
+                                rowHeight={200}
+                                gap={10}>
+
+                                <ImageListItem key={itemDataFPD[0].img} cols={1} rows={1}>
+                                    <img
+                                        srcSet={`${itemDataFPD[0].img}`} //?w=500&h=500&fit=crop&auto=format&dpr=2 2x
+                                        src={`${itemDataFPD[0].img}`}  // ?w=250&h=250&fit=crop&auto=format
+                                        alt={itemDataFPD[0].title}
+                                        loading="lazy"
+                                    />
+                                    <ImageListItemBar
+                                        title={itemDataFPD[0].title}
+                                        position="top"
+                                    />
+                                </ImageListItem>
+
+                            </ImageList>
+
                         </TabPanel>
                         <TabPanel value="2">
                             Таблица описания графа
-                            <TableContainer component={Paper}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>#</TableCell>
-                                            <TableCell align="right"> ID</TableCell>
-                                            <TableCell align="right">Имя</TableCell>
-                                            <TableCell align="right">Тип</TableCell>
-                                            <TableCell align="right">Размеры</TableCell>
-                                            <TableCell align="right">Верхний и.</TableCell>
-                                            <TableCell align="right">Нижний и.</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {listStorage.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell component="th" scope="row">{row.id}</TableCell>
-                                                <TableCell align="right">{row.id}</TableCell>
-                                                <TableCell align="right">{row.name}</TableCell>
-                                                <TableCell align="right">{row.type}</TableCell>
-                                                <TableCell align="right">{row.x} : {row.y}</TableCell>
-                                                <TableCell align="right">{row.upperIndex}</TableCell>
-                                                <TableCell align="right">{row.lowerIndex}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <TableCustom></TableCustom>
                         </TabPanel>
                     </TabContext>
                 </Grid>
                 <Grid item xs={6}>
-                <TextField
-                                id="filled-multiline-static"
-                                label="Описание устройства"
-                                multiline
-                                rows={20}
-                                fullWidth
-                                defaultValue={"xxx"}
-                                variant="filled"
-                            />
+                    <TextField
+                        id="filled-multiline-static"
+                        label="Описание устройства"
+                        multiline
+                        rows={20}
+                        fullWidth
+                        defaultValue={"xxx"}
+                        variant="filled"
+                    />
                 </Grid>
             </Grid>
 
@@ -194,67 +189,61 @@ export default function Schemes() {
                 rowSpacing={1}
                 columnSpacing={2}>
                 <Grid item xs={6}>
-                    <TabContext value={value}>
+                <TabContext
+                        sx={{
+                            height: 250,
+                            maxHeight: '250',
+                        }}
+                        value={value2}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example">
+                            <TabList onChange={handleChange2} aria-label="lab API tabs example">
                                 <Tab label="Схема" value="1" />
                                 <Tab label="Описание" value="2" />
                             </TabList>
                         </Box>
                         <TabPanel value="1">
-                            <h4>
-                                {itemDataFPD[1].title}
-                            </h4>
-                            <img
-                                srcSet={`${itemDataFPD[1].img}`}  //?w=250&h=250&fit=crop&auto=format&dpr=2 2x
-                                src={`${itemDataFPD[1].img}`}  // ?w=250&h=250&fit=crop&auto=format
-                                alt={itemDataFPD[1].title}
-                                loading="lazy"
-                            />
+                            <ImageList sx={{
+                                width: "100%",
+                                height: 300,
+                                transform: 'translateZ(0)',
+                                display: "block",
+                            }}
+                                rowHeight={200}
+                                gap={10}>
+
+                                <ImageListItem key={itemDataFPD[1].img} cols={1} rows={1}>
+                                    <img
+                                        srcSet={`${itemDataFPD[1].img}`} //?w=500&h=500&fit=crop&auto=format&dpr=2 2x
+                                        src={`${itemDataFPD[1].img}`}  // ?w=250&h=250&fit=crop&auto=format
+                                        alt={itemDataFPD[1].title}
+                                        loading="lazy"
+                                    />
+                                    <ImageListItemBar
+                                        title={itemDataFPD[1].title}
+                                        position="top"
+                                    />
+                                </ImageListItem>
+
+                            </ImageList>
+
                         </TabPanel>
                         <TabPanel value="2">
                             Таблица описания графа
-                            <TableContainer component={Paper}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>#</TableCell>
-                                            <TableCell align="right"> ID</TableCell>
-                                            <TableCell align="right">Имя</TableCell>
-                                            <TableCell align="right">Тип</TableCell>
-                                            <TableCell align="right">Размеры</TableCell>
-                                            <TableCell align="right">Верхний и.</TableCell>
-                                            <TableCell align="right">Нижний и.</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {listStorage.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell component="th" scope="row">{row.id}</TableCell>
-                                                <TableCell align="right">{row.id}</TableCell>
-                                                <TableCell align="right">{row.name}</TableCell>
-                                                <TableCell align="right">{row.type}</TableCell>
-                                                <TableCell align="right">{row.x} : {row.y}</TableCell>
-                                                <TableCell align="right">{row.upperIndex}</TableCell>
-                                                <TableCell align="right">{row.lowerIndex}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <TableCustom></TableCustom>
                         </TabPanel>
                     </TabContext>
                 </Grid>
                 <Grid item xs={6}>
-                <TextField
-                                id="filled-multiline-static"
-                                label="Описание устройства"
-                                multiline
-                                rows={20}
-                                fullWidth
-                                defaultValue={"xxx"}
-                                variant="filled"
-                            />
+                    <h3>Описание устрйоства </h3> 
+                    <TextField
+                        id="filled-multiline-static"
+                        label="Описание устройства"
+                        multiline
+                        rows={20}
+                        fullWidth
+                        defaultValue={"xxx"}
+                        variant="filled"
+                    />
                 </Grid>
             </Grid>
 
