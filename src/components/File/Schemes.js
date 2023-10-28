@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import axios from 'axios';
-import { Box, Tabs, Tab, dividerClasses } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 
 import TextField from '@mui/material/TextField';
-import { FormLabel, FormControl, FormGroup, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -18,13 +18,8 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
+import Stack from '@mui/material/Stack';
 
 import TableCustom from '../SubComponents/TableCustom'
 import SaveButton from '../SubComponents/SaveButton';
@@ -95,7 +90,6 @@ export default function Schemes() {
                     }}
                         rowHeight={200}
                         gap={10}>
-
                         {itemData.map((item) => (
                             <ImageListItem key={item.img} cols={1} rows={itemData.length}>
                                 <img
@@ -109,8 +103,10 @@ export default function Schemes() {
                                     position="top"
                                 />
                             </ImageListItem>
+
                         ))}
                     </ImageList>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
                 </Grid>
             </Grid>
 
@@ -122,8 +118,8 @@ export default function Schemes() {
                             // display: 'flex', 
                             // flexWrap: 'wrap', 
                             //maxWidth: '250',
-                            height: 250,
-                            maxHeight: '250',
+                            // height: 350,
+                            // maxHeight: '250',
                         }}
                         value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -135,13 +131,12 @@ export default function Schemes() {
                         <TabPanel value="1">
                             <ImageList sx={{
                                 width: "100%",
-                                height: 300,
+                                height: 350,
                                 transform: 'translateZ(0)',
                                 display: "block",
                             }}
                                 rowHeight={200}
                                 gap={10}>
-
                                 <ImageListItem key={itemDataFPD[0].img} cols={1} rows={1}>
                                     <img
                                         srcSet={`${itemDataFPD[0].img}`} //?w=500&h=500&fit=crop&auto=format&dpr=2 2x
@@ -154,8 +149,8 @@ export default function Schemes() {
                                         position="top"
                                     />
                                 </ImageListItem>
-
                             </ImageList>
+
 
                         </TabPanel>
                         <TabPanel value="2">
@@ -163,8 +158,23 @@ export default function Schemes() {
                             <TableCustom></TableCustom>
                         </TabPanel>
                     </TabContext>
+                    {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
                 </Grid>
                 <Grid item xs={6}>
+                    <Stack
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+                        <h3>Описание устрйоства </h3>
+                        <Divider orientation="vertical" variant="middle" flexItem />
+
+                        <SaveButton></SaveButton>
+                    </Stack>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
+
+
                     <TextField
                         id="filled-multiline-static"
                         label="Описание устройства"
@@ -181,18 +191,18 @@ export default function Schemes() {
             <Grid sx={{
                 // display: 'flex', 
                 // flexWrap: 'wrap', 
-                maxWidth: '250',
-                height: '250',
-                maxHeight: '250',
+                // maxWidth: '250',
+                // height: '250',
+                // maxHeight: '250',
             }}
                 container
                 rowSpacing={1}
                 columnSpacing={2}>
                 <Grid item xs={6}>
-                <TabContext
+                    <TabContext
                         sx={{
-                            height: 250,
-                            maxHeight: '250',
+                            // height: 350,
+                            // maxHeight: '350',
                         }}
                         value={value2}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -204,7 +214,7 @@ export default function Schemes() {
                         <TabPanel value="1">
                             <ImageList sx={{
                                 width: "100%",
-                                height: 300,
+                                height: 350,
                                 transform: 'translateZ(0)',
                                 display: "block",
                             }}
@@ -234,7 +244,17 @@ export default function Schemes() {
                     </TabContext>
                 </Grid>
                 <Grid item xs={6}>
-                    <h3>Описание устрйоства </h3> 
+                    <Stack
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+                        <h3>Описание устрйоства </h3>
+                        <Divider orientation="vertical" variant="middle" flexItem />
+                        <SaveButton></SaveButton>
+                    </Stack>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
                     <TextField
                         id="filled-multiline-static"
                         label="Описание устройства"
