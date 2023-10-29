@@ -73,13 +73,14 @@ export default function Schemes() {
     ];
 
     return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%', maxHeight: '100%' }} >
+         <Box sx={{ display: 'flex', flexWrap: 'wrap', 
+         maxWidth: '100%', maxHeight: '100%' }} >
 
             <div>
                 <h2>Схемы</h2>
             </div>
 
-            <Grid container rowSpacing={1} columnSpacing={2}>
+            <Grid container rowSpacing={10} columnSpacing={2}>
                 <Grid item xs={12}>
                     <ImageList sx={{
                         width: "100%",
@@ -111,17 +112,9 @@ export default function Schemes() {
             </Grid>
 
 
-            <Grid container rowSpacing={1} columnSpacing={2}>
+            <Grid sx={{ pt:1 }} container rowSpacing={10} columnSpacing={2}>
                 <Grid item xs={6}>
-                    <TabContext
-                        sx={{
-                            // display: 'flex', 
-                            // flexWrap: 'wrap', 
-                            //maxWidth: '250',
-                            // height: 350,
-                            // maxHeight: '250',
-                        }}
-                        value={value}>
+                    <TabContext value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList onChange={handleChange} aria-label="lab API tabs example">
                                 <Tab label="Схема" value="1" />
@@ -172,7 +165,7 @@ export default function Schemes() {
 
                         <SaveButton></SaveButton>
                     </Stack>
-                    <Divider orientation="horizontal" variant="middle" flexItem />
+                    {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
 
 
                     <TextField
@@ -185,26 +178,13 @@ export default function Schemes() {
                         variant="filled"
                     />
                 </Grid>
+                <Divider orientation="horizontal" variant="middle" flexItem />
             </Grid>
 
 
-            <Grid sx={{
-                // display: 'flex', 
-                // flexWrap: 'wrap', 
-                // maxWidth: '250',
-                // height: '250',
-                // maxHeight: '250',
-            }}
-                container
-                rowSpacing={1}
-                columnSpacing={2}>
+            <Grid sx={{ pt:1}} container rowSpacing={1} columnSpacing={2}>
                 <Grid item xs={6}>
-                    <TabContext
-                        sx={{
-                            // height: 350,
-                            // maxHeight: '350',
-                        }}
-                        value={value2}>
+                    <TabContext value={value2}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList onChange={handleChange2} aria-label="lab API tabs example">
                                 <Tab label="Схема" value="1" />
@@ -233,9 +213,7 @@ export default function Schemes() {
                                         position="top"
                                     />
                                 </ImageListItem>
-
                             </ImageList>
-
                         </TabPanel>
                         <TabPanel value="2">
                             Таблица описания графа
@@ -267,7 +245,7 @@ export default function Schemes() {
                 </Grid>
             </Grid>
 
-        </Box>
+         </Box> 
 
 
 
