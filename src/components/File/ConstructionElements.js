@@ -23,6 +23,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchButton from '../SubComponents/SearchButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import FolderIcon from '@mui/icons-material/Folder';
+import Typography from '@mui/material/Typography';
+import SquareFootIcon from '@mui/icons-material/SquareFoot';
+
 export default function ConstructionElements() {
     const [value, setValue] = React.useState('1');
     const handleChange = (event, newValue) => {
@@ -41,6 +51,16 @@ export default function ConstructionElements() {
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
+    const templateFoundElements = ['element 1', 'element 2', ' element 3']
+
+    function generate(element) {
+        return [0, 1, 2].map((value) =>
+            React.cloneElement(element, {
+                key: value,
+            }),
+        );
+    }
+
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
 
@@ -48,7 +68,8 @@ export default function ConstructionElements() {
                 <h2>Конструктивные элементы</h2>
             </div>
 
-            <Grid sx={{ pt : 1}}container rowSpacing={1} columnSpacing={2}>
+
+            <Grid sx={{ pt: 1 }} container rowSpacing={1} columnSpacing={2}>
                 {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
                 <Grid item xs={12}>
                     <Stack
@@ -83,40 +104,65 @@ export default function ConstructionElements() {
                     </Stack>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
+                    <Grid item xs={4}>
+                        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                            Результаты поиска
+                        </Typography>
+                        <List sx={{ width: '100%', maxWidth: 360, 
+                        // bgcolor: 'background.paper'
+                         }}>
+                            {templateFoundElements.map((row) => (
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <SquareFootIcon />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={row}
+                                        secondary={row}
+                                    />
+                                </ListItem>
+                            ))
+                            }
+                        </List>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell align="center">Название</TableCell>
+                                        <TableCell align="center">Схема</TableCell>
+                                        <TableCell align="center">Номер патента</TableCell>
+                                        <TableCell align="center">Ресурс</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {tableStorage.map((row) => (
+                                        <TableRow
+                                            key={row.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell >
+                                                {row.number}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
+                                            <TableCell align="left"><img src={row.scheme} /></TableCell>
+                                            <TableCell align="left">{row.patentNumber}</TableCell>
+                                            <TableCell align="left">{row.sourceURL}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                    </Grid>
 
                 </Grid>
 
                 <Grid item xs={12}>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>#</TableCell>
-                                    <TableCell align="center">Название</TableCell>
-                                    <TableCell align="center">Схема</TableCell>
-                                    <TableCell align="center">Номер патента</TableCell>
-                                    <TableCell align="center">Ресурс</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableStorage.map((row) => (
-                                    <TableRow
-                                        key={row.name}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell >
-                                            {row.number}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                        <TableCell align="left"><img src={row.scheme} /></TableCell>
-                                        <TableCell align="left">{row.patentNumber}</TableCell>
-                                        <TableCell align="left">{row.sourceURL}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+
                 </Grid>
 
             </Grid>
