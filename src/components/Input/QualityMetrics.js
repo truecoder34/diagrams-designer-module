@@ -64,7 +64,7 @@ export default function QualityMetrics() {
         console.log("New ", tableStorage)
 
         setElementName('');
-        setElementCount(tableStorage.length + 1)
+        setElementCount(tableStorage.length)
     };
 
 
@@ -83,6 +83,7 @@ export default function QualityMetrics() {
             }
         }
 
+        setElementCount(localListStorage.length)
         setListStorage(localListStorage);
         console.log("New list storage ", localListStorage)
     }

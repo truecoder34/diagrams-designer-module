@@ -87,6 +87,7 @@ export default function ElementaryFunctions() {
             }
         }
 
+        setElementCount(localListStorage.length)
         setListStorage(localListStorage);
         console.log("New list storage ", localListStorage)
     }
