@@ -17,6 +17,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 
 
@@ -37,6 +38,17 @@ export default function ConstructionElements() {
             elementaryFunctions, qualityMetrics, expertsScore
         };
     }
+
+    const tableStorageReducedInitial = [
+        createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
+            'RU № 2 203 165 B23С 5/28', 'ссылка на ресурс 1'),
+        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1', 'ссылка на ресурс 2'),
+        createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Устройство_для_Подачи_Охл_жидкости_RU_№994214.png',
+            'SU № 1454651 B23Q 11/10', 'ссылка на ресурс 3'),
+    ]
+    const [tableStorageReduced, setListStorageReduced] = React.useState(tableStorageReducedInitial);
+
+
     const tableStorageInitial = [
         createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
             'RU № 2 203 165 B23С 5/28',
@@ -60,8 +72,45 @@ export default function ConstructionElements() {
             <h2>Конструктивные элементы</h2>
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
-                <Grid container rowSpacing={1} columnSpacing={2}   >
-                    <Grid item xs={12}> </Grid>
+                <Grid container sx={{ pl: 4, pl: 4 }} rowSpacing={1} columnSpacing={2}   >
+                    <Grid container rowSpacing={1} columnSpacing={2} xs={12}>
+                        <Grid item xs={4}>
+                            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                                Список отобранных конструктивных элементов
+                            </Typography>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>#</TableCell>
+                                            <TableCell align="center">Название</TableCell>
+                                            <TableCell align="center">Номер патента</TableCell>
+                                            <TableCell align="center">Ресурс</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {tableStorageReduced.map((row) => (
+                                            <TableRow
+                                                key={row.name}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell >
+                                                    {row.number}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
+                                                <TableCell align="left">{row.patentNumber}</TableCell>
+                                                <TableCell align="left">{row.sourceURL}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+
+                        </Grid>
+                        <Grid item xs={8}>
+                            Ввод данных
+                        </Grid>
+                    </Grid>
                     <Grid item xs={12}> </Grid>
                     <Grid item xs={12}> </Grid>
                 </Grid>
@@ -71,7 +120,7 @@ export default function ConstructionElements() {
 
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
-                <Grid container rowSpacing={1} columnSpacing={2}>
+                <Grid sx={{ pl: 4, pl: 4 }} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={12}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

@@ -69,7 +69,7 @@ export default function ElementaryFunctions() {
         console.log("New ", tableStorage)
 
         setElementName('');
-        setElementCount(tableStorage.length + 1)
+        setElementCount(tableStorage.length)
     };
 
     const selectRow = (rowName) => {
