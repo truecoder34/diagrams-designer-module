@@ -18,7 +18,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Slider from '@mui/material/Slider';
+
+import AddButton from '../SubComponents/AddButton';
 
 
 import Stack from '@mui/material/Stack';
@@ -27,9 +31,25 @@ import Grid from '@mui/material/Grid';
 
 export default function ConstructionElements() {
     const [value, setValue] = React.useState('1');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+
+
+    const handleChange = (event) => {
+        setQualityMetric(event.target.value);
     };
+
+    const [constructionElementName, setConstructionElementName] = React.useState('');
+    const [qualityMetric, setQualityMetric] = React.useState('');
+
+
+    const addConstructionElement = (event) => {
+        // TODO :: Добавить 
+        event.preventDefault();
+
+    }
+    const selectConstructionElement = (constructionElementName) => {
+        setConstructionElementName(constructionElementName)
+        console.log("[DEBUG]: active scheme new : ", constructionElementName)
+    }
 
     function createData(number, name, scheme, patentNumber,
         elementaryFunctions, qualityMetrics, expertsScore) {
@@ -38,6 +58,25 @@ export default function ConstructionElements() {
             elementaryFunctions, qualityMetrics, expertsScore
         };
     }
+
+    function createDataCQualiryMetric(number, name, description) {
+        return { number, name, description };
+    }
+
+    const qualityMetricsInitial = [
+        createDataCQualiryMetric(1, 'Эффективность смазывающего воздействия', 'дополнительная информация..'),
+        createDataCQualiryMetric(2, 'Эффективность охлаждающего воздействия', 'дополнительная информация..'),
+        createDataCQualiryMetric(3, 'Рассход электроэнергии', 'дополнительная информация..'),
+        createDataCQualiryMetric(4, 'Вероятность безотказной работы', 'дополнительная информация..'),
+        createDataCQualiryMetric(5, 'Срок службы', 'дополнительная информация..'),
+        createDataCQualiryMetric(6, 'Трудоемкость изготовления', 'дополнительная информация..'),
+        createDataCQualiryMetric(7, 'Коэффициент стандартизации и унификации', 'дополнительная информация..'),
+        createDataCQualiryMetric(8, 'Безопсность', 'дополнительная информация..'),
+        createDataCQualiryMetric(9, 'Показатель патентной защиты', 'дополнительная информация..'),
+        createDataCQualiryMetric(10, 'Показатель патентной чвстоты', 'дополнительная информация..'),
+        createDataCQualiryMetric(11, 'Габаритные размеры', 'дополнительная информация..'),
+        createDataCQualiryMetric(12, 'Масса', 'дополнительная информация..'),
+    ]
 
     const tableStorageReducedInitial = [
         createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
@@ -67,14 +106,19 @@ export default function ConstructionElements() {
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
+
+    function valuetext(value) {
+        return `${value}`;
+      }
+
     return (
         <div>
             <h2>Конструктивные элементы</h2>
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
-                <Grid container sx={{ pl: 4, pl: 4 }} rowSpacing={1} columnSpacing={2}   >
+                <Grid container sx={{ pl: 4, pr: 4 }} rowSpacing={1} columnSpacing={2}   >
                     <Grid container rowSpacing={1} columnSpacing={2} xs={12}>
-                        <Grid item xs={4}>
+                        <Grid sx={{ pl: 2, pr: 2 }} item xs={4}>
                             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
                                 Список отобранных конструктивных элементов
                             </Typography>
@@ -91,6 +135,8 @@ export default function ConstructionElements() {
                                     <TableBody>
                                         {tableStorageReduced.map((row) => (
                                             <TableRow
+                                                onClick={() => selectConstructionElement(row.name)}
+                                                hover
                                                 key={row.name}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
@@ -105,10 +151,68 @@ export default function ConstructionElements() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-
                         </Grid>
-                        <Grid item xs={8}>
-                            Ввод данных
+
+                        {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+
+                        <Grid sx={{ pl: 2, pr: 2 }} item xs={8}>
+                            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                                Ввод данных
+                            </Typography>
+
+                            <Stack
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="flex-start"
+                                spacing={2}
+                            >
+                                <TextField id="outlined-basic" label="Название конструктивного элемента" variant="outlined"
+                                    fullWidth
+                                    value={constructionElementName}
+                                    onChange={e => setConstructionElementName(e.target.value)} />
+                                <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton>
+                            </Stack>
+
+                            <Stack
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="flex-start"
+                                spacing={2}
+                            >
+
+                                <InputLabel id="demo-simple-select-autowidth-label">Показатель качества </InputLabel>
+                                <Select sx={{ mt: 4, mb: 2 }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={qualityMetric}
+                                    label="Показатели качества"
+                                    onChange={handleChange}
+                                    defaultValue=""
+                                >
+                                    {qualityMetricsInitial.map((row) => (
+                                        <MenuItem value={row.number}>{row.name}</MenuItem>
+                                    ))}
+
+                                </Select>
+
+                                <Slider
+                                    aria-label="Значение показателя качества"
+                                    defaultValue={3}
+                                    getAriaValueText={valuetext}
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks
+                                    min={1}
+                                    max={10}
+                                />
+                                {/* <Slider defaultValue={3} step={1} marks min={1} max={10} disabled /> */}
+                                {/* <TextField id="outlined-basic" label="Название конструктивного элемента" variant="outlined"
+                                    fullWidth
+                                    value={constructionElementName}
+                                    onChange={e => setConstructionElementName(e.target.value)} />
+                                <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton> */}
+                            </Stack>
+
                         </Grid>
                     </Grid>
                     <Grid item xs={12}> </Grid>

@@ -22,6 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import SearchButton from '../SubComponents/SearchButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import AddButton from '../SubComponents/AddButton';
 
 
 import List from '@mui/material/List';
@@ -61,6 +62,12 @@ export default function ConstructionElements() {
         );
     }
 
+    const addConstructionElement = (event) => {
+        // TODO :: Добавить 
+        event.preventDefault();
+
+    }
+
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
 
@@ -92,7 +99,7 @@ export default function ConstructionElements() {
                                 ),
                             }}
                         />
-                        <Divider orientation="vertical" variant="middle" flexItem />
+                        < Divider orientation="vertical" variant="middle" flexItem />
                         <TextField
                             id="outlined-patent-name-input"
                             label="Номер патента"
@@ -121,6 +128,7 @@ export default function ConstructionElements() {
                                         primary={row}
                                         secondary={row}
                                     />
+                                     <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton>
                                 </ListItem>
                             ))
                             }
