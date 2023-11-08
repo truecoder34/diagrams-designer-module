@@ -18,6 +18,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 import Stack from '@mui/material/Stack';
@@ -26,9 +28,7 @@ import Grid from '@mui/material/Grid';
 
 export default function ElementaryFunctions() {
     const [value, setValue] = React.useState('1');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+
     function createData(number, name, description) {
         return { number, name, description };
     }
@@ -46,7 +46,7 @@ export default function ElementaryFunctions() {
         createData(10, 'Подача распыленной жидкости на поверхность детали и инструмента', 'дополнительная информация..'),
         createData(11, 'Подвод воздуха к соплу  эжектора из цеховой пневмосети', 'дополнительная информация..'),
         createData(12, 'Подвод жидкости в смесительную камеру эжектора', 'дополнительная информация..'),
-        
+
         createData(13, 'Подача воздуха в ионизатор', 'дополнительная информация..'),
         createData(14, 'Изоляция электрического разряда в ионизаторе от станочного приспособления', 'дополнительная информация..'),
         createData(15, 'Защита ионизатор от утечеки ионизированного воздуха', 'дополнительная информация..'),
@@ -57,6 +57,7 @@ export default function ElementaryFunctions() {
 
     const [elementCount, setElementCount] = useState(tableStorage.length);
 
+    const [rowName, setRowName] = React.useState('');
 
     const addRow = () => {
         console.log("New name :: ", elementName)
@@ -68,10 +69,28 @@ export default function ElementaryFunctions() {
         console.log("New ", tableStorage)
 
         setElementName('');
-        setElementCount(tableStorage.length + 1)
+        setElementCount(tableStorage.length)
+    };
+
+    const selectRow = (rowName) => {
+        setElementName(rowName)
+        console.log("[DEBUG]: active scheme new : ", rowName)
     };
 
 
+    const deleteRow = (rowName) => {
+        let localListStorage = [...tableStorage];
+        console.log("Current list storage ", tableStorage)
+        for (let i = 0; i < localListStorage.length; i++) {
+            if (localListStorage[i].name === rowName) {
+                localListStorage.splice(i, 1);
+            }
+        }
+
+        setElementCount(localListStorage.length)
+        setListStorage(localListStorage);
+        console.log("New list storage ", localListStorage)
+    }
 
 
     return (
@@ -85,7 +104,7 @@ export default function ElementaryFunctions() {
                             <FormLabel>
                                 <h4>Почередно введите элементарные функции (не более 30)</h4>
                             </FormLabel>
-                            <br/>
+                            <br />
                             <FormGroup row >
                                 <Grid item xs={11}>
                                     <TextField fullWidth
@@ -101,7 +120,7 @@ export default function ElementaryFunctions() {
                                     </Button>
                                 </Grid>
                             </FormGroup>
-                            <br/>
+                            <br />
                         </FormControl>
 
                     </Grid>
@@ -111,12 +130,12 @@ export default function ElementaryFunctions() {
                             // divider={<Divider orientation="vertical" flexItem />}
                             spacing={1}
                         >
-                            <h4>Введено элементарных функций :</h4> 
+                            <h4>Введено элементарных функций :</h4>
                             <Divider orientation="vertical" flexItem />
-                            <Chip label={elementCount}  />
-                            
+                            <Chip label={elementCount} />
+
                         </Stack>
-                        <br/>
+                        <br />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -127,19 +146,25 @@ export default function ElementaryFunctions() {
                                         <TableCell>#</TableCell>
                                         <TableCell align="center">Название</TableCell>
                                         <TableCell align="center">Дополнительная информация</TableCell>
+                                        <TableCell align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {tableStorage.map((row) => (
                                         <TableRow
+                                            hover
                                             key={row.name}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            onClick={() => selectRow(row.name)}
                                         >
                                             <TableCell >
                                                 {row.number}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
                                             <TableCell align="left">{row.description}</TableCell>
+                                            <TableCell align="right">
+                                                <DeleteIcon onClick={() => deleteRow(row.name)} />
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

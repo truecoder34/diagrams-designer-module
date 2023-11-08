@@ -116,7 +116,7 @@ export default function SchemeDesigner() {
                                     value={schemeName}
                                     onChange={e => setSchemeName(e.target.value)} />
 
-                                <AddButton onPress={addSchema}></AddButton>
+                                <AddButton onPress={addSchema} name={"Создать"}></AddButton>
                             </Stack>
 
                         </Grid>

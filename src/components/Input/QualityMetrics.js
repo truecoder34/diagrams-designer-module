@@ -18,7 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Stack from '@mui/material/Stack';
 
@@ -64,9 +64,29 @@ export default function QualityMetrics() {
         console.log("New ", tableStorage)
 
         setElementName('');
-        setElementCount(tableStorage.length + 1)
+        setElementCount(tableStorage.length)
     };
 
+
+    const selectRow = (rowName) => {
+        setElementName(rowName)
+        console.log("[DEBUG]: active scheme new : ", rowName)
+    };
+
+
+    const deleteRow = (rowName) => {
+        let localListStorage = [...tableStorage];
+        console.log("Current list storage ", tableStorage)
+        for (let i = 0; i < localListStorage.length; i++) {
+            if (localListStorage[i].name === rowName) {
+                localListStorage.splice(i, 1);
+            }
+        }
+
+        setElementCount(localListStorage.length)
+        setListStorage(localListStorage);
+        console.log("New list storage ", localListStorage)
+    }
 
 
 
@@ -122,19 +142,25 @@ export default function QualityMetrics() {
                                         <TableCell>#</TableCell>
                                         <TableCell align="center">Название</TableCell>
                                         <TableCell align="center">Дополнительная информация</TableCell>
+                                        <TableCell align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {tableStorage.map((row) => (
                                         <TableRow
+                                            hover
                                             key={row.name}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            onClick={() => selectRow(row.name)}
                                         >
                                             <TableCell >
                                                 {row.number}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
                                             <TableCell align="left">{row.description}</TableCell>
+                                            <TableCell align="right">
+                                                <DeleteIcon onClick={() => deleteRow(row.name)} />
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
