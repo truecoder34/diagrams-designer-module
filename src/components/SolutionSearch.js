@@ -37,6 +37,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AddButton from './SubComponents/AddButton';
+import LinearProgress from '@mui/material/LinearProgress';
+
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -77,28 +81,30 @@ export default function SolutionSearch() {
     );
 
 
-    const addConstructionElement = () => {
+    const checkAllData = () => {
 
     }
+
+    const startSearch = () => {
+
+    }
+
 
     return (
         <Box sx={{ width: '100%', typography: 'body1', pl: 4, pr: 4 }}>
             <div>
                 <h2>Поиск решений</h2>
             </div>
+
+
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
+                Проверка наличия исходных данных
+            </Typography>
             <Grid xs={12} container rowSpacing={1} columnSpacing={2}   >
-                <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-                    Проверка наличия исходных данных
-                </Typography>
-
-                <Grid item xs={2}>
-                    <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton>
-                </Grid>
-
-                <Grid item xs={10}>
+                <Grid item xs={6}>
                     <Typography sx={{
                         // mt: 4, mb: 2 
-                    }} variant="h7" component="div">
+                    }} variant="h6" component="div">
                         Информация о ходе проверки
                     </Typography>
 
@@ -116,24 +122,80 @@ export default function SolutionSearch() {
                         {children}
                     </div>
                 </Grid>
-            </Grid>
-
-
-            <Grid container rowSpacing={1} columnSpacing={2}   >
-                <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-                    Поиск технических решений
-                </Typography>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <Grid item xs={4}>
+                    <AddButton onPress={checkAllData} name={"Проверить"}></AddButton>
+                </Grid>
                 <Grid item xs={2}>
-
                 </Grid>
 
-                <Grid item xs={10}>
-
-                </Grid>
+                {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
             </Grid>
 
 
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
+                Поиск технических решений
+            </Typography>
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}   >
+                <Grid item xs={7} container>
+                    <Grid xs={4} >
+                        <Typography sx={{}} variant="h6" component="div">
+                            Информация о процессе
+                        </Typography>
+                    </Grid>
+                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+                    <Grid xs={8} >
+                        <LinearProgress />
+                    </Grid>
 
+                    <Grid xs={6} sx={{ mt: 2, mb: 2}}>
+                        <Typography sx={{}} variant="h7" component="div">
+                            Количество обрабытваемых тенических решний
+                        </Typography>
+                    </Grid>
+                    
+                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                        <TextField
+                            id="filled-number"
+                            label="Количество"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="filled"
+                        />
+                    </Grid>
+
+                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                        <Typography sx={{}} variant="h7" component="div">
+                            Количество сформированных списков конструктивных элементов
+                        </Typography>
+                    </Grid>
+                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                        <TextField
+                            id="filled-number"
+                            label="Количество"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="filled"
+                        />
+                    </Grid>
+
+                </Grid>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                
+                <Grid item xs={3}>
+                    <AddButton onPress={startSearch} name={"Запустить"}></AddButton>
+                </Grid>
+                <Grid item xs={1}>
+                </Grid>
+
+                {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
+            </Grid>
 
 
 
