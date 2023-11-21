@@ -28,16 +28,15 @@ import { Tabs, Tab, AppBar } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import SolutionSearch from './components/SolutionSearch';
 
 export function App() {
   const handleChange = (event, newValue) => {
     console.log("New value refering :: ", newValue.toString())
     setValue(newValue.toString());
 };
-const pagesArray = ['Файл', 'Ввод даных',
-    'Поиск решений', 'Значение показателей', 'Вывод результатов', 'Таблицы']
-const pagesLinksArray = ['file/*', 'inputData/*',
-    'constructionElements', 'valueChange', 'tables', 'tables']
+const pagesArray = ['Файл', 'Ввод даных', 'Поиск решений', 'Вывод результатов']
+const pagesLinksArray = ['file/*', 'inputData/*', 'solutionSearch', 'results',]
 const [value, setValue] = React.useState(pagesLinksArray[0]);
   return (
 
@@ -64,7 +63,8 @@ const [value, setValue] = React.useState(pagesLinksArray[0]);
           <Route path="/" element={<Create />} />
           <Route path="/file/*" element={<File />} />
           <Route path="/inputData/*" element={<InputData />} />
-          <Route path='/tables' element={<Tables />} />
+          <Route path="/solutionSearch" element={<SolutionSearch />} />
+          <Route path='/results' element={<Tables />} />
         </Routes>
 
       </div>

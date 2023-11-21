@@ -165,6 +165,7 @@ export default function ConstructionElements() {
                                 justifyContent="flex-start"
                                 alignItems="flex-start"
                                 spacing={2}
+                                sx={{ mb: 2 }}
                             >
                                 <TextField id="outlined-basic" label="Название конструктивного элемента" variant="outlined"
                                     fullWidth
@@ -179,7 +180,6 @@ export default function ConstructionElements() {
                                 alignItems="flex-start"
                                 spacing={2}
                             >
-
                                 <InputLabel id="demo-simple-select-autowidth-label">Показатель качества </InputLabel>
                                 <Select sx={{ mt: 4, mb: 2 }}
                                     labelId="demo-simple-select-label"
@@ -188,6 +188,7 @@ export default function ConstructionElements() {
                                     label="Показатели качества"
                                     onChange={handleChange}
                                     defaultValue=""
+                                    input={<OutlinedInput />}
                                 >
                                     {qualityMetricsInitial.map((row) => (
                                         <MenuItem value={row.number}>{row.name}</MenuItem>
@@ -195,6 +196,15 @@ export default function ConstructionElements() {
 
                                 </Select>
 
+                            </Stack>
+
+                            <Stack
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="flex-start"
+                                spacing={2}
+                            >
+                                 <InputLabel id="demo-simple-select-autowidth-label">Значение п.к. </InputLabel>
                                 <Slider
                                     aria-label="Значение показателя качества"
                                     defaultValue={3}
@@ -205,13 +215,7 @@ export default function ConstructionElements() {
                                     min={1}
                                     max={10}
                                 />
-                                {/* <Slider defaultValue={3} step={1} marks min={1} max={10} disabled /> */}
-                                {/* <TextField id="outlined-basic" label="Название конструктивного элемента" variant="outlined"
-                                    fullWidth
-                                    value={constructionElementName}
-                                    onChange={e => setConstructionElementName(e.target.value)} />
-                                <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton> */}
-                            </Stack>
+</Stack>
 
                         </Grid>
                     </Grid>
