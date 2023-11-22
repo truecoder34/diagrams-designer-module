@@ -29,6 +29,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SolutionSearch from './components/SolutionSearch';
+import Results from './components/Results';
 
 export function App() {
   const handleChange = (event, newValue) => {
@@ -64,7 +65,7 @@ const [value, setValue] = React.useState(pagesLinksArray[0]);
           <Route path="/file/*" element={<File />} />
           <Route path="/inputData/*" element={<InputData />} />
           <Route path="/solutionSearch" element={<SolutionSearch />} />
-          <Route path='/results' element={<Tables />} />
+          <Route path='/results' element={<Results />} />
         </Routes>
 
       </div>
