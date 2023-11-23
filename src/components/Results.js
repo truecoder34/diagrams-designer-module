@@ -1,43 +1,11 @@
 import React, { useState } from 'react';
-import {
-    BrowserRouter,
-    NavLink,
-    Routes,
-    Route,
-    Router,
-    Navigate,
-    Link,
-} from 'react-router-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 import axios from 'axios';
-import { Box, Tabs, Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-
-
-import MainPage from './File/MainPage';
-import DeviceInformation from './File/DeviceInformation';
-import SchemeDesigner from './File/SchemeDesigner';
-import Schemes from './File/Schemes';
-import ConstructionElements from './File/ConstructionElements';
-import ValueFunctions from './File/ValuesFunctions';
+import { Box } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import AddButton from './SubComponents/AddButton';
-import LinearProgress from '@mui/material/LinearProgress';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -48,7 +16,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
-import FormControlLabel from '@mui/material/FormControlLabel';
+
+import SaveButton from './SubComponents/SaveButton';
 
 export default function Results() {
     function createData(number, name) {
@@ -63,11 +32,28 @@ export default function Results() {
         createData(6, 'Тех. Решение 6'),
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
+
+    const tableElementsStorageInitial = [
+        createData(1, 'Конструктивный Элемент 1'),
+        createData(2, 'Конструктивный Элемент 2'),
+        createData(3, 'Конструктивный Элемент 3'),
+        createData(4, 'Конструктивный Элемент 4'),
+        createData(5, 'Конструктивный Элементе 5'),
+        createData(6, 'Конструктивный Элемент 6'),
+    ]
+    const [tableElementsStorage, setElementsListStorage] = React.useState(tableElementsStorageInitial);
+
     const [elementName, setElementName] = useState('');
+    const [elementConstructionName, setElementConstructionName] = useState('');
 
     const selectRow = (rowName) => {
         setElementName(rowName)
         console.log("[DEBUG]: active scheme new : ", rowName)
+    };
+
+    const selectElementsRow = (rowElementName) => {
+        setElementConstructionName(rowElementName)
+        console.log("[DEBUG]: active scheme new : ", rowElementName)
     };
 
     return (
@@ -79,7 +65,6 @@ export default function Results() {
 
                 <Grid container item xs={6}>
                     <Grid item xs={12} sx={{ mt: 2 }}>
-
                         <Stack
                             direction="row"
                             spacing={1}
@@ -101,7 +86,6 @@ export default function Results() {
                             />
 
                         </Stack>
-
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 2 }} >
                         <TableContainer component={Paper}>
@@ -118,7 +102,7 @@ export default function Results() {
                                             hover
                                             key={row.name}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        onClick={() => selectRow(row.name)}
+                                            onClick={() => selectRow(row.name)}
                                         >
                                             <TableCell >
                                                 {row.number}
@@ -131,13 +115,145 @@ export default function Results() {
                         </TableContainer>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 2 }}>
-
+                        <Divider orientation="horizontal" flexItem />
+                        <Typography sx={{}} variant="h6" component="div">
+                            Список конструктивных элементов
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Divider orientation="horizontal" flexItem />
+                    </Grid>
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 150 }} size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell align="center">Название Конструктивного Элемента </TableCell>
+                                        <TableCell align="center">Дополнительная информация</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {tableElementsStorageInitial.map((row) => (
+                                        <TableRow
+                                            hover
+                                            key={row.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            onClick={() => selectElementsRow(row.name)}
+                                        >
+                                            <TableCell >
+                                                {row.number}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
 
                 </Grid>
 
                 <Grid container item xs={6}>
-                    B
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Typography sx={{}} variant="h6" component="div">
+                            Информация об конструктивном элементе
+                        </Typography>
+                        <Divider orientation="horizontal" flexItem />
+                        <TableContainer sx={{ mt: 2 }} component={Paper}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell align="center">Название</TableCell>
+                                        <TableCell align="center">Опсание</TableCell>
+                                        <TableCell align="center">Схема</TableCell>
+                                        <TableCell align="center">Номер патента</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell >
+                                            1
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell >
+                                            2
+                                        </TableCell>
+                                    </TableRow>
+                                    {/* {tableElementsStorageInitial.map((row) => (
+                                        <TableRow
+                                            hover
+                                            key={row.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            onClick={() => selectElementsRow(row.name)}
+                                        >
+                                            <TableCell >
+                                                {row.number}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
+                                        </TableRow>
+                                    ))}  */}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+
+                    <Grid item xs={12} >
+                        {/* <Divider orientation="horizontal" flexItem /> */}
+
+                    </Grid>
+                    {/* <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Divider orientation="horizontal" flexItem />
+                    </Grid>
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Divider orientation="horizontal" flexItem />
+                    </Grid>
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Divider orientation="horizontal" flexItem />
+                    </Grid> */}
+                </Grid>
+
+                <Grid container item xs={12}>
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Divider orientation="horizontal" flexItem />
+                    </Grid>
+                    <Grid container sx={{ mt: 1 }} item xs={12}>
+                        <Typography sx={{}} variant="h6" component="div">
+                            Сохранить результаты
+                        </Typography>
+                    </Grid>
+
+
+                    <Grid container sx={{ mt: 1 }} item xs={6}>
+                        <Stack
+                            direction="row"
+                            divider={<Divider orientation="vertical" flexItem />}
+                            spacing={1}
+                        >
+                            <Typography sx={{}} variant="h7" component="div">
+                                Список технических решений
+                            </Typography>
+                            <SaveButton></SaveButton>
+                        </Stack>
+                    </Grid>
+
+                    <Grid container sx={{ mt: 1 }} item xs={6}>
+                        <Stack
+                            direction="row"
+                            divider={<Divider orientation="vertical" flexItem />}
+                            spacing={1}
+                        >
+                            <Typography sx={{}} variant="h7" component="div">
+                                Инфомация о конструктивном элементе
+                            </Typography>
+                            <SaveButton></SaveButton>
+                        </Stack>
+                    </Grid>
+
+
+
                 </Grid>
             </Grid>
 

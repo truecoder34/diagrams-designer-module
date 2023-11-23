@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 import {
-    BrowserRouter,
-    NavLink,
     Routes,
     Route,
-    Router,
-    Navigate,
     Link,
 } from 'react-router-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 import axios from 'axios';
 import { Box, Tabs, Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-
 import QualityMetrics from './Input/QualityMetrics';
 import ElementaryFunctions from './Input/ElementaryFunctions';
-import ValueChange from './Input/ValueChange';
 import ConstructionElements from './Input/ConstructionElements';
-import ExpertEstimations from './Input/ExpertEstimations';
 
 
 export default function InputData() {
@@ -27,9 +18,9 @@ export default function InputData() {
         setValue(newValue.toString());
     };
     const subPagesArray = ['Показатели качества', 'Элементарные функции',
-        'Конструктивные элементы', 'Экспертные оценки', ]               //'Редактирование значений',
+        'Конструктивные элементы',  ]               // 'Экспертные оценки', 'Редактирование значений',
     const subPagesLinksArray = ['qualityMetrics', 'elementaryFunctions',
-        'constructionElements', 'expertEstimations', ]                  //'valueChange',
+        'constructionElements', ]                  //  'expertEstimations', 'valueChange',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
 
 
@@ -55,7 +46,7 @@ export default function InputData() {
                 <Route path='qualityMetrics' element={<QualityMetrics />} />
                 <Route path='elementaryFunctions' element={<ElementaryFunctions />} />
                 <Route path='constructionElements' element={<ConstructionElements />} />
-                <Route path='expertEstimations' element={<ExpertEstimations />} />
+                {/* <Route path='expertEstimations' element={<ExpertEstimations />} /> */}
                 {/* <Route path='valueChange' element={<ValueChange />} /> */}
             </Routes>
 
