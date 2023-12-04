@@ -72,7 +72,7 @@ export default function ConstructionElements() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
 
             <div>
-                <h2>Конструктивные элементы</h2>
+                <h3>Просмотр конструктивных элементов</h3>
             </div>
 
 

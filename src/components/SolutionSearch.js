@@ -96,18 +96,36 @@ export default function SolutionSearch() {
                 <h2>Поиск решений</h2>
             </div>
 
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid container item xs={6}>
+                    <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
+                        Проверка наличия исходных данных
+                    </Typography>
+                </Grid>
+                <Grid container item xs={2}> </Grid>
+                <Grid container item xs={4}> </Grid>
+            </Grid>
 
-            <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
-                Проверка наличия исходных данных
-            </Typography>
-            <Grid xs={12} container rowSpacing={1} columnSpacing={2}   >
-                <Grid item xs={6}>
+            <Grid xs={12} sx={{ mt: 2, mb: 2 }} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={12}>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
+                </Grid>
+            </Grid>
+
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid container item xs={6}>
                     <Typography sx={{
                         // mt: 4, mb: 2 
                     }} variant="h6" component="div">
                         Информация о ходе проверки
                     </Typography>
+                </Grid>
+                <Grid container item xs={2}> </Grid>
+                <Grid container item xs={4}> </Grid>
+            </Grid>
 
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid container item xs={6}>
                     <div>
                         <FormControlLabel
                             label="Выделить целиком"
@@ -122,40 +140,59 @@ export default function SolutionSearch() {
                         {children}
                     </div>
                 </Grid>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <Grid item xs={4}>
+                <Grid container item xs={1}>
+                    <Divider orientation="vertical" variant="middle" flexItem />
+                </Grid>
+                <Grid container item xs={5}>
                     <AddButton onPress={checkAllData} name={"Проверить"}></AddButton>
                 </Grid>
-                <Grid item xs={2}>
-                </Grid>
+            </Grid>
 
-                {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
+            <Grid xs={12} sx={{ mt: 2, mb: 2 }} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={12}>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
+                </Grid>
+            </Grid>
+
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid container item xs={6}>
+                    <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
+                        Поиск технических решений
+                    </Typography>
+
+                </Grid>
+                <Grid container item xs={2}> </Grid>
+                <Grid container item xs={4}> </Grid>
+            </Grid>
+
+            <Grid xs={12} sx={{ mt: 2, mb: 2 }} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={12}>
+                    <Divider orientation="horizontal" variant="middle" flexItem />
+                </Grid>
+            </Grid>
+
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={2}>
+                    <Typography variant="h6" component="div">
+                        Информация о процесе
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <LinearProgress />
+                </Grid>
+                <Grid item xs={4}>
+                </Grid>
             </Grid>
 
 
-            <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
-                Поиск технических решений
-            </Typography>
-            <Grid xs={12} container rowSpacing={1} columnSpacing={2}   >
-                <Grid item xs={7} container>
-                    <Grid xs={4} >
-                        <Typography sx={{}} variant="h6" component="div">
-                            Информация о процессе
-                        </Typography>
-                    </Grid>
-                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-                    <Grid xs={8} >
-                        <LinearProgress />
-                    </Grid>
-
-                    <Grid xs={6} sx={{ mt: 2, mb: 2}}>
-                        <Typography sx={{}} variant="h7" component="div">
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid container item xs={6}>
+                    <Grid sx={{ mt:2 }} item xs={6}>
+                        <Typography  variant="h7" component="div">
                             Количество обрабытваемых тенических решний
                         </Typography>
                     </Grid>
-                    
-                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                    <Grid sx={{ mt:2 }} item xs={4}>
                         <TextField
                             id="filled-number"
                             label="Количество"
@@ -166,14 +203,15 @@ export default function SolutionSearch() {
                             variant="filled"
                         />
                     </Grid>
+                    <Grid sx={{ mt:2 }} item xs={2}>
+                    </Grid>
 
-                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                    <Grid sx={{ mt:2 }} item xs={6}>
                         <Typography sx={{}} variant="h7" component="div">
                             Количество сформированных списков конструктивных элементов
                         </Typography>
                     </Grid>
-                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-                    <Grid xs={6} sx={{ mt: 2, mb: 2 }} >
+                    <Grid sx={{ mt:2 }} item xs={4}>
                         <TextField
                             id="filled-number"
                             label="Количество"
@@ -184,20 +222,61 @@ export default function SolutionSearch() {
                             variant="filled"
                         />
                     </Grid>
+                    <Grid sx={{ mt:2 }} item xs={2}>
+                    </Grid>
 
                 </Grid>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                
-                <Grid item xs={3}>
-                    <AddButton onPress={startSearch} name={"Запустить"}></AddButton>
+                <Grid container item xs={1}>
+                    <Divider orientation="vertical" variant="middle" flexItem />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid container item xs={5}>
+                    <AddButton onPress={checkAllData} name={"Сформировать технические решения"}></AddButton>
                 </Grid>
-
-                {/* <Divider orientation="horizontal" variant="middle" flexItem /> */}
             </Grid>
 
+            {/* <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={2}>
+                    <Typography sx={{}} variant="h7" component="div">
+                        Количество обрабытваемых тенических решний
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        id="filled-number"
+                        label="Количество"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="filled"
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                </Grid>
+            </Grid>
 
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
+                <Grid item xs={2}>
+                    <Typography sx={{}} variant="h7" component="div">
+                        Количество сформированных списков конструктивных элементов
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        id="filled-number"
+                        label="Количество"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="filled"
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                </Grid>
+            </Grid>
+
+ */}
 
         </Box>
     )

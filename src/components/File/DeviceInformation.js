@@ -119,7 +119,7 @@ export default function DeviceInformation() {
                 </Grid>
                 <Grid item xs={12}>
                     <h3>Конструктивная схема</h3>
-                    <ImageList sx={{ maxWidth: '95%' }} cols={1} rowHeight={450}>
+                    <ImageList sx={{ maxWidth: '95%' }} cols={1} rowHeight={550}>
 
                         <ImageListItem>
                             <img

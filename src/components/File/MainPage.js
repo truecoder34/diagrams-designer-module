@@ -26,7 +26,7 @@ export default function MainPage() {
             autoComplete="off"
         >
 
-            <h2>Начальная страница</h2>
+            <h3>Сценарий работы пользователя с системой</h3>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <Grid item xs={12}> 
                 <TextField
