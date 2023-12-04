@@ -61,9 +61,9 @@ export default function Results() {
             <div>
                 <h2>Вывод результатов</h2>
             </div>
-            <Grid xs={12} container rowSpacing={1} columnSpacing={2}   >
+            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
 
-                <Grid container item xs={6}>
+                <Grid container item xs={4}>
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <Stack
                             direction="row"
@@ -154,7 +154,7 @@ export default function Results() {
 
                 </Grid>
 
-                <Grid container item xs={6}>
+                <Grid container item xs={8}>
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <Typography sx={{}} variant="h6" component="div">
                             Информация об конструктивном элементе
@@ -226,7 +226,7 @@ export default function Results() {
                     </Grid>
 
 
-                    <Grid container sx={{ mt: 1 }} item xs={6}>
+                    <Grid container sx={{ mt: 1 }} item xs={4}>
                         <Stack
                             direction="row"
                             divider={<Divider orientation="vertical" flexItem />}
@@ -239,7 +239,7 @@ export default function Results() {
                         </Stack>
                     </Grid>
 
-                    <Grid container sx={{ mt: 1 }} item xs={6}>
+                    <Grid container sx={{ mt: 1 }} item xs={8}>
                         <Stack
                             direction="row"
                             divider={<Divider orientation="vertical" flexItem />}

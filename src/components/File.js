@@ -58,7 +58,7 @@ export default function File() {
         'constructionElements', ]       // 'valueFunctions',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
 
-    const iconsList = [<AddIcon/>, <FileOpenIcon/>,<FirstPageIcon/>,<CloseIcon/>,<SaveIcon/>,<PrintIcon/>,<HelpIcon/>,<ExitToAppIcon/>];
+    const iconsList = [<AddIcon/>, <FileOpenIcon/>,<CloseIcon/>,<SaveIcon/>,<PrintIcon/>,<HelpIcon/>,<ExitToAppIcon/>];
 
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -67,7 +67,7 @@ export default function File() {
                     <Toolbar />
                     <Divider />
                     <List>
-                        {['Создать', 'Открыть', 'Начальная страница', 'Закрыть', 
+                        {['Создать', 'Открыть', 'Закрыть', 
                         'Сохранить','Печать','Справка','Выход'].map((text, index) => (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>

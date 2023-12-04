@@ -230,7 +230,7 @@ export default function SolutionSearch() {
                     <Divider orientation="vertical" variant="middle" flexItem />
                 </Grid>
                 <Grid container item xs={5}>
-                    <AddButton onPress={checkAllData} name={"Проверить"}></AddButton>
+                    <AddButton onPress={checkAllData} name={"Сформировать технические решения"}></AddButton>
                 </Grid>
             </Grid>
 
