@@ -32,6 +32,10 @@ export default function InputData() {
                 // textColor="secondary"
                 // indicatorColor="secondary"
                 aria-label="secondary tabs example"
+                //style={{        fontSize:'106px',
+                //fontWeight:'600',}}
+                //sx={{fontWeight:'1000', fontSize:'206px',}}
+                //style={{background: 'blue', fontWeight:'2000', fontSize:'206px'}}
             >
                 {subPagesArray.map((_, index) => (
                     <Tab

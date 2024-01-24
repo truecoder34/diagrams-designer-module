@@ -101,7 +101,7 @@ export default function Schemes() {
                                 />
                                 <ImageListItemBar
                                     title={item.title}
-                                    position="top"
+                                    position="below"
                                 />
                             </ImageListItem>
 
@@ -139,7 +139,7 @@ export default function Schemes() {
                                     />
                                     <ImageListItemBar
                                         title={itemDataFPD[0].title}
-                                        position="top"
+                                        position="below"
                                     />
                                 </ImageListItem>
                             </ImageList>
@@ -210,7 +210,7 @@ export default function Schemes() {
                                     />
                                     <ImageListItemBar
                                         title={itemDataFPD[1].title}
-                                        position="top"
+                                        position="below"
                                     />
                                 </ImageListItem>
                             </ImageList>

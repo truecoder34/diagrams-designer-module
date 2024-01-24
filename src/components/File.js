@@ -74,7 +74,9 @@ export default function File() {
                                     <ListItemIcon>
                                         {iconsList[index]}
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    <ListItemText primary={text} 
+                                    primaryTypographyProps={{fontSize: '1.3rem'}}
+                                    />
                                 </ListItemButton>
                             </ListItem>
                         ))}
