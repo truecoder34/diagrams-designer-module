@@ -17,7 +17,8 @@ const VisuallyHiddenInput = styled('output')({
 
 export default function DownloadFile({fileName}) {
   return (
-    <Button component="label" variant="contained" startIcon={<DownloadIcon />}>
+    <Button component="label" variant="contained"  
+            startIcon={<DownloadIcon />} sx={{fontSize: 14}} >
       {fileName}
       <VisuallyHiddenInput type="file" />
     </Button>

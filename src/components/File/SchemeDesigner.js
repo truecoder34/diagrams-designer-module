@@ -67,6 +67,7 @@ export default function SchemeDesigner() {
                 //width: 500,
                 //height: "200",
                 maxWidth: '95%',
+                marginTop: "2rem",
             }}
             noValidate
             autoComplete="off"
@@ -77,7 +78,7 @@ export default function SchemeDesigner() {
                 <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={6} >
                         <Typography
-                            variant="h6"
+                            variant="h5"
                             component="div">
                             Схемы проекта:
                         </Typography>
@@ -93,7 +94,8 @@ export default function SchemeDesigner() {
                                         <ListItemIcon>
                                             <SchemaIcon />
                                         </ListItemIcon>
-                                        <ListItemText primary={row.name} />
+                                        <ListItemText primary={row.name}
+                                        primaryTypographyProps={{ fontSize: 16 }}/>
                                     </ListItemButton>
                                     <ListItemIcon>
                                         <DeleteIcon onClick={() => deleteSchema(row.name)} />
@@ -114,7 +116,26 @@ export default function SchemeDesigner() {
                                 <TextField id="outlined-basic" label="Название схемы" variant="outlined"
                                     fullWidth
                                     value={schemeName}
-                                    onChange={e => setSchemeName(e.target.value)} />
+                                    onChange={e => setSchemeName(e.target.value)}
+                                    inputProps={{
+                                        sx: {
+                                            fontSize: 20,
+                                            fontWeight: 500,
+                                            lineHeight: '30px',
+                                        }
+                                    }} // font size of input text
+                                    InputLabelProps={{
+                                        shrink: true,
+                                        sx: {
+                                            fontSize: 30,
+                                            fontWeight: 600,
+                                            letterSpacing: 1,
+                                            lineHeight: '30px',
+                                            //left: "5rem",
+
+                                        }
+                                    }} // font size of input label
+                                     />
 
                                 <AddButton onPress={addSchema} name={"Создать"}></AddButton>
                             </Stack>

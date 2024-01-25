@@ -6,7 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function DeleteButton({labelName}) {
   return (
-    <Button component="label" variant="contained" color="error" startIcon={<DeleteIcon />}>
+    <Button component="label" variant="contained" 
+            color="error" startIcon={<DeleteIcon />}
+            sx={{fontSize: 14}}>
       {labelName}
     </Button>
   );

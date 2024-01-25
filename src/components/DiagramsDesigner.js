@@ -89,20 +89,6 @@ export default function DiagramsDesigner() {
 
 
 
-  // ***************** example start *****************
-  function handleChange(event) {
-    setName(event.target.value);
-  }
-  function handleAdd() {
-    const newList = list.concat({ name, id: uuidv4() });
-    setList(newList);
-    setName('');
-  }
-  // ***************** example finish *****************
-
-
-
-
   const ELEMENTS_STORAGE = []
 
   const handleSubmitButton = (event) => {
@@ -961,7 +947,7 @@ export default function DiagramsDesigner() {
 
   return (
     <div>
-      <h3>Конструктор диаграмм</h3>
+      <h2>Конструктор диаграмм</h2>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
         <Button sx={{
           color: 'white', '&:hover': {
@@ -970,6 +956,8 @@ export default function DiagramsDesigner() {
           },
           backgroundColor: '#125b30',
           borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addNode}>
           <PanoramaFishEyeIcon></PanoramaFishEyeIcon>
@@ -981,7 +969,9 @@ export default function DiagramsDesigner() {
             color: "white",
           },
           backgroundColor: '#477b59',
-          borderColor: '#125b30 !important'
+          borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addNodeEllipse}>
           <TollIcon></TollIcon>
@@ -994,6 +984,8 @@ export default function DiagramsDesigner() {
           },
           backgroundColor: '#125b30',
           borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addObject}>
           <Crop32Icon> </Crop32Icon>
@@ -1005,7 +997,9 @@ export default function DiagramsDesigner() {
             color: "white",
           },
           backgroundColor: '#477b59',
-          borderColor: '#125b30 !important'
+          borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addFunctionalModule}>
           <Crop75Icon> </Crop75Icon>
@@ -1018,6 +1012,8 @@ export default function DiagramsDesigner() {
           },
           backgroundColor: '#125b30',
           borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addFunctionalModuleDashed}>
           <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon>
@@ -1029,7 +1025,9 @@ export default function DiagramsDesigner() {
             color: "white",
           },
           backgroundColor: '#477b59',
-          borderColor: '#125b30 !important'
+          borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addIsolationElement}>
           <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
@@ -1041,6 +1039,8 @@ export default function DiagramsDesigner() {
           },
           backgroundColor: '#125b30',
           borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addComboGreenElement}>
           <ImageAspectRatioIcon></ImageAspectRatioIcon>
@@ -1052,7 +1052,9 @@ export default function DiagramsDesigner() {
             color: "white",
           },
           backgroundColor: '#477b59',
-          borderColor: '#125b30 !important'
+          borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={addComboElement}>
           <ImageAspectRatioIcon></ImageAspectRatioIcon>
@@ -1067,7 +1069,9 @@ export default function DiagramsDesigner() {
             backgroundColor: '#59bb7b',
             color: "white",
           },
-          backgroundColor: 'white', borderColor: '#125b30 !important'
+          backgroundColor: 'white', borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={() => setUserMode("addEdge")}>Режим добавления ребер
         </Button>
@@ -1076,7 +1080,9 @@ export default function DiagramsDesigner() {
             backgroundColor: '#59bb7b',
             color: "white",
           },
-          backgroundColor: 'white', borderColor: '#125b30 !important'
+          backgroundColor: 'white', borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={() => setUserMode("addDashedEdge")}>Режим добавления прерывистых ребер
         </Button>
@@ -1085,7 +1091,9 @@ export default function DiagramsDesigner() {
             backgroundColor: '#59bb7b',
             color: "white",
           },
-          backgroundColor: 'white', borderColor: '#125b30 !important'
+          backgroundColor: 'white', borderColor: '#125b30 !important',
+          fontSize: 14,
+          fontWeight: 550,
         }}
           onClick={() => setUserMode("default")}>Режим добавления элементов
         </Button>
@@ -1099,7 +1107,10 @@ export default function DiagramsDesigner() {
         <Grid item xs={4}>
           <Grid container spacing={0.5} justifyContent="flex-start">
             <Grid item xs={6}>
-              <Button sx={{ color: 'blue', backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+              <Button sx={{ color: 'blue', backgroundColor: 'white', 
+                            borderColor: '#125b30 !important',
+                            fontSize: 14,
+                                        fontWeight: 550, }} >
                 <DoubleArrowIcon></DoubleArrowIcon> Ребро синее
               </Button>
             </Grid>
@@ -1109,7 +1120,7 @@ export default function DiagramsDesigner() {
                   backgroundColor: '#59bb7b',
                   color: "white",
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
               }}
                 onClick={() => setUserMode("addBoldBlueEdge")}>
                 <ArrowOutwardIcon></ArrowOutwardIcon>
@@ -1119,9 +1130,9 @@ export default function DiagramsDesigner() {
               <Button sx={{
                 color: 'blue', '&:hover': {
                   backgroundColor: '#59bb7b',
-                  color: "white",
+                  color: "white", 
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
               }}
                 onClick={() => setUserMode("addBoldBlueBrokenEdge")}>
                 <SubdirectoryArrowRight> </SubdirectoryArrowRight>
@@ -1135,7 +1146,9 @@ export default function DiagramsDesigner() {
               <Button sx={{
                 color: 'purple',
                 backgroundColor: 'white',
-                borderColor: '#125b30 !important'
+                borderColor: '#125b30 !important',
+                fontSize: 14,
+                fontWeight: 550, 
               }}  >
                 <DoubleArrowIcon></DoubleArrowIcon> Ребро фиолетовое
               </Button>
@@ -1146,7 +1159,7 @@ export default function DiagramsDesigner() {
                   backgroundColor: '#59bb7b',
                   color: "white",
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
               }}
                 onClick={() => setUserMode("addBoldPurpleEdge")}>
                 <ArrowOutwardIcon></ArrowOutwardIcon>
@@ -1158,7 +1171,7 @@ export default function DiagramsDesigner() {
                   backgroundColor: '#59bb7b',
                   color: "white",
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
               }}
                 onClick={() => setUserMode("addBoldPurpleBrokenEdge")}>
                 <SubdirectoryArrowRight></SubdirectoryArrowRight>
@@ -1169,7 +1182,10 @@ export default function DiagramsDesigner() {
         <Grid item xs={4}>
           <Grid container spacing={0.5} justifyContent="flex-start">
             <Grid item xs={6}>
-              <Button sx={{ color: '#bdba00', backgroundColor: 'white', borderColor: '#125b30 !important' }} >
+              <Button sx={{ color: '#bdba00', backgroundColor: 'white', 
+                            borderColor: '#125b30 !important',
+                            fontSize: 14,
+                            fontWeight: 550, }} >
                 <DoubleArrowIcon></DoubleArrowIcon>Ребро желтое
               </Button>
             </Grid>
@@ -1179,7 +1195,7 @@ export default function DiagramsDesigner() {
                   backgroundColor: '#59bb7b',
                   color: "white",
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
               }}
                 onClick={() => setUserMode("addBoldYellowEdge")}>
                 <ArrowOutwardIcon></ArrowOutwardIcon>
@@ -1191,7 +1207,9 @@ export default function DiagramsDesigner() {
                   backgroundColor: '#59bb7b',
                   color: "white",
                 },
-                backgroundColor: 'white', borderColor: '#125b30 !important'
+                backgroundColor: 'white', borderColor: '#125b30 !important',
+                fontSize: 14,
+                fontWeight: 550,
               }}
                 onClick={() => setUserMode("addBoldYellowBrokenEdge")}>
                 <SubdirectoryArrowRight></SubdirectoryArrowRight>
@@ -1213,7 +1231,7 @@ export default function DiagramsDesigner() {
         <div class="column-2">
 
           <Grid container spacing={0} justifyContent="flex-start">
-            <h3>Характеристики элемента</h3>
+            <h2>Характеристики элемента</h2>
             <form onSubmit={handleSubmitButton}>
               <Grid item xs={12}>
                 <Grid container spacing={0.5} justifyContent="flex-start">
@@ -1308,8 +1326,15 @@ export default function DiagramsDesigner() {
           <br />
           <TableContainer component={Paper}>
             <Table>
-              <TableHead>
-                <TableRow>
+              <TableHead style={{fontSize: 24,
+                fontWeight: 550,}}>
+                <TableRow sx={{
+                          "& th": {
+                            fontSize: "1.25rem",
+                            color: "rgba(96, 96, 96)",
+                            fontWeight: 550
+                          }
+                }}>
                   <TableCell>#</TableCell>
                   <TableCell align="right"> ID</TableCell>
                   <TableCell align="right">Имя</TableCell>
@@ -1321,7 +1346,8 @@ export default function DiagramsDesigner() {
               </TableHead>
               <TableBody>
                 {listStorage.map((row) => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.name}
+                  >
                     <TableCell component="th" scope="row">{row.id}</TableCell>
                     <TableCell align="right">{row.id}</TableCell>
                     <TableCell align="right">{row.name}</TableCell>

@@ -6,7 +6,12 @@ import SaveIcon from '@mui/icons-material/Save';
 
 export default function SaveButton() {
   return (
-    <Button component="label" variant="contained" color="success" startIcon={<SaveIcon/>}>
+    <Button component="label" 
+    variant="contained" 
+    color="success" 
+    startIcon={<SaveIcon/>}
+    sx={{fontSize: 14}}
+    >
       Сохранить
     </Button>
   );

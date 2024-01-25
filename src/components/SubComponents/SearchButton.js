@@ -7,7 +7,8 @@ export default function SearchButton({onPress}) {
   return (
     <Button 
       component="label" variant="contained" 
-      onClick={onPress} startIcon={<SearchIcon/>} >
+      onClick={onPress} startIcon={<SearchIcon/>}
+      sx={{fontSize: 14}} >
     Поиск конструктивного элмента
   </Button>
   );
