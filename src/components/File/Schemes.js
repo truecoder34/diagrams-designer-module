@@ -161,7 +161,7 @@ export default function Schemes() {
                                             alignItems="flex-start"
                                             spacing={2}
                                         >
-                                            <h2>Описание устройства </h2>
+                                            <h2>Описание схемы </h2>
                                             <Divider orientation="vertical" variant="middle" flexItem />
 
                                             <SaveButton></SaveButton>

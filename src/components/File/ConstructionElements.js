@@ -44,10 +44,10 @@ export default function ConstructionElements() {
         return { number, name, scheme, patentNumber, sourceURL };
     }
     const tableStorageInitial = [
-        createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
+        createData(1, 'Устройство для подачи СОЖ', '/images/Конструктивный_Элемент_1.png',
             'RU № 2 203 165 B23С 5/28', 'ссылка на ресурс 1'),
-        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1', 'ссылка на ресурс 2'),
-        createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Устройство_для_Подачи_Охл_жидкости_RU_№994214.png',
+        createData(2, 'Устройство охлаждения зоны резания', '/images/Конструктивный_Элемент_2.png', 'ИИ_1', 'ссылка на ресурс 2'),
+        createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Конструктивный_Элемент_3.png',
             'SU № 1454651 B23Q 11/10', 'ссылка на ресурс 3'),
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
