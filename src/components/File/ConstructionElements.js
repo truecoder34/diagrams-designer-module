@@ -156,7 +156,7 @@ export default function ConstructionElements() {
                                                 {row.number}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                            <TableCell align="left"><img src={row.scheme} /></TableCell>
+                                            <TableCell align="left"><img src={row.scheme} width="400" height="300" /></TableCell>
                                             <TableCell align="left">{row.patentNumber}</TableCell>
                                             <TableCell align="left">{row.sourceURL}</TableCell>
                                         </TableRow>

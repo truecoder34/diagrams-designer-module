@@ -25,6 +25,8 @@ import Slider from '@mui/material/Slider';
 import AddButton from '../SubComponents/AddButton';
 
 
+import TablePagination from '@mui/material/TablePagination';
+
 import Stack from '@mui/material/Stack';
 
 import Grid from '@mui/material/Grid';
@@ -40,6 +42,8 @@ export default function ConstructionElements() {
     const [constructionElementName, setConstructionElementName] = React.useState('');
     const [qualityMetric, setQualityMetric] = React.useState('');
 
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const addConstructionElement = (event) => {
         // TODO :: Добавить 
@@ -63,6 +67,16 @@ export default function ConstructionElements() {
         return { number, name, description };
     }
 
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+      };
+
     const qualityMetricsInitial = [
         createDataCQualiryMetric(1, 'Эффективность смазывающего воздействия', 'дополнительная информация..'),
         createDataCQualiryMetric(2, 'Эффективность охлаждающего воздействия', 'дополнительная информация..'),
@@ -79,30 +93,33 @@ export default function ConstructionElements() {
     ]
 
     const tableStorageReducedInitial = [
-        createData(1, 'Активный эелемент отпаянного газового  CO2-лазера', '/images/Конструктивный_Элемент_1.png',
-            'SU 1232092 A1', 'ссылка на ресурс 1'),
-        createData(2, 'Катодный цилиндр АС 660520', '/images/Конструктивный_Элемент_2.png', 'SU 660520 A1', 'ссылка на ресурс 2'),
-        createData(3, 'Катодный цилиндр АС 94770', '/images/Конструктивный_Элемент_3.png',
+        createData(33, 'Катодный цилиндр', '/images/Конструктивный_Элемент_1.png',
             'RU 94 770 U1', 'ссылка на ресурс 3'),
+        createData(34, 'Катодный цилиндр', '/images/Конструктивный_Элемент_2.png',
+            'SU 1232092 A1', 'ссылка на ресурс 1'),
+        createData(35, 'Катодный цилиндр', '/images/Конструктивный_Элемент_3.png', 'SU 660520 A1', 'ссылка на ресурс 2'),
+        //createData(36, 'Катодный цилиндр', '/images/Конструктивный_Элемент_3.png', 'SU 660520 A1', 'ссылка на ресурс 2'),
+
     ]
     const [tableStorageReduced, setListStorageReduced] = React.useState(tableStorageReducedInitial);
 
 
     const tableStorageInitial = [
-        createData(1, 'Активный эелемент отпаянного газового  CO2-лазера', '/images/Конструктивный_Элемент_1.png',
-            'SU 1232092 A1',
-            'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 ); f 6 (e 05 гид )',
-            '(1)2 (2)4 (4)1 (5)1 (6)1 (7)1 (8)1 (9)1 (10)1 (11)1 (12)1',
-            '{6;6}=6 {8;9;6;6}=7,25 {9}=9 {8}=8 {9}=9 {9}=9 {9}=9 {7}=7 {8}=8 {9}=9 {8}=8'),
-        createData(2, 'Катодный цилиндр АС 660520', '/images/Конструктивный_Элемент_2.png', 'SU 660520 A1',
-            'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 );f 5 (i 31,2 )',
-            '(1)1 (2)4 (4)1 (5)1 (6)1 (7)1 (9)1 (10)1 (11)1 (12)1',
-            '{5}=5 {7;8;5;4}=5,5 {8}=8 {7}=7 {7}=7 {8}=8 {8}=8 {5}=5 {7}=7 {8}=8'),
-        createData(3, 'Катодный цилиндр АС 94770', '/images/Конструктивный_Элемент_3.png',
+        createData(33, 'Катодный цилиндр', '/images/Конструктивный_Элемент_1.png',
             'RU 94 770 U1',
             'f 3 (e 1 тер ); f 5 (i 13 ); f 5 (i 31,2 ); f 6 (e 05 гид )',
             '(1)2 (2)4 (4)1 (5)1 (6)1 (7)7 (8)1 (9)1 (10)1 (11)1 (12)1',
             '{3}=3 {5;6;3;3}=4,25 {5}=5 {3}=3 {3}=3 {5}=5 {6}=6 {2}=2 {5}=5 {5}=5 {5}=5'),
+        createData(34, 'Катодный цилиндр', '/images/Конструктивный_Элемент_2.png',
+            'SU 1232092 A1',
+            'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 ); f 6 (e 05 гид )',
+            '(1)2 (2)4 (4)1 (5)1 (6)1 (7)1 (8)1 (9)1 (10)1 (11)1 (12)1',
+            '{6;6}=6 {8;9;6;6}=7,25 {9}=9 {8}=8 {9}=9 {9}=9 {9}=9 {7}=7 {8}=8 {9}=9 {8}=8'),
+        createData(35, 'Катодный цилиндр', '/images/Конструктивный_Элемент_3.png', 'SU 660520 A1',
+            'f 3 (e 1 тер ); f 3 (e 2 тер ); f 5 (i 13 );f 5 (i 31,2 )',
+            '(1)1 (2)4 (4)1 (5)1 (6)1 (7)1 (9)1 (10)1 (11)1 (12)1',
+            '{5}=5 {7;8;5;4}=5,5 {8}=8 {7}=7 {7}=7 {8}=8 {8}=8 {5}=5 {7}=7 {8}=8'),
+
     ]
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
@@ -123,7 +140,7 @@ export default function ConstructionElements() {
                                 Список отобранных конструктивных элементов
                             </Typography>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                <Table sx={{ minWidth: 650, maxHeight: 50 }} size="small" aria-label="a dense table">
                                     <TableHead>
                                         <TableRow >
                                             <TableCell sx={{ fontSize: 20 }} >#</TableCell>
@@ -151,6 +168,15 @@ export default function ConstructionElements() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={3} //{rows.length}
+                                rowsPerPage={3}
+                                page={1}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
                         </Grid>
 
                         {/* <Divider orientation="vertical" variant="middle" flexItem /> */}

@@ -49,7 +49,7 @@ export default function Schemes() {
     };
 
     const subPagesSchemes = ['Иерархическая Схема', 'Структурная Схема',
-        'Схема 1', 'Схема 2',];
+        'Граф модели ФПД 1', 'Граф модели ФПД 2',];
     const subPagesLinksSchemes = ['hierarchicalScheme', 'structureScheme', 'scheme1', 'scheme2',]
 
     const itemData = [

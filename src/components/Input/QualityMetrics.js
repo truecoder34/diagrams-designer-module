@@ -5,10 +5,6 @@ import axios from 'axios';
 import { Box, Tabs, Tab, dividerClasses } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import TextField from '@mui/material/TextField';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import { FormLabel, FormControl, FormGroup, Divider } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,6 +19,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
 
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import AddButton from '../SubComponents/AddButton';
 
 export default function QualityMetrics() {
     const [value, setValue] = React.useState('1');
@@ -93,31 +91,42 @@ export default function QualityMetrics() {
     return (
 
         <div>
-            <h2>Введите показатели качества для оценки технических решений</h2>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '95%', marginTop: "2rem", 
+                        marginLeft: "1rem", marginRight: "1rem" }}  >
                 <Grid container rowSpacing={1} columnSpacing={2}   >
                     <Grid item xs={12}>
                         <FormControl fullWidth>
                             <FormLabel>
-                                <h4>Почередно введите показатели качества для оценки технических решений (не более 7)</h4>
+                                <Typography variant="h6" component="div">
+                                    Почередно введите показатели качества для оценки технических решений (не более 7)
+                                </Typography>
                             </FormLabel>
-                            <br/>
+                            <br />
                             <FormGroup row >
                                 <Grid item xs={11}>
                                     <TextField fullWidth
                                         label="показатели качества" id="baseFunction"
                                         value={elementName} onChange={e => setElementName(e.target.value)}
+                                        inputProps={{
+                                            sx: {
+                                                fontSize: 20,
+                                                fontWeight: 500,
+                                                lineHeight: '30px',
+                                            }
+                                        }} // font size of input text
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            sx: {
+                                                fontSize: 20,
+                                                fontWeight: 600,
+                                            }
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Button variant="contained" color='primary' size="large"
-                                        onClick={() => addRow()}
-                                    >
-                                        Добавить
-                                    </Button>
+                                    <AddButton onPress={addRow} name={"Добавить"}></AddButton>
                                 </Grid>
                             </FormGroup>
-                            <br/>
                         </FormControl>
 
                     </Grid>
@@ -126,12 +135,12 @@ export default function QualityMetrics() {
                             direction="row"
                             spacing={1}
                         >
-                            <h4>Введено показателей качества :</h4> 
+                            <Typography sx={{ fontSize: 22 }} variant="h4" component="div">
+                                Введено показателей качества :
+                            </Typography>
                             <Divider orientation="vertical" flexItem />
-                            <Chip label={elementCount}  />
-                            
+                            <Chip label={elementCount} sx={{ fontSize: 22 }} />
                         </Stack>
-                        <br/>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -139,10 +148,10 @@ export default function QualityMetrics() {
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>#</TableCell>
-                                        <TableCell align="center">Название</TableCell>
-                                        <TableCell align="center">Дополнительная информация</TableCell>
-                                        <TableCell align="right"></TableCell>
+                                        <TableCell sx={{ fontSize: 20 }}>#</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">Название</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">Дополнительная информация</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -153,12 +162,12 @@ export default function QualityMetrics() {
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             onClick={() => selectRow(row.name)}
                                         >
-                                            <TableCell >
+                                            <TableCell sx={{ fontSize: 17 }}>
                                                 {row.number}
                                             </TableCell>
-                                            <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                            <TableCell align="left">{row.description}</TableCell>
-                                            <TableCell align="right">
+                                            <TableCell sx={{ fontSize: 17 }} component="th" scope="row" align="left" >{row.name}</TableCell>
+                                            <TableCell sx={{ fontSize: 17 }} align="left">{row.description}</TableCell>
+                                            <TableCell sx={{ fontSize: 17 }} align="right">
                                                 <DeleteIcon onClick={() => deleteRow(row.name)} />
                                             </TableCell>
                                         </TableRow>

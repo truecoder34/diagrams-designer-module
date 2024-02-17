@@ -20,7 +20,8 @@ import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
+import Typography from '@mui/material/Typography';
+import AddButton from '../SubComponents/AddButton';
 
 import Stack from '@mui/material/Stack';
 
@@ -96,46 +97,58 @@ export default function ElementaryFunctions() {
     return (
 
         <div>
-            <h2>Введите элементарные функции</h2>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }}  >
+            <Box sx={{
+                display: 'flex', flexWrap: 'wrap', maxWidth: '95%', marginTop: "2rem",
+                marginLeft: "1rem", marginRight: "1rem"
+            }}  >
                 <Grid container rowSpacing={1} columnSpacing={2}   >
                     <Grid item xs={12}>
                         <FormControl fullWidth>
                             <FormLabel>
-                                <h4>Почередно введите элементарные функции (не более 30)</h4>
+                                <Typography variant="h6" component="div">
+                                    Почередно введите элементарные функции (не более 30)
+                                </Typography>
                             </FormLabel>
                             <br />
                             <FormGroup row >
                                 <Grid item xs={11}>
                                     <TextField fullWidth
-                                        label="Защита проводящего канала от утечки ионизированного воздуха" id="baseFunction"
+                                        label="элементарные функции" id="baseFunction"
                                         value={elementName} onChange={e => setElementName(e.target.value)}
+                                        inputProps={{
+                                            sx: {
+                                                fontSize: 20,
+                                                fontWeight: 500,
+                                                lineHeight: '30px',
+                                            }
+                                        }} // font size of input text
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            sx: {
+                                                fontSize: 20,
+                                                fontWeight: 600,
+                                            }
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Button variant="contained" color='primary' size="large"
-                                        onClick={() => addRow()}
-                                    >
-                                        Добавить
-                                    </Button>
+                                    <AddButton onPress={addRow} name={"Добавить"}></AddButton>
                                 </Grid>
                             </FormGroup>
-                            <br />
                         </FormControl>
 
                     </Grid>
                     <Grid item xs={12}>
                         <Stack
                             direction="row"
-                            // divider={<Divider orientation="vertical" flexItem />}
                             spacing={1}
                         >
-                            <h4>Введено элементарных функций :</h4>
+                            <Typography sx={{ fontSize: 22 }} variant="h4" component="div">
+                                Введено элементарных функций :
+                            </Typography>
                             <Divider orientation="vertical" flexItem />
-                            <Chip label={elementCount} />
-
+                            <Chip label={elementCount}  sx={{ fontSize: 22 }} />
                         </Stack>
-                        <br />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -143,10 +156,10 @@ export default function ElementaryFunctions() {
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>#</TableCell>
-                                        <TableCell align="center">Название</TableCell>
-                                        <TableCell align="center">Дополнительная информация</TableCell>
-                                        <TableCell align="right"></TableCell>
+                                        <TableCell sx={{ fontSize: 20 }}>#</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">Название</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">Дополнительная информация</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -157,12 +170,12 @@ export default function ElementaryFunctions() {
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             onClick={() => selectRow(row.name)}
                                         >
-                                            <TableCell >
+                                            <TableCell sx={{ fontSize: 17 }} >
                                                 {row.number}
                                             </TableCell>
-                                            <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                            <TableCell align="left">{row.description}</TableCell>
-                                            <TableCell align="right">
+                                            <TableCell sx={{ fontSize: 17 }} component="th" scope="row" align="left" >{row.name}</TableCell>
+                                            <TableCell sx={{ fontSize: 17 }} align="left">{row.description}</TableCell>
+                                            <TableCell sx={{ fontSize: 17 }} align="right">
                                                 <DeleteIcon onClick={() => deleteRow(row.name)} />
                                             </TableCell>
                                         </TableRow>
