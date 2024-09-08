@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 
 
-export default function SaveButton() {
+export default function SaveButton({labelName}) {
   return (
     <Button component="label" 
     variant="contained" 
@@ -12,7 +12,7 @@ export default function SaveButton() {
     startIcon={<SaveIcon/>}
     sx={{fontSize: 14}}
     >
-      Сохранить
+      {labelName}
     </Button>
   );
 }

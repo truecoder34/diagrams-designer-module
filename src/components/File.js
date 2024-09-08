@@ -52,13 +52,20 @@ export default function File() {
         setValue(newValue.toString());
     };
 
-    const subPagesArray = ['Начальная страница', 'Описание устройства',
-        'Редактор', 'Схемы', 'Конструктивные элементы', ]   // 'Показатели и функции'
+    const subPagesArrayRu = ['Начальная страница', 'Описание устройства', 'Редактор', 'Схемы', 'Конструктивные элементы', ]
+    const subPagesArrayEn = ['Main page', 'Device information', 'Designer', 'Schemes', 'Construction Elements', ]
+    const subPagesArray = subPagesArrayEn
+        
+        // 'Показатели и функции'
     const subPagesLinksArray = ['mainPage', 'deviceInformation', 'schemeDesigner', 'schemes', 
         'constructionElements', ]       // 'valueFunctions',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
 
     const iconsList = [<AddIcon/>, <FileOpenIcon/>,<CloseIcon/>,<SaveIcon/>,<PrintIcon/>,<HelpIcon/>,<ExitToAppIcon/>];
+    
+    const leftMenuRu = ['Создать', 'Открыть', 'Закрыть', 'Сохранить','Печать','Справка','Выход']
+    const leftMenuEn = ['Create', 'Open', 'Close', 'Save','Print','Info','Exit']
+    const leftMenu = leftMenuEn 
 
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -67,15 +74,14 @@ export default function File() {
                     <Toolbar />
                     <Divider />
                     <List>
-                        {['Создать', 'Открыть', 'Закрыть', 
-                        'Сохранить','Печать','Справка','Выход'].map((text, index) => (
+                        {leftMenu.map((text, index) => (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         {iconsList[index]}
                                     </ListItemIcon>
                                     <ListItemText primary={text} 
-                                    primaryTypographyProps={{fontSize: '1.3rem'}}
+                                    primaryTypographyProps={{fontSize: '1.4rem'}}
                                     />
                                 </ListItemButton>
                             </ListItem>

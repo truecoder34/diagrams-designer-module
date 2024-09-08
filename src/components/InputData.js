@@ -17,8 +17,10 @@ export default function InputData() {
         console.log("New value refering :: ", newValue.toString())
         setValue(newValue.toString());
     };
-    const subPagesArray = ['Показатели качества', 'Элементарные функции',
-        'Конструктивные элементы',  ]               // 'Экспертные оценки', 'Редактирование значений',
+    
+    const subPagesArrayRu = ['Показатели качества', 'Элементарные функции','Конструктивные элементы',  ]               // 'Экспертные оценки', 'Редактирование значений',
+    const subPagesArrayEn = ['Quality metrics', 'Basic functions','Construction elements',  ] 
+    const subPagesArray = subPagesArrayEn
     const subPagesLinksArray = ['qualityMetrics', 'elementaryFunctions',
         'constructionElements', ]                  //  'expertEstimations', 'valueChange',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
