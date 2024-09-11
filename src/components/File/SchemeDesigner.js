@@ -58,6 +58,13 @@ export default function SchemeDesigner() {
         console.log("[DEBUG]: active scheme new : ", schemeName)
     };
 
+    const headers_ru = ["Модель физического принципа действия (ФПД)", "Схемы проекта:", "Конструктор диаграмм", "Название схемы" ]
+    const headers_en = ["Physical Operating Principle (POP)", "Project schemas", "Diagram Desgner", "Shema name"]
+    const headers = headers_en
+
+    const buttonLabelsRu = ["Создать", "Сохранить", "Загрузить граф ФПД", "Скачать граф"]
+    const buttonLabelsEn  = ["Create", "Save", "Upload POP schema", "Download schema" ]
+    const buttonLabels = buttonLabelsEn
 
     return (
 
@@ -73,14 +80,14 @@ export default function SchemeDesigner() {
             autoComplete="off"
         >
 
-            <h2>Модель физического принципа действия (ФПД)</h2>
+            <h2>{headers[0]}</h2>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={6} >
                         <Typography
                             variant="h5"
                             component="div">
-                            Схемы проекта:
+                            {headers[1]}
                         </Typography>
                         <List
                             sx={{
@@ -113,7 +120,7 @@ export default function SchemeDesigner() {
                                 alignItems="flex-start"
                                 spacing={2}
                             >
-                                <TextField id="outlined-basic" label="Название схемы" variant="outlined"
+                                <TextField id="outlined-basic" label={headers[3]} variant="outlined"
                                     fullWidth
                                     value={schemeName}
                                     onChange={e => setSchemeName(e.target.value)}
@@ -137,7 +144,7 @@ export default function SchemeDesigner() {
                                     }} // font size of input label
                                      />
 
-                                <AddButton onPress={addSchema} name={"Создать"}></AddButton>
+                                <AddButton onPress={addSchema} name={buttonLabels[0]}></AddButton>
                             </Stack>
 
                         </Grid>
@@ -154,8 +161,8 @@ export default function SchemeDesigner() {
                                     alignItems="flex-start"
                                     spacing={2}
                                 >
-                                    <InputFileUpload fileName={"Загрузить граф ФПД"}> </InputFileUpload>
-                                    <DownloadFile fileName={"Cкачать граф"}></DownloadFile>
+                                    <InputFileUpload fileName={buttonLabels[2]}> </InputFileUpload>
+                                    <DownloadFile fileName={buttonLabels[3]}></DownloadFile>
                                 </Stack>
 
 
@@ -168,7 +175,7 @@ export default function SchemeDesigner() {
                                     alignItems="flex-start"
                                     spacing={2}
                                 >
-                                    <SaveButton >  </SaveButton>
+                                    <SaveButton labelName={buttonLabels[1]} >  </SaveButton>
                                 </Stack>
                             </Grid>
 

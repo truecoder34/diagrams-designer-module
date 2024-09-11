@@ -26,8 +26,10 @@ import SaveButton from '../SubComponents/SaveButton';
 
 
 export default function Schemes() {
-    const STRUCTURE_SCHEME_DESCRIPTION = "На структурной схеме прямоугольники, выделенные зеленым цветом, обозначают подсистемы; прямоугольники черного цвета – обозначают элементы лазера, либо входящие в подсистемы, либо взаимодействующие с ними; прямоугольники, выделенные красным цветом, обозначают функциональные модули, входящие в состав лазера.  На основании структурной схемы строится модель ФПД СО2-лазера для каждого функционального модуля (ФМ) и затем объединенная модель ФПД отпаянного СО2-лазера. \nОтпаянный СО2-лазер состоит из трех подсистем: \n– излучатель (подсистема 1); \n– система охлаждения (подсистема 2); \n– блок электропитания (подсистема 3). \n\nОтпаянный СО2-лазер состоит из четырех ФМ: \n– ФМ1 – газоразрядная трубка (рабочее тело v1 – смесь газов в газоразрядной трубке, рабочее тело v2 – стенки трубки); \n– ФМ2 – рубашка охлаждения (рабочее тело v4 – охлаждающая жидкость); \n– ФМ3 – регенератор (рабочее тело v3 – вещество регенератора Cu2O); \n– ФМ4 – электроды (рабочее тело v5 – анод и рабочее тело v6 – катод). "
-
+    
+    const STRUCTURE_SCHEME_DESCRIPTION_EN = "In the structural diagram, rectangles highlighted in green color denote subsystems; rectangles in black color denote laser elements either included in the subsystems or interacting with them; rectangles highlighted in red color denote functional modules included in the laser.  Based on the structural diagram, a model of the CO2 laser FFT is constructed for each functional module (FM) and then a combined model of the FFT of the desoldered CO2 laser.  \nThe desoldered CO2 laser consists of three subsystems: \n- emitter (subsystem 1); \n - cooling system (subsystem 2); \n - power supply unit (subsystem 3). \n\nThe desoldered CO2 laser consists of four FMs: \n - FM1 - gas discharge tube (working body v1 - mixture of gases in the gas discharge tube, working body v2 - tube walls); \n - FM2 - cooling jacket (working body v4 - cooling liquid); \n - FM3 - regenerator (working body v3 - regenerator substance Cu2O); \n - FM4 - electrodes (working body v5 - anode and working body v6 - cathode). "
+    const STRUCTURE_SCHEME_DESCRIPTION_RU = "На структурной схеме прямоугольники, выделенные зеленым цветом, обозначают подсистемы; прямоугольники черного цвета – обозначают элементы лазера, либо входящие в подсистемы, либо взаимодействующие с ними; прямоугольники, выделенные красным цветом, обозначают функциональные модули, входящие в состав лазера.  На основании структурной схемы строится модель ФПД СО2-лазера для каждого функционального модуля (ФМ) и затем объединенная модель ФПД отпаянного СО2-лазера. \nОтпаянный СО2-лазер состоит из трех подсистем: \n– излучатель (подсистема 1); \n– система охлаждения (подсистема 2); \n– блок электропитания (подсистема 3). \n\nОтпаянный СО2-лазер состоит из четырех ФМ: \n– ФМ1 – газоразрядная трубка (рабочее тело v1 – смесь газов в газоразрядной трубке, рабочее тело v2 – стенки трубки); \n– ФМ2 – рубашка охлаждения (рабочее тело v4 – охлаждающая жидкость); \n– ФМ3 – регенератор (рабочее тело v3 – вещество регенератора Cu2O); \n– ФМ4 – электроды (рабочее тело v5 – анод и рабочее тело v6 – катод). "
+    const STRUCTURE_SCHEME_DESCRIPTION = STRUCTURE_SCHEME_DESCRIPTION_EN
     const [value, setValue] = React.useState('1');
     const [value2, setValue2] = React.useState('1');
     const [valueSubTab, setValueSubTab] = React.useState('1');
@@ -48,8 +50,9 @@ export default function Schemes() {
         setValue2(newValue);
     };
 
-    const subPagesSchemes = ['Иерархическая Схема', 'Структурная Схема',
-        'Граф модели ФПД 1', 'Граф модели ФПД 2',];
+    const subPagesSchemesRu = ['Иерархическая Схема', 'Структурная Схема', 'Граф модели ФПД 1', 'Граф модели ФПД 2',];
+    const subPagesSchemesEn = ['Hierarchical', 'Structure', 'Graph POP-1 model', 'Graph POP-2 model',];
+    const subPagesSchemes = subPagesSchemesEn
     const subPagesLinksSchemes = ['hierarchicalScheme', 'structureScheme', 'scheme1', 'scheme2',]
 
     const itemData = [
@@ -89,6 +92,15 @@ export default function Schemes() {
 
     ];
 
+
+    const headers_ru = ["Схемы", "Схемы", "Description", "Табличное представление граф-схемы", "Словесное описание схемы"]
+    const headers_en = ["Schemas", "Schemas", "Description", "Table graph description", "Scehma description"]
+    const HEADERS = headers_en
+
+    const buttons_ru = ["Созранить"]
+    const buttons_en = ["SAVE"]
+    const buttons = buttons_en
+
     return (
         <Box sx={{
             display: 'flex', flexWrap: 'wrap',
@@ -96,7 +108,7 @@ export default function Schemes() {
         }} >
 
             <div>
-                <h2>Схемы</h2>
+                <h2>{headers_en[0]}</h2>
             </div>
 
             <Grid container rowSpacing={10} columnSpacing={2}>
@@ -121,8 +133,8 @@ export default function Schemes() {
                                         <TabContext value={valueSubTab}>
                                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                                 <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
-                                                    <Tab label="Схема" value="1" />
-                                                    <Tab label="Описание" value="2" />
+                                                    <Tab label={headers_en[1]} value="1" />
+                                                    <Tab label={headers_en[2]} value="2" />
                                                 </TabList>
                                             </Box>
                                             <TabPanel value="1">
@@ -149,7 +161,7 @@ export default function Schemes() {
                                                 </ImageList>
                                             </TabPanel>
                                             <TabPanel value="2">
-                                                Таблица описания графа
+                                            {headers_en[3]}
                                                 <TableCustom></TableCustom>
                                             </TabPanel>
                                         </TabContext>
@@ -161,10 +173,10 @@ export default function Schemes() {
                                             alignItems="flex-start"
                                             spacing={2}
                                         >
-                                            <h2>Описание схемы </h2>
+                                            <h2>{headers_en[4]} </h2>
                                             <Divider orientation="vertical" variant="middle" flexItem />
 
-                                            <SaveButton></SaveButton>
+                                            <SaveButton>xxxx</SaveButton>
                                         </Stack>
 
 

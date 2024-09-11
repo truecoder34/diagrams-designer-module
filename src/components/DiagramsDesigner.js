@@ -38,7 +38,6 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import SubdirectoryArrowRight from '@mui/icons-material/SubdirectoryArrowRight';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 
-
 import { v4 as uuidv4 } from 'uuid';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -51,23 +50,11 @@ import {initModelCircle, initModelEllipse,
 
 
 
-
-
 export default function DiagramsDesigner() {
   const ref = React.useRef(null);
   const graph = React.useRef(null);
   //let graph = null;
 
-  const initialList = [
-    {
-      id: 'a',
-      name: 'Robin',
-    },
-    {
-      id: 'b',
-      name: 'Dennis',
-    },
-  ];
 
   const graphStorageInitial = []
   const [listStorage, setListStorage] = React.useState(graphStorageInitial);
@@ -81,14 +68,6 @@ export default function DiagramsDesigner() {
   const [elementLowerIndex, setElementLowerIndex] = useState('');
   const [elementSemanticDescription, setElementSemanticDescription] = useState('');
 
-
-
-  const [list, setList] = React.useState(initialList);
-  const [name, setName] = React.useState('');
-
-
-
-
   const ELEMENTS_STORAGE = []
 
   const handleSubmitButton = (event) => {
@@ -100,8 +79,6 @@ export default function DiagramsDesigner() {
   const data = {
     id: 'root',
   };
-
-
 
 
   useEffect(() => {
@@ -887,7 +864,6 @@ export default function DiagramsDesigner() {
     graph.current.addItem('node', ioe_upd);
   };
 
-
   const addComboElement = () => {
     let newElemUuid = uuidv4();
     console.log('[INFO] New combo element UUID is: ' + newElemUuid);
@@ -932,7 +908,6 @@ export default function DiagramsDesigner() {
     graph.current.addItem('combo', ce_upd);
   };
 
-
   const setUserMode = (mode) => {
     console.log("[INFO] set mode - ", mode)
     if (graph.current != null) {
@@ -941,13 +916,26 @@ export default function DiagramsDesigner() {
     console.log("[DEBUG] graph", graph)
   }
 
+  const HEADERS_RU = ["Конструктор диаграмм", "Характеристики элемента", "Название", "Тип", "X", "Y", "Верхний индекс", "Нижний индекс", "Описание"]
+  const HEADERS_EN = ["Diagram Desgner", "Elements description", "Name", "Type", "X", "Y", "Upper Idx", "Lower Idx", "Description"]
+  const HEADERS = HEADERS_EN
 
+  const TABLE_HEADERS_RU = ["#", "Имя", "Тип", "Размеры", "Верхний И.", "Нижний И."]
+  const TABLE_HEADERS_EN = ["#", "Name", "Type", "Size", "Upper Idx", "Lower Idx"]
+  const TABLE_HEADERS = TABLE_HEADERS_EN
 
-
+  const DESIGNER_BUTTONS_EN = ["Node. Circle", "Node. Ellipse", "Environment object", "Functional module", "Functional module. Dashed",
+    "Isolation element", "Combo", "Combo", "Adding links mode", "Adding dashed links mode", "Adding elements",
+    "Link Blue", "Link Purple", "Link Yellow"
+  ]
+  const DESIGNER_BUTTONS_RU = ["Характерная точка. Круг", "Характерная точка. Овал", "Обьект окружения", "Функциональный модуль", 
+    "Функциональный модуль. Пунктир", "Элемент изоляции", "Комбо", "Комбо", "Режим добавления ребер", "Режим добавления прерывистых ребер", "Режим добавления элементов", 
+    "Ребро синее", "Ребро фиолетовое", "Ребро желтое"]
+  const DESIGNER_BUTTONS = DESIGNER_BUTTONS_EN
 
   return (
     <div>
-      <h2>Конструктор диаграмм</h2>
+      <h2>{HEADERS[0]}</h2>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
         <Button sx={{
           color: 'white', '&:hover': {
@@ -961,7 +949,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addNode}>
           <PanoramaFishEyeIcon></PanoramaFishEyeIcon>
-          Характерная точка. Круг
+          {DESIGNER_BUTTONS[0]}
         </Button>
         <Button sx={{
           color: 'white', '&:hover': {
@@ -975,7 +963,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addNodeEllipse}>
           <TollIcon></TollIcon>
-          Характерная точка. Овал
+          {DESIGNER_BUTTONS[1]}
         </Button>
         <Button sx={{
           color: 'white', '&:hover': {
@@ -989,7 +977,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addObject}>
           <Crop32Icon> </Crop32Icon>
-          Объект окружения
+          {DESIGNER_BUTTONS[2]}
         </Button>
         <Button sx={{
           color: 'white', '&:hover': {
@@ -1003,7 +991,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addFunctionalModule}>
           <Crop75Icon> </Crop75Icon>
-          Функциональный модуль
+          {DESIGNER_BUTTONS[3]}
         </Button>
         <Button sx={{
           color: 'white', '&:hover': {
@@ -1017,7 +1005,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addFunctionalModuleDashed}>
           <DashboardCustomizeSharpIcon></DashboardCustomizeSharpIcon>
-          Функциональный модуль пунктир
+          {DESIGNER_BUTTONS[4]}
         </Button>
         <Button sx={{
           color: 'white', '&:hover': {
@@ -1030,7 +1018,7 @@ export default function DiagramsDesigner() {
           fontWeight: 550,
         }}
           onClick={addIsolationElement}>
-          <RectangleTwoToneIcon></RectangleTwoToneIcon>Элемент изоляции
+          <RectangleTwoToneIcon></RectangleTwoToneIcon>{DESIGNER_BUTTONS[5]}
         </Button>
         <Button sx={{
           color: '#11f36f', '&:hover': {
@@ -1044,7 +1032,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addComboGreenElement}>
           <ImageAspectRatioIcon></ImageAspectRatioIcon>
-          Комбо
+          {DESIGNER_BUTTONS[6]}
         </Button>
         <Button sx={{
           color: 'red', '&:hover': {
@@ -1058,7 +1046,7 @@ export default function DiagramsDesigner() {
         }}
           onClick={addComboElement}>
           <ImageAspectRatioIcon></ImageAspectRatioIcon>
-          Комбо
+          {DESIGNER_BUTTONS[7]}
         </Button>
       </ButtonGroup>
       <br />
@@ -1073,7 +1061,7 @@ export default function DiagramsDesigner() {
           fontSize: 14,
           fontWeight: 550,
         }}
-          onClick={() => setUserMode("addEdge")}>Режим добавления ребер
+          onClick={() => setUserMode("addEdge")}>{DESIGNER_BUTTONS[8]}
         </Button>
         <Button sx={{
           color: 'black', '&:hover': {
@@ -1084,7 +1072,7 @@ export default function DiagramsDesigner() {
           fontSize: 14,
           fontWeight: 550,
         }}
-          onClick={() => setUserMode("addDashedEdge")}>Режим добавления прерывистых ребер
+          onClick={() => setUserMode("addDashedEdge")}>{DESIGNER_BUTTONS[9]}
         </Button>
         <Button sx={{
           color: 'black', '&:hover': {
@@ -1095,7 +1083,7 @@ export default function DiagramsDesigner() {
           fontSize: 14,
           fontWeight: 550,
         }}
-          onClick={() => setUserMode("default")}>Режим добавления элементов
+          onClick={() => setUserMode("default")}>{DESIGNER_BUTTONS[10]}
         </Button>
       </ButtonGroup>
       <br />
@@ -1111,7 +1099,7 @@ export default function DiagramsDesigner() {
                             borderColor: '#125b30 !important',
                             fontSize: 14,
                                         fontWeight: 550, }} >
-                <DoubleArrowIcon></DoubleArrowIcon> Ребро синее
+                <DoubleArrowIcon></DoubleArrowIcon> {DESIGNER_BUTTONS[11]}
               </Button>
             </Grid>
             <Grid item xs={3}>
@@ -1150,7 +1138,7 @@ export default function DiagramsDesigner() {
                 fontSize: 14,
                 fontWeight: 550, 
               }}  >
-                <DoubleArrowIcon></DoubleArrowIcon> Ребро фиолетовое
+                <DoubleArrowIcon></DoubleArrowIcon> {DESIGNER_BUTTONS[12]}
               </Button>
             </Grid>
             <Grid item xs={3}>
@@ -1186,7 +1174,7 @@ export default function DiagramsDesigner() {
                             borderColor: '#125b30 !important',
                             fontSize: 14,
                             fontWeight: 550, }} >
-                <DoubleArrowIcon></DoubleArrowIcon>Ребро желтое
+                <DoubleArrowIcon></DoubleArrowIcon> {DESIGNER_BUTTONS[13]}
               </Button>
             </Grid>
             <Grid item xs={3}>
@@ -1231,12 +1219,12 @@ export default function DiagramsDesigner() {
         <div class="column-2">
 
           <Grid container spacing={0} justifyContent="flex-start">
-            <h2>Характеристики элемента</h2>
+            <h2>{HEADERS[1]}</h2>
             <form onSubmit={handleSubmitButton}>
               <Grid item xs={12}>
                 <Grid container spacing={0.5} justifyContent="flex-start">
                   <Grid item xs={6}>
-                    <label for="elementLabel">Название элемента</label>
+                    <label for="elementLabel">{HEADERS[2]}</label>
                     <br />
                     <input
                       type="text"
@@ -1248,7 +1236,7 @@ export default function DiagramsDesigner() {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <label for="elementType">Тип элемента</label>
+                    <label for="elementType">{HEADERS[3]}</label>
                     <br />
                     <input
                       type="text"
@@ -1261,7 +1249,7 @@ export default function DiagramsDesigner() {
                   </Grid>
 
                   <Grid item xs={6}>
-                    <label for="elementSizeX">X</label>
+                    <label for="elementSizeX">{HEADERS[4]}</label>
                     <br />
                     <input
                       type="number"
@@ -1272,7 +1260,7 @@ export default function DiagramsDesigner() {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <label for="elementSizeY">Y</label>
+                    <label for="elementSizeY">{HEADERS[5]}</label>
                     <br />
                     <input
                       type="number"
@@ -1284,37 +1272,37 @@ export default function DiagramsDesigner() {
                   </Grid>
 
                   <Grid item xs={6}>
-                    <label for="elementUpperIndex">Верхний индекс</label>
+                    <label for="elementUpperIndex">{HEADERS[6]}</label>
                     <br />
                     <input
                       type="text"
                       name="elementUpperIndex"
                       value={elementUpperIndex}
                       onChange={e => setElementUpperIndex(e.target.value)}
-                      placeholder="Верхний индекс"
+                      placeholder={HEADERS[6]}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <label for="elementLowerIndex">Нижний индекс</label>
+                    <label for="elementLowerIndex">{HEADERS[7]}</label>
                     <br />
                     <input
                       type="text"
                       name="elementLowerIndex"
                       value={elementLowerIndex}
                       onChange={e => setElementLowerIndex(e.target.value)}
-                      placeholder="Нижний индекс"
+                      placeholder={HEADERS[7]}
                     />
                   </Grid>
 
                   <Grid item xs={12}>
-                    <label for="elementSemanticDescription"> Семантическое описание</label>
+                    <label for="elementSemanticDescription">{HEADERS[8]}</label>
                     <br />
                     <input
                       type="text"
                       name="elementSemanticDescription"
                       value={elementSemanticDescription}
                       onChange={e => setElementSemanticDescription(e.target.value)}
-                      placeholder="Семантическое описание"
+                      placeholder={HEADERS[8]}
                     />
                   </Grid>
 
@@ -1324,6 +1312,8 @@ export default function DiagramsDesigner() {
           </Grid>
 
           <br />
+
+
           <TableContainer component={Paper}>
             <Table>
               <TableHead style={{fontSize: 24,
@@ -1335,13 +1325,13 @@ export default function DiagramsDesigner() {
                             fontWeight: 550
                           }
                 }}>
-                  <TableCell>#</TableCell>
-                  <TableCell align="right"> ID</TableCell>
-                  <TableCell align="right">Имя</TableCell>
-                  <TableCell align="right">Тип</TableCell>
-                  <TableCell align="right">Размеры</TableCell>
-                  <TableCell align="right">Верхний и.</TableCell>
-                  <TableCell align="right">Нижний и.</TableCell>
+                  <TableCell>{TABLE_HEADERS[0]}</TableCell>
+                  <TableCell align="right"> {TABLE_HEADERS[1]}</TableCell>
+                  <TableCell align="right">{TABLE_HEADERS[2]}</TableCell>
+                  <TableCell align="right">{TABLE_HEADERS[3]}</TableCell>
+                  <TableCell align="right">{TABLE_HEADERS[4]}</TableCell>
+                  <TableCell align="right">{TABLE_HEADERS[5]}</TableCell>
+                  <TableCell align="right">{TABLE_HEADERS[6]}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -1365,8 +1355,6 @@ export default function DiagramsDesigner() {
 
         </div>
       </div>
-
-
     </div>
   );
 }
