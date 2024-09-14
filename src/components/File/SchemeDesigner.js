@@ -58,6 +58,13 @@ export default function SchemeDesigner() {
         console.log("[DEBUG]: active scheme new : ", schemeName)
     };
 
+    const headers_ru = ["Модель физического принципа действия (ФПД)", "Схемы проекта:", "Конструктор диаграмм", "Название схемы" ]
+    const headers_en = ["Physical Operating Principle (POP)", "Project schemas", "Diagram Desgner", "Shema name"]
+    const headers = headers_en
+
+    const buttonLabelsRu = ["Создать", "Сохранить", "Загрузить граф ФПД", "Скачать граф"]
+    const buttonLabelsEn  = ["Create", "Save", "Upload POP schema", "Download schema" ]
+    const buttonLabels = buttonLabelsEn
 
     return (
 
@@ -67,19 +74,20 @@ export default function SchemeDesigner() {
                 //width: 500,
                 //height: "200",
                 maxWidth: '95%',
+                marginTop: "2rem",
             }}
             noValidate
             autoComplete="off"
         >
 
-            <h2>Модель физического принципа действия (ФПД)</h2>
+            <h2>{headers[0]}</h2>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={6} >
                         <Typography
-                            variant="h6"
+                            variant="h5"
                             component="div">
-                            Схемы проекта:
+                            {headers[1]}
                         </Typography>
                         <List
                             sx={{
@@ -93,7 +101,8 @@ export default function SchemeDesigner() {
                                         <ListItemIcon>
                                             <SchemaIcon />
                                         </ListItemIcon>
-                                        <ListItemText primary={row.name} />
+                                        <ListItemText primary={row.name}
+                                        primaryTypographyProps={{ fontSize: 16 }}/>
                                     </ListItemButton>
                                     <ListItemIcon>
                                         <DeleteIcon onClick={() => deleteSchema(row.name)} />
@@ -111,12 +120,31 @@ export default function SchemeDesigner() {
                                 alignItems="flex-start"
                                 spacing={2}
                             >
-                                <TextField id="outlined-basic" label="Название схемы" variant="outlined"
+                                <TextField id="outlined-basic" label={headers[3]} variant="outlined"
                                     fullWidth
                                     value={schemeName}
-                                    onChange={e => setSchemeName(e.target.value)} />
+                                    onChange={e => setSchemeName(e.target.value)}
+                                    inputProps={{
+                                        sx: {
+                                            fontSize: 20,
+                                            fontWeight: 500,
+                                            lineHeight: '30px',
+                                        }
+                                    }} // font size of input text
+                                    InputLabelProps={{
+                                        shrink: true,
+                                        sx: {
+                                            fontSize: 30,
+                                            fontWeight: 600,
+                                            letterSpacing: 1,
+                                            lineHeight: '30px',
+                                            //left: "5rem",
 
-                                <AddButton onPress={addSchema} name={"Создать"}></AddButton>
+                                        }
+                                    }} // font size of input label
+                                     />
+
+                                <AddButton onPress={addSchema} name={buttonLabels[0]}></AddButton>
                             </Stack>
 
                         </Grid>
@@ -133,8 +161,8 @@ export default function SchemeDesigner() {
                                     alignItems="flex-start"
                                     spacing={2}
                                 >
-                                    <InputFileUpload fileName={"Загрузить граф ФПД"}> </InputFileUpload>
-                                    <DownloadFile fileName={"Cкачать граф"}></DownloadFile>
+                                    <InputFileUpload fileName={buttonLabels[2]}> </InputFileUpload>
+                                    <DownloadFile fileName={buttonLabels[3]}></DownloadFile>
                                 </Stack>
 
 
@@ -147,7 +175,7 @@ export default function SchemeDesigner() {
                                     alignItems="flex-start"
                                     spacing={2}
                                 >
-                                    <SaveButton >  </SaveButton>
+                                    <SaveButton labelName={buttonLabels[1]} >  </SaveButton>
                                 </Stack>
                             </Grid>
 

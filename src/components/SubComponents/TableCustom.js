@@ -13,7 +13,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function TableCustom({ fileName }) {
-    const headers = ['#', 'ID', 'Имя', 'Тип', 'Размеры', 'В. Индекс', 'Н. Индекс',];
+    const TABLE_HEADERS_RU = ["#", "Имя", "Тип", "Размеры", "Верхний И.", "Нижний И."]
+    const TABLE_HEADERS_EN = ["#", "Name", "Type", "Size", "Upper Idx", "Lower Idx"]
+    const TABLE_HEADERS = TABLE_HEADERS_EN
+
     const listStorage = [];
 
     return (
@@ -24,13 +27,13 @@ export default function TableCustom({ fileName }) {
                             
                             ))} */}
                     <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell align="right"> ID</TableCell>
-                        <TableCell align="right">Имя</TableCell>
-                        <TableCell align="right">Тип</TableCell>
-                        <TableCell align="right">Размеры</TableCell>
-                        <TableCell align="right">Верхний и.</TableCell>
-                        <TableCell align="right">Нижний и.</TableCell>
+                        <TableCell>{TABLE_HEADERS[0]}</TableCell>
+                        <TableCell align="right"> {TABLE_HEADERS[1]}</TableCell>
+                        <TableCell align="right">{TABLE_HEADERS[2]}</TableCell>
+                        <TableCell align="right">{TABLE_HEADERS[3]}</TableCell>
+                        <TableCell align="right">{TABLE_HEADERS[4]}</TableCell>
+                        <TableCell align="right">{TABLE_HEADERS[5]}</TableCell>
+                        <TableCell align="right">{TABLE_HEADERS[6]}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

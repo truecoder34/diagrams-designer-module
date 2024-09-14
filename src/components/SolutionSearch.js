@@ -1,50 +1,29 @@
 import React, { useState } from 'react';
-import {
-    BrowserRouter,
-    NavLink,
-    Routes,
-    Route,
-    Router,
-    Navigate,
-    Link,
-} from 'react-router-dom';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
-
-import axios from 'axios';
 import { Box, Tabs, Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-
-
-import MainPage from './File/MainPage';
-import DeviceInformation from './File/DeviceInformation';
-import SchemeDesigner from './File/SchemeDesigner';
-import Schemes from './File/Schemes';
-import ConstructionElements from './File/ConstructionElements';
-import ValueFunctions from './File/ValuesFunctions';
-
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AddButton from './SubComponents/AddButton';
 import LinearProgress from '@mui/material/LinearProgress';
-
-import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function SolutionSearch() {
+
+
+
+    const HEADERS_RU = ["Поиск решений", "Проверка наличия исходных данных", "Информация о ходе проверки", "Выделить все", 
+        "Показатели качества", "Элементарные функции", "Конструктивные элементы", "Поиск технических решений", "Информация о процесе",
+    "Количество обрабытваемых тенических решний", "Количество сформированных списков конструктивных элементов", "Количество"]
+    const HEADERS_EN = ["Searching for solutions", "Checking the availability of input data", "Information on the progress of the check", "Select all", 
+        "Quality metrics", "Basic functions", "Design elements", "Search for technical solutions", "Process information",
+    "Number of processed shadow solutions", "Number of generated lists of design elements", "Count"]
+    const HEADERS = HEADERS_EN
+
+    const BUTTONS_RU = ["Проверить", "Сформировать технические решения"]
+    const BUTTONS_EN = ["Validate", "Build technical solution"]
+    const BUTTONS = BUTTONS_EN
 
     const [checked, setChecked] = React.useState([true, false]);
 
@@ -66,15 +45,15 @@ export default function SolutionSearch() {
     const children = (
         <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
             <FormControlLabel
-                label="Показатели качества"
+                label={HEADERS[4]}
                 control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
             />
             <FormControlLabel
-                label="Элементарные функции"
+                label={HEADERS[5]}
                 control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
             />
             <FormControlLabel
-                label="Конструктивные элементы"
+                label={HEADERS[6]}
                 control={<Checkbox checked={checked[2]} onChange={handleChange4} />}
             />
         </Box>
@@ -93,13 +72,13 @@ export default function SolutionSearch() {
     return (
         <Box sx={{ width: '100%', typography: 'body1', pl: 4, pr: 4 }}>
             <div>
-                <h2>Поиск решений</h2>
+                <h2>{HEADERS[0]}</h2>
             </div>
 
             <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
                 <Grid container item xs={6}>
                     <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
-                        Проверка наличия исходных данных
+                    {HEADERS[1]}
                     </Typography>
                 </Grid>
                 <Grid container item xs={2}> </Grid>
@@ -117,7 +96,7 @@ export default function SolutionSearch() {
                     <Typography sx={{
                         // mt: 4, mb: 2 
                     }} variant="h6" component="div">
-                        Информация о ходе проверки
+                        {HEADERS[2]}
                     </Typography>
                 </Grid>
                 <Grid container item xs={2}> </Grid>
@@ -128,7 +107,7 @@ export default function SolutionSearch() {
                 <Grid container item xs={6}>
                     <div>
                         <FormControlLabel
-                            label="Выделить целиком"
+                            label={HEADERS[3]}
                             control={
                                 <Checkbox
                                     checked={checked[0] && checked[1] && checked[2]}
@@ -144,7 +123,7 @@ export default function SolutionSearch() {
                     <Divider orientation="vertical" variant="middle" flexItem />
                 </Grid>
                 <Grid container item xs={5}>
-                    <AddButton onPress={checkAllData} name={"Проверить"}></AddButton>
+                    <AddButton onPress={checkAllData} name={BUTTONS[0]}></AddButton>
                 </Grid>
             </Grid>
 
@@ -157,7 +136,7 @@ export default function SolutionSearch() {
             <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
                 <Grid container item xs={6}>
                     <Typography sx={{ mt: 4, mb: 2 }} variant="h5" component="div">
-                        Поиск технических решений
+                        {HEADERS[7]}
                     </Typography>
 
                 </Grid>
@@ -174,7 +153,7 @@ export default function SolutionSearch() {
             <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
                 <Grid item xs={2}>
                     <Typography variant="h6" component="div">
-                        Информация о процесе
+                        {HEADERS[8]}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -188,14 +167,12 @@ export default function SolutionSearch() {
             <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
                 <Grid container item xs={6}>
                     <Grid sx={{ mt:2 }} item xs={6}>
-                        <Typography  variant="h7" component="div">
-                            Количество обрабытваемых тенических решний
-                        </Typography>
+                        <Typography  variant="h7" component="div"> {HEADERS[9]} </Typography>
                     </Grid>
                     <Grid sx={{ mt:2 }} item xs={4}>
                         <TextField
                             id="filled-number"
-                            label="Количество"
+                            label={HEADERS[11]}
                             type="number"
                             InputLabelProps={{
                                 shrink: true,
@@ -207,14 +184,12 @@ export default function SolutionSearch() {
                     </Grid>
 
                     <Grid sx={{ mt:2 }} item xs={6}>
-                        <Typography sx={{}} variant="h7" component="div">
-                            Количество сформированных списков конструктивных элементов
-                        </Typography>
+                        <Typography sx={{}} variant="h7" component="div"> {HEADERS[10]}</Typography>
                     </Grid>
                     <Grid sx={{ mt:2 }} item xs={4}>
                         <TextField
                             id="filled-number"
-                            label="Количество"
+                            label={HEADERS[11]}
                             type="number"
                             InputLabelProps={{
                                 shrink: true,
@@ -230,54 +205,9 @@ export default function SolutionSearch() {
                     <Divider orientation="vertical" variant="middle" flexItem />
                 </Grid>
                 <Grid container item xs={5}>
-                    <AddButton onPress={checkAllData} name={"Сформировать технические решения"}></AddButton>
+                    <AddButton onPress={checkAllData} name={BUTTONS[1]}></AddButton>
                 </Grid>
             </Grid>
-
-            {/* <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
-                <Grid item xs={2}>
-                    <Typography sx={{}} variant="h7" component="div">
-                        Количество обрабытваемых тенических решний
-                    </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        id="filled-number"
-                        label="Количество"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="filled"
-                    />
-                </Grid>
-                <Grid item xs={4}>
-                </Grid>
-            </Grid>
-
-            <Grid xs={12} container rowSpacing={1} columnSpacing={2}>
-                <Grid item xs={2}>
-                    <Typography sx={{}} variant="h7" component="div">
-                        Количество сформированных списков конструктивных элементов
-                    </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        id="filled-number"
-                        label="Количество"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="filled"
-                    />
-                </Grid>
-                <Grid item xs={4}>
-                </Grid>
-            </Grid>
-
- */}
-
         </Box>
     )
 }

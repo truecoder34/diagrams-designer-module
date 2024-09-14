@@ -43,16 +43,37 @@ export default function ConstructionElements() {
     function createData(number, name, scheme, patentNumber, sourceURL) {
         return { number, name, scheme, patentNumber, sourceURL };
     }
-    const tableStorageInitial = [
-        createData(1, 'Устройство для подачи СОЖ', '/images/Устройство_для_Подачи_СОЖ_RU_№2_203_165_B23С_5_28.png',
-            'RU № 2 203 165 B23С 5/28', 'ссылка на ресурс 1'),
-        createData(2, 'Устройство охлаждения зоны резания', 'scheme', 'ИИ_1', 'ссылка на ресурс 2'),
-        createData(2, 'Устройство для подачи охлаждающей жидкости', '/images/Устройство_для_Подачи_Охл_жидкости_RU_№994214.png',
-            'SU № 1454651 B23Q 11/10', 'ссылка на ресурс 3'),
+
+    const tableStorageInitialEn = [
+        createData(1, 'SOJ passing device', '/images/Конструктивный_Элемент_1.png',
+            'RU № 2 203 165 B23С 5/28', 'link_1'),
+        createData(2, 'Cooler device for cunnig zone', '/images/Конструктивный_Элемент_2.png', 'ИИ_1', 'link_2'),
+        createData(3, 'Cooler liquid passing device', '/images/Конструктивный_Элемент_3.png', 'SU № 1454651 B23Q 11/10', 'link_3'),
     ]
+    const tableStorageInitialRu = [
+        createData(1, 'Устройство для подачи СОЖ', '/images/Конструктивный_Элемент_1.png','RU № 2 203 165 B23С 5/28', 'ссылка на ресурс 1'),
+        createData(2, 'Устройство охлаждения зоны резания', '/images/Конструктивный_Элемент_2.png', 'ИИ_1', 'ссылка на ресурс 2'),
+        createData(3, 'Устройство для подачи охлаждающей жидкости', '/images/Конструктивный_Элемент_3.png', 'SU № 1454651 B23Q 11/10', 'ссылка на ресурс 3'),
+    ]
+    const tableStorageInitial = tableStorageInitialEn
     const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
 
-    const templateFoundElements = ['element 1', 'element 2', ' element 3']
+    const templateFoundElementsRu = ['элмент 1', 'элмент 2', ' элмент 3']
+    const templateFoundElementsEn = ['element 1', 'element 2', ' element 3']
+    const templateFoundElements = templateFoundElementsEn
+
+    const HEADERS_RU = ["Просмотр конструктивных элементов", "Название", "Номер патента", "Результаты поиска"]
+    const HEADERS_EN = ["Construction elements list", "Name", "Patent ID", "Search results"]
+    const HEADERS = HEADERS_EN
+
+    const BUTTONS_RU = ["Добавить", "Поиск конструктивныъ элементов"]
+    const BUTTONS_EN = ["Add", "Construction elements search"]
+    const BUTTONS = BUTTONS_EN
+
+
+    const TABLE_HEADERS_RU = ["#", "Назвние", "Схема", "Номер патента", "Ресурс",]
+    const TABLE_HEADERS_EN = ["#", "Name", "Schema", "Patent Id", "Source"]
+    const TABLE_HEADERS = TABLE_HEADERS_EN
 
     function generate(element) {
         return [0, 1, 2].map((value) =>
@@ -72,7 +93,7 @@ export default function ConstructionElements() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '100%' }} >
 
             <div>
-                <h3>Просмотр конструктивных элементов</h3>
+                <h3>{HEADERS[0]}</h3>
             </div>
 
 
@@ -88,7 +109,7 @@ export default function ConstructionElements() {
 
                         <TextField
                             id="outlined-name-input"
-                            label="Название"
+                            label={HEADERS[1]}
                             type="search"
                             autoComplete="current-name"
                             InputProps={{
@@ -102,11 +123,11 @@ export default function ConstructionElements() {
                         < Divider orientation="vertical" variant="middle" flexItem />
                         <TextField
                             id="outlined-patent-name-input"
-                            label="Номер патента"
+                            label={HEADERS[2]}
                             autoComplete="current-patent-name"
                         />
                         <Divider orientation="vertical" variant="middle" flexItem />
-                        <SearchButton></SearchButton>
+                        <SearchButton name={BUTTONS[1]}></SearchButton>
 
                     </Stack>
                 </Grid>
@@ -114,7 +135,7 @@ export default function ConstructionElements() {
                 <Grid item xs={12} container rowSpacing={1} columnSpacing={2}>
                     <Grid item xs={4}>
                         <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-                            Результаты поиска
+                            {HEADERS[3]}
                         </Typography>
                         <List sx={{ width: '100%', maxWidth: 360, 
                         // bgcolor: 'background.paper'
@@ -128,7 +149,7 @@ export default function ConstructionElements() {
                                         primary={row}
                                         secondary={row}
                                     />
-                                     <AddButton onPress={addConstructionElement} name={"Добавить"}></AddButton>
+                                     <AddButton onPress={addConstructionElement} name={BUTTONS[0]}></AddButton>
                                 </ListItem>
                             ))
                             }
@@ -139,11 +160,11 @@ export default function ConstructionElements() {
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>#</TableCell>
-                                        <TableCell align="center">Название</TableCell>
-                                        <TableCell align="center">Схема</TableCell>
-                                        <TableCell align="center">Номер патента</TableCell>
-                                        <TableCell align="center">Ресурс</TableCell>
+                                        <TableCell>{TABLE_HEADERS[0]}</TableCell>
+                                        <TableCell align="center">{TABLE_HEADERS[1]}</TableCell>
+                                        <TableCell align="center">{TABLE_HEADERS[2]}</TableCell>
+                                        <TableCell align="center">{TABLE_HEADERS[3]}</TableCell>
+                                        <TableCell align="center">{TABLE_HEADERS[4]}</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -156,7 +177,7 @@ export default function ConstructionElements() {
                                                 {row.number}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="left" >{row.name}</TableCell>
-                                            <TableCell align="left"><img src={row.scheme} /></TableCell>
+                                            <TableCell align="left"><img src={row.scheme} width="400" height="300" /></TableCell>
                                             <TableCell align="left">{row.patentNumber}</TableCell>
                                             <TableCell align="left">{row.sourceURL}</TableCell>
                                         </TableRow>

@@ -36,7 +36,11 @@ export function App() {
     console.log("New value refering :: ", newValue.toString())
     setValue(newValue.toString());
 };
-const pagesArray = ['Файл', 'Ввод даных', 'Поиск решений', 'Вывод результатов']
+
+const pagesArrayRu = ['Файл', 'Ввод даных', 'Поиск решений', 'Вывод результатов']
+const pagesArrayEn = ['File', 'Data input', 'Silution search', 'Result']
+const pagesArray = pagesArrayEn
+
 const pagesLinksArray = ['file/*', 'inputData/*', 'solutionSearch', 'results',]
 const [value, setValue] = React.useState(pagesLinksArray[0]);
   return (

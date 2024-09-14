@@ -7,7 +7,8 @@ export default function AddButton({onPress, name}) {
   return (
     <Button 
       component="label" variant="contained" 
-      onClick={onPress} startIcon={<AddIcon/>} >
+      onClick={onPress} startIcon={<AddIcon/>} 
+      sx={{fontSize: 14}}>
     {name}
   </Button>
   );

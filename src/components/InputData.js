@@ -17,8 +17,10 @@ export default function InputData() {
         console.log("New value refering :: ", newValue.toString())
         setValue(newValue.toString());
     };
-    const subPagesArray = ['Показатели качества', 'Элементарные функции',
-        'Конструктивные элементы',  ]               // 'Экспертные оценки', 'Редактирование значений',
+    
+    const subPagesArrayRu = ['Показатели качества', 'Элементарные функции','Конструктивные элементы',  ]               // 'Экспертные оценки', 'Редактирование значений',
+    const subPagesArrayEn = ['Quality metrics', 'Basic functions','Construction elements',  ] 
+    const subPagesArray = subPagesArrayEn
     const subPagesLinksArray = ['qualityMetrics', 'elementaryFunctions',
         'constructionElements', ]                  //  'expertEstimations', 'valueChange',
     const [value, setValue] = React.useState(subPagesLinksArray[0]);
@@ -32,6 +34,10 @@ export default function InputData() {
                 // textColor="secondary"
                 // indicatorColor="secondary"
                 aria-label="secondary tabs example"
+                //style={{        fontSize:'106px',
+                //fontWeight:'600',}}
+                //sx={{fontWeight:'1000', fontSize:'206px',}}
+                //style={{background: 'blue', fontWeight:'2000', fontSize:'206px'}}
             >
                 {subPagesArray.map((_, index) => (
                     <Tab
