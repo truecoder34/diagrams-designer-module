@@ -34,7 +34,7 @@ export default function ElementaryFunctions() {
         return { number, name, description };
     }
 
-    const tableStorageInitial = [
+    const TABLE_STORAGE_INITIAL_RU = [
         createData(1, 'Нагнетание воздуха в канал подачи ионизированного газа', 'дополнительная информация..'),
         createData(2, 'Формирование коронного разряда', 'дополнительная информация..'),
         createData(3, 'Отвод теплоты от детали', 'дополнительная информация..'),
@@ -47,13 +47,44 @@ export default function ElementaryFunctions() {
         createData(10, 'Подача распыленной жидкости на поверхность детали и инструмента', 'дополнительная информация..'),
         createData(11, 'Подвод воздуха к соплу  эжектора из цеховой пневмосети', 'дополнительная информация..'),
         createData(12, 'Подвод жидкости в смесительную камеру эжектора', 'дополнительная информация..'),
-
         createData(13, 'Подача воздуха в ионизатор', 'дополнительная информация..'),
         createData(14, 'Изоляция электрического разряда в ионизаторе от станочного приспособления', 'дополнительная информация..'),
         createData(15, 'Защита ионизатор от утечеки ионизированного воздуха', 'дополнительная информация..'),
     ]
+    const TABLE_STORAGE_INITIAL_EN = [
+        createData(1, 'Injection of air into the ionized gas supply channel', 'additional information...'),
+        createData(2, 'Corona discharge formation', 'additional information...'),
+        createData(3, 'Heat dissipation from the part', 'additional information...'),
+        createData(4, 'Heat dissipation from tool', 'additional information...'),
+        createData(5, 'Transfer of air kinetic energy to the sucked liquid', 'additional information...'), 
+        createData(6, 'Mixing air with liquid', 'formation of atomized liquid'),
+        createData(7, 'Providing contact of ionized gas with juvenile surfaces', 'additional info...'),
+        createData(8, 'Providing electrical discharge between electrodes in an ionizer', 'additional info...'),
+        createData(9, 'Supplying ionized air to the cutting zone with a directional flow', 'additional information...'),
+        createData(10, 'Supply of atomized liquid to the workpiece and tool surface', 'additional information...'),
+        createData(11, 'Supply air to the ejector nozzle from the shop pneumatic network', 'additional information...'),
+        createData(12, 'Liquid supply to the mixing chamber of the ejector', 'additional information...'),
+        createData(13, 'Air supply to the ionizer', 'additional information...'),
+        createData(14, 'Isolation of electric discharge in the ionizer from the machine tool', 'additional information...'),
+        createData(15, 'Protection of the ionizer against leakage of ionized air', 'additional information...')
+    ]
 
-    const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
+    const TABLE_STORAGE_INITIAL = TABLE_STORAGE_INITIAL_EN
+
+    const TABLE_HEADERS_RU = ["#", "Название", "Дополнительная информаиця"]
+    const TABLE_HEADERS_EN = ["#", "Name", "Additional Information"]
+    const TABLE_HEADERS = TABLE_HEADERS_EN
+
+    const HEADERS_RU = ["Почередно введите элементарные функции (не более 30)", "элементраная функция", "Введено элементарных функций :"]
+    const HEADERS_EN = ["Enter basic functions (max. 30)", "basic function", "Basic functions specified"]
+    const HEADERS = HEADERS_EN
+
+    const BUTTONS_RU = ["Добавить"]
+    const BUTTONS_EN = ["Add"]
+    const BUTTONS = BUTTONS_EN
+
+
+    const [tableStorage, setListStorage] = React.useState(TABLE_STORAGE_INITIAL);
     const [elementName, setElementName] = useState('');
 
     const [elementCount, setElementCount] = useState(tableStorage.length);
@@ -106,14 +137,14 @@ export default function ElementaryFunctions() {
                         <FormControl fullWidth>
                             <FormLabel>
                                 <Typography variant="h6" component="div">
-                                    Почередно введите элементарные функции (не более 30)
+                                    {HEADERS[0]}
                                 </Typography>
                             </FormLabel>
                             <br />
                             <FormGroup row >
                                 <Grid item xs={11}>
                                     <TextField fullWidth
-                                        label="элементарные функции" id="baseFunction"
+                                        label={HEADERS[1]} id="baseFunction"
                                         value={elementName} onChange={e => setElementName(e.target.value)}
                                         inputProps={{
                                             sx: {
@@ -132,7 +163,7 @@ export default function ElementaryFunctions() {
                                     />
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <AddButton onPress={addRow} name={"Добавить"}></AddButton>
+                                    <AddButton onPress={addRow} name={BUTTONS[0]}></AddButton>
                                 </Grid>
                             </FormGroup>
                         </FormControl>
@@ -144,7 +175,7 @@ export default function ElementaryFunctions() {
                             spacing={1}
                         >
                             <Typography sx={{ fontSize: 22 }} variant="h4" component="div">
-                                Введено элементарных функций :
+                                {HEADERS[2]}
                             </Typography>
                             <Divider orientation="vertical" flexItem />
                             <Chip label={elementCount}  sx={{ fontSize: 22 }} />
@@ -156,9 +187,9 @@ export default function ElementaryFunctions() {
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ fontSize: 20 }}>#</TableCell>
-                                        <TableCell sx={{ fontSize: 20 }} align="center">Название</TableCell>
-                                        <TableCell sx={{ fontSize: 20 }} align="center">Дополнительная информация</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }}>{TABLE_HEADERS[0]}</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">{TABLE_HEADERS[1]}</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">{TABLE_HEADERS[2]}</TableCell>
                                         <TableCell sx={{ fontSize: 20 }} align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>

@@ -176,7 +176,7 @@ export default function Schemes() {
                                             <h2>{headers_en[4]} </h2>
                                             <Divider orientation="vertical" variant="middle" flexItem />
 
-                                            <SaveButton>xxxx</SaveButton>
+                                            <SaveButton labelName={buttons[0]}>xxxx</SaveButton>
                                         </Stack>
 
 

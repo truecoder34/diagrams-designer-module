@@ -31,7 +31,7 @@ export default function QualityMetrics() {
         return { number, name, description };
     }
 
-    const tableStorageInitial = [
+    const TABLE_STORAGE_INITIAL_RU = [
         createData(1, 'Эффективность смазывающего воздействия', 'дополнительная информация..'),
         createData(2, 'Эффективность охлаждающего воздействия', 'дополнительная информация..'),
         createData(3, 'Рассход электроэнергии', 'дополнительная информация..'),
@@ -45,10 +45,36 @@ export default function QualityMetrics() {
         createData(11, 'Габаритные размеры', 'дополнительная информация..'),
         createData(12, 'Масса', 'дополнительная информация..'),
     ]
+    const TABLE_STORAGE_INITIAL_EN = [
+        createData(1, 'Effectiveness of lubricating action', 'additional information..'),
+        createData(2, 'Cooling effect efficiency', 'additional information..'),
+        createData(3, 'Electricity consumption', 'additional information..'),
+        createData(4, 'Probability of failure-free operation', 'additional information..'),
+        createData(5, 'Service life', 'additional information..'),
+        createData(6, 'Manufacturing labor', 'additional information..'),
+        createData(7, 'Standardization and unification factors', 'additional information..'),
+        createData(8, 'Safety', 'additional information..'),
+        createData(9, 'Patent protection index', 'additional information..'),
+        createData(10, 'Patent purity index', 'additional information..'),
+        createData(11, 'Overall dimensions', 'additional information..'),
+        createData(12, 'Weight', 'additional information..'),
+    ]
+    const TABLE_STORAGE_INITIAL = TABLE_STORAGE_INITIAL_EN
 
-    const [tableStorage, setListStorage] = React.useState(tableStorageInitial);
-    const [elementName, setElementName] = useState('');
+    const TABLE_HEADERS_RU = ["#", "Название", "Дополнительная информаиця"]
+    const TABLE_HEADERS_EN = ["#", "Name", "Additional Information"]
+    const TABLE_HEADERS = TABLE_HEADERS_EN
 
+    const HEADERS_RU = ["Почередно введите показатели качества для оценки технических решений (не более 7)", "Показатели качества", "Введено показателей качества :"]
+    const HEADERS_EN = ["Enter quality metrics for evaluating technical solutions (max. 7)", "Quality metrics", "Qualyty metrics specified"]
+    const HEADERS = HEADERS_EN
+
+    const BUTTONS_RU = ["Добавить"]
+    const BUTTONS_EN = ["Add"]
+    const BUTTONS = BUTTONS_EN
+    
+    const [tableStorage, setListStorage] = React.useState(TABLE_STORAGE_INITIAL);
+    const [elementName, setElementName] = useState('');    
     const [elementCount, setElementCount] = useState(tableStorage.length);
 
 
@@ -98,14 +124,14 @@ export default function QualityMetrics() {
                         <FormControl fullWidth>
                             <FormLabel>
                                 <Typography variant="h6" component="div">
-                                    Почередно введите показатели качества для оценки технических решений (не более 7)
+                                    {HEADERS[0]}
                                 </Typography>
                             </FormLabel>
                             <br />
                             <FormGroup row >
                                 <Grid item xs={11}>
                                     <TextField fullWidth
-                                        label="показатели качества" id="baseFunction"
+                                        label={HEADERS[1]} id="baseFunction"
                                         value={elementName} onChange={e => setElementName(e.target.value)}
                                         inputProps={{
                                             sx: {
@@ -124,7 +150,7 @@ export default function QualityMetrics() {
                                     />
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <AddButton onPress={addRow} name={"Добавить"}></AddButton>
+                                    <AddButton onPress={addRow} name={BUTTONS[0]}></AddButton>
                                 </Grid>
                             </FormGroup>
                         </FormControl>
@@ -136,7 +162,7 @@ export default function QualityMetrics() {
                             spacing={1}
                         >
                             <Typography sx={{ fontSize: 22 }} variant="h4" component="div">
-                                Введено показателей качества :
+                                {HEADERS[2]}
                             </Typography>
                             <Divider orientation="vertical" flexItem />
                             <Chip label={elementCount} sx={{ fontSize: 22 }} />
@@ -148,9 +174,9 @@ export default function QualityMetrics() {
                             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ fontSize: 20 }}>#</TableCell>
-                                        <TableCell sx={{ fontSize: 20 }} align="center">Название</TableCell>
-                                        <TableCell sx={{ fontSize: 20 }} align="center">Дополнительная информация</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }}>{TABLE_HEADERS[0]}</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">{TABLE_HEADERS[1]}</TableCell>
+                                        <TableCell sx={{ fontSize: 20 }} align="center">{TABLE_HEADERS[2]}</TableCell>
                                         <TableCell sx={{ fontSize: 20 }} align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
